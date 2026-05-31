@@ -39,7 +39,6 @@ function buildSummary(data) {
     "PRESTADOR",
     "Daniel Arnaiz Cuesta, NIF 72828826Q",
     "Servicio documental laboral. Representacion voluntaria ante SMAC con poder valido.",
-    "No abogado ni graduado social. No asistencia letrada ni representacion judicial.",
     "",
     "CLIENTE",
     `Nombre: ${valueOf(data, "nombre")}`,
