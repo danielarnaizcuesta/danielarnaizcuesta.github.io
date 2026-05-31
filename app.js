@@ -28,6 +28,20 @@ function buildSummary(data) {
     timeStyle: "short",
   }).format(new Date());
 
+  const direccion = valueOf(data, "direccion");
+  const piso = valueOf(data, "piso");
+  const cp = valueOf(data, "cp");
+  const localidad = valueOf(data, "localidad");
+  const provincia = valueOf(data, "provincia");
+  
+  const domicilioCompleto = [
+    direccion,
+    piso ? `Piso/Puerta: ${piso}` : "",
+    `CP ${cp}`,
+    localidad,
+    provincia
+  ].filter(Boolean).join(", ");
+
   return [
     "SOLICITUD DE CONTRATACION",
     "",
@@ -42,7 +56,7 @@ function buildSummary(data) {
     `DNI/NIE: ${valueOf(data, "dni")}`,
     `Email: ${valueOf(data, "email")}`,
     `Telefono: ${valueOf(data, "telefono") || "No indicado"}`,
-    `Domicilio: ${valueOf(data, "domicilio")}`,
+    `Domicilio: ${domicilioCompleto}`,
     "",
     "ASUNTO",
     `Empresa o empleador: ${valueOf(data, "empresa")}`,

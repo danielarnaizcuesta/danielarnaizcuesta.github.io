@@ -110,12 +110,28 @@
                 <input autocomplete="tel" inputmode="tel" name="telefono" placeholder="Teléfono (opcional)" />
               </label>
               <label>
-                Domicilio completo
-                <input autocomplete="street-address" name="domicilio" required placeholder="Calle, número, piso, ciudad" />
+                Dirección (Calle, número)
+                <input autocomplete="address-line1" name="direccion" required placeholder="Tu calle y número" />
+              </label>
+              <label>
+                Piso, puerta (opcional)
+                <input autocomplete="address-line2" name="piso" placeholder="Piso, puerta, bloque" />
+              </label>
+              <label>
+                Código Postal
+                <input autocomplete="postal-code" inputmode="numeric" name="cp" required placeholder="C.P." />
+              </label>
+              <label>
+                Localidad o Ciudad
+                <input autocomplete="address-level2" name="localidad" required placeholder="Tu ciudad" />
+              </label>
+              <label>
+                Provincia
+                <input autocomplete="address-level1" name="provincia" required placeholder="Tu provincia" />
               </label>
               <label>
                 Empresa a reclamar
-                <input name="empresa" required placeholder="Nombre de la empresa o empleador" />
+                <input name="empresa" required placeholder="Nombre de la empresa" />
               </label>
             </div>
           </fieldset>
