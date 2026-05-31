@@ -187,7 +187,7 @@ function buildSummary(data) {
     "",
     "PRECIO",
     "Precio cerrado del servicio: 150,00 EUR IVA incluido.",
-    "Pago por transferencia o Bizum una vez prestado el servicio, salvo acuerdo escrito distinto.",
+    "Pago por transferencia o Bizum una vez prestado el servicio.",
     "Factura del servicio conforme a la normativa de facturacion.",
     "",
     "ACEPTACIONES",
@@ -253,7 +253,7 @@ async function buildPayload(data, summary, contractPdf) {
       employer: valueOf(data, "empresa"),
       service: "S-01 papeleta de conciliacion, presentacion y representacion voluntaria en asunto tramitable ante el SMAC de la Comunidad de Madrid",
       price: "150,00 EUR IVA incluido",
-      payment: "transferencia o Bizum una vez prestado el servicio, salvo acuerdo escrito distinto",
+      payment: "transferencia o Bizum una vez prestado el servicio",
     },
     acceptances: {
       conditionsAndPrivacy: Boolean(data.get("aceptaCondiciones")),
