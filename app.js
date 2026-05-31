@@ -1,7 +1,6 @@
 const CONTACT_EMAIL = "danielarnaizcuesta@gmail.com";
 const WHATSAPP_NUMBER = "34615860227";
 const BASE_PRICE = 90;
-const MAX_TOTAL = 150;
 
 const form = document.querySelector("#hire-form");
 const resultSection = document.querySelector("#resultado");
@@ -11,7 +10,6 @@ const whatsappLink = document.querySelector("#whatsapp-link");
 const copyButton = document.querySelector("#copy-button");
 const downloadButton = document.querySelector("#download-button");
 const copyStatus = document.querySelector("#copy-status");
-const estimateOutput = document.querySelector("#estimate-output");
 
 function euro(value) {
   return new Intl.NumberFormat("es-ES", {
@@ -30,25 +28,6 @@ function valueOf(data, name) {
 
 function yesNo(data, name) {
   return data.get(name) ? "SI" : "NO";
-}
-
-function calculateEstimate() {
-  const amountField = form.elements.importe;
-  const amount = Number(amountField.value || 0);
-
-  if (!amount || amount < 0) {
-    estimateOutput.textContent =
-      "Introduce un importe aproximado para ver el posible máximo orientativo.";
-    return;
-  }
-
-  const variableTotal = Math.min(amount * 0.1, MAX_TOTAL);
-  const total = Math.max(BASE_PRICE, variableTotal);
-  const complement = Math.max(0, total - BASE_PRICE);
-
-  estimateOutput.textContent =
-    `Orientativo si se cobraran ${euro(amount)} por avenencia: total máximo ${euro(total)}; ` +
-    `complemento posterior ${euro(complement)}.`;
 }
 
 function buildSummary(data) {
@@ -89,9 +68,8 @@ function buildSummary(data) {
     "S-01: redaccion y presentacion de papeleta de conciliacion, una representacion ante SMAC con poder valido y borrador posterior incluido cuando proceda y pueda entregarse en plazo.",
     "",
     "PRECIO",
-    "Precio del servicio: 90,00 EUR IVA incluido.",
-    "El pago se realiza tras la emision de la factura, salvo pacto distinto por escrito.",
-    "Complemento solo si existe avenencia dineraria ante SMAC y cobro efectivo: hasta completar el menor entre el 10% de lo cobrado y 150,00 EUR de precio total. Los 90,00 EUR iniciales se descuentan siempre.",
+    "Precio cerrado del servicio: 90,00 EUR IVA incluido.",
+    "Factura del servicio conforme a la normativa de facturacion.",
     "",
     "ACEPTACIONES",
     `Solicita contratar S-01: ${yesNo(data, "aceptaServicio")}`,
@@ -126,8 +104,6 @@ function showResult(summary, data) {
   resultSection.hidden = false;
   resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
 }
-
-form.addEventListener("input", calculateEstimate);
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -166,5 +142,3 @@ downloadButton.addEventListener("click", () => {
   anchor.remove();
   URL.revokeObjectURL(url);
 });
-
-calculateEstimate();
