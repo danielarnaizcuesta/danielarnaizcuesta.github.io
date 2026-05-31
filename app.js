@@ -251,7 +251,9 @@ async function buildPayload(data, summary, contractPdf) {
   };
 }
 
-async function sendEncryptedSubmission(encryptedSubmission, reference) {
+async function sendEncryptedSubmission(encryptedSubmission, evidence) {
+  const subject = `Nueva solicitud cifrada S-01 REF ${evidence.reference} PDF-SHA256 ${evidence.contractPdfSha256}`;
+
   const response = await fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
     method: "POST",
     headers: {
@@ -259,9 +261,11 @@ async function sendEncryptedSubmission(encryptedSubmission, reference) {
       Accept: "application/json",
     },
     body: JSON.stringify({
-      _subject: `Nueva solicitud cifrada S-01 ${reference}`,
+      _subject: subject,
       _captcha: "false",
-      referencia_solicitud: reference,
+      referencia_solicitud: evidence.reference,
+      hash_pdf_sha256: evidence.contractPdfSha256,
+      hash_texto_sha256: evidence.summarySha256,
       solicitud_cifrada: JSON.stringify(encryptedSubmission),
     }),
   });
@@ -271,22 +275,28 @@ async function sendEncryptedSubmission(encryptedSubmission, reference) {
   }
 }
 
-function setLinks(summary, data) {
-  const subject = `Solicitud contratacion conciliacion - ${valueOf(data, "nombre")}`;
+function setLinks(summary, data, evidence = null) {
+  const subject = evidence
+    ? `Solicitud contratacion S-01 REF ${evidence.reference} PDF-SHA256 ${evidence.contractPdfSha256}`
+    : `Solicitud contratacion conciliacion - ${valueOf(data, "nombre")}`;
   const encodedSubject = encodeURIComponent(subject);
-  const encodedBody = encodeURIComponent(summary);
+  const evidenceBlock = evidence
+    ? `\n\nTRAZABILIDAD\nReferencia: ${evidence.reference}\nPDF SHA-256: ${evidence.contractPdfSha256}\nTexto SHA-256: ${evidence.summarySha256}`
+    : "";
+  const encodedBody = encodeURIComponent(`${summary}${evidenceBlock}`);
   const waMessage =
     "*SOLICITUD DE CONTRATACION*\n\n" +
     "Hola Daniel, aqui tienes la solicitud de contratacion que acabo de preparar desde la web:\n\n" +
-    summary;
+    summary +
+    evidenceBlock;
 
   emailLink.href = `mailto:${CONTACT_EMAIL}?subject=${encodedSubject}&body=${encodedBody}`;
   whatsappLink.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessage)}`;
 }
 
-function showResult(summary, data) {
+function showResult(summary, data, evidence = null) {
   summaryText.value = summary;
-  setLinks(summary, data);
+  setLinks(summary, data, evidence);
   resultSection.hidden = false;
   resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
 }
@@ -312,9 +322,9 @@ form.addEventListener("submit", async (event) => {
     const contractPdf = await createContractPdfAttachment(summary);
     const payload = await buildPayload(data, summary, contractPdf);
     const encryptedSubmission = await encryptSubmission(payload);
-    await sendEncryptedSubmission(encryptedSubmission, payload.evidence.reference);
-    showResult(summary, data);
-    copyStatus.textContent = `Solicitud cifrada enviada. Referencia: ${payload.evidence.reference}`;
+    await sendEncryptedSubmission(encryptedSubmission, payload.evidence);
+    showResult(summary, data, payload.evidence);
+    copyStatus.textContent = `Solicitud cifrada enviada. REF ${payload.evidence.reference}. PDF SHA-256 ${payload.evidence.contractPdfSha256}`;
     submitButton.textContent = "Solicitud enviada";
     submitButton.style.backgroundColor = "var(--primary)";
     submitButton.style.borderColor = "var(--primary)";
