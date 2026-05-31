@@ -1,5 +1,6 @@
 const CONTACT_EMAIL = "danielarnaizcuesta@gmail.com";
 const WHATSAPP_NUMBER = "34615860227";
+const SITE_EVIDENCE_VERSION = "2026-05-31-evidence-v1";
 const ENCRYPTION_PUBLIC_KEY_PEM = `-----BEGIN PUBLIC KEY-----
 MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA8c9htGPDxR2ulaLJRRS5
 n4xlEfSihcUIkqTxadXlDrawq5W64JwIfzHafODOZNPCBadBrZk72nyXYpd8XXN8
@@ -34,6 +35,22 @@ function valueOf(data, name) {
 
 function yesNo(data, name) {
   return data.get(name) ? "SI" : "NO";
+}
+
+function submissionReference() {
+  if (crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+
+  const bytes = crypto.getRandomValues(new Uint8Array(16));
+  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+async function sha256Hex(value) {
+  const bytes = typeof value === "string" ? new TextEncoder().encode(value) : value;
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+
+  return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
 }
 
 function base64ToBytes(base64) {
@@ -178,13 +195,35 @@ function buildSummary(data) {
   ].join("\n");
 }
 
-function buildPayload(data, summary, contractPdf) {
+async function buildPayload(data, summary, contractPdf) {
+  const submittedAt = new Date().toISOString();
+  const reference = submissionReference();
+  const summarySha256 = await sha256Hex(summary);
+
   return {
-    submittedAt: new Date().toISOString(),
+    submittedAt,
     source: "danielarnaizcuesta.github.io",
     summary,
     documents: {
       contractPdf,
+    },
+    evidence: {
+      reference,
+      submittedAt,
+      siteEvidenceVersion: SITE_EVIDENCE_VERSION,
+      pageUrl: window.location.href,
+      pageOrigin: window.location.origin,
+      summarySha256,
+      contractPdfSha256: contractPdf.sha256,
+      acceptedConditionsText: "Acepto las condiciones del servicio, la politica de privacidad y el precio cerrado de 90,00 EUR IVA incluido.",
+      immediateStartText: data.get("inicioInmediato")
+        ? "Si mi asunto es un despido o existe riesgo de caducidad o prescripcion, solicito el inicio inmediato de las gestiones sin esperar al plazo legal de desistimiento."
+        : null,
+      browser: {
+        userAgent: navigator.userAgent,
+        language: navigator.language,
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      },
     },
     client: {
       name: valueOf(data, "nombre"),
@@ -212,7 +251,7 @@ function buildPayload(data, summary, contractPdf) {
   };
 }
 
-async function sendEncryptedSubmission(encryptedSubmission) {
+async function sendEncryptedSubmission(encryptedSubmission, reference) {
   const response = await fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
     method: "POST",
     headers: {
@@ -220,8 +259,9 @@ async function sendEncryptedSubmission(encryptedSubmission) {
       Accept: "application/json",
     },
     body: JSON.stringify({
-      _subject: "Nueva solicitud cifrada S-01",
+      _subject: `Nueva solicitud cifrada S-01 ${reference}`,
       _captcha: "false",
+      referencia_solicitud: reference,
       solicitud_cifrada: JSON.stringify(encryptedSubmission),
     }),
   });
@@ -269,12 +309,12 @@ form.addEventListener("submit", async (event) => {
   submitButton.textContent = "Enviando solicitud segura...";
 
   try {
-    const contractPdf = createContractPdfAttachment(summary);
-    const payload = buildPayload(data, summary, contractPdf);
+    const contractPdf = await createContractPdfAttachment(summary);
+    const payload = await buildPayload(data, summary, contractPdf);
     const encryptedSubmission = await encryptSubmission(payload);
-    await sendEncryptedSubmission(encryptedSubmission);
+    await sendEncryptedSubmission(encryptedSubmission, payload.evidence.reference);
     showResult(summary, data);
-    copyStatus.textContent = "Solicitud cifrada enviada. Conserva copia si quieres.";
+    copyStatus.textContent = `Solicitud cifrada enviada. Referencia: ${payload.evidence.reference}`;
     submitButton.textContent = "Solicitud enviada";
     submitButton.style.backgroundColor = "var(--primary)";
     submitButton.style.borderColor = "var(--primary)";
@@ -365,17 +405,20 @@ function buildPdfDocument(summary) {
   return doc;
 }
 
-function createContractPdfAttachment(summary) {
+async function createContractPdfAttachment(summary) {
   if (!window.jspdf || !window.jspdf.jsPDF) {
-    return null;
+    throw new Error("No se pudo cargar el generador de PDF del contrato.");
   }
 
   const doc = buildPdfDocument(summary);
+  const arrayBuffer = doc.output("arraybuffer");
 
   return {
     filename: pdfFilename(),
     mimeType: "application/pdf",
-    base64: bytesToBase64(doc.output("arraybuffer")),
+    size: arrayBuffer.byteLength,
+    sha256: await sha256Hex(arrayBuffer),
+    base64: bytesToBase64(arrayBuffer),
   };
 }
 
