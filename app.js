@@ -89,7 +89,8 @@ function buildSummary(data) {
     "S-01: redaccion y presentacion de papeleta de conciliacion, una representacion ante SMAC con poder valido y borrador posterior incluido cuando proceda y pueda entregarse en plazo.",
     "",
     "PRECIO",
-    "Pago previo: 90,00 EUR IVA incluido.",
+    "Precio del servicio: 90,00 EUR IVA incluido.",
+    "El pago se realiza tras la emision de la factura, salvo pacto distinto por escrito.",
     "Complemento solo si existe avenencia dineraria ante SMAC y cobro efectivo: hasta completar el menor entre el 10% de lo cobrado y 150,00 EUR de precio total. Los 90,00 EUR iniciales se descuentan siempre.",
     "",
     "ACEPTACIONES",
@@ -98,12 +99,12 @@ function buildSummary(data) {
     `Ha leido proteccion de datos: ${yesNo(data, "aceptaPrivacidad")}`,
     `Ha leido desistimiento: ${yesNo(data, "aceptaDesistimiento")}`,
     `Solicita inicio urgente si procede: ${yesNo(data, "inicioUrgente")}`,
-    `No envia documentos por la web: ${yesNo(data, "sinAdjuntos")}`,
+    `Autoriza indicar canal de documentacion por correo o WhatsApp: ${yesNo(data, "sinAdjuntos")}`,
     "",
     "FIRMA / CONFIRMACION ESCRITA",
     valueOf(data, "firma"),
     "",
-    "La aceptacion del encargo queda pendiente de confirmacion por Daniel Arnaiz Cuesta, revision de plazos/documentos y pago previo cuando proceda.",
+    "El cliente solicita iniciar el encargo S-01. Daniel Arnaiz Cuesta respondera con el inicio, la factura y el canal de documentacion. En asuntos de despido o con riesgo de caducidad o prescripcion, el cliente solicita inicio inmediato durante el plazo de desistimiento si ha marcado esa opcion.",
   ].join("\n");
 }
 
