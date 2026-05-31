@@ -42,7 +42,7 @@
           <h1 id="page-title">Papeleta de conciliación y representación ante SMAC</h1>
           <p class="lead">
             Servicio profesional y privado para trabajadores: redacción, presentación de la papeleta
-            y representación ante el SMAC, ya sea asistiendo en persona o delegándola con un documento firmado ante el organismo.
+            y representación voluntaria ante el SMAC con poder válido.
           </p>
 
           <div class="service-facts" aria-label="Datos esenciales del servicio">
@@ -56,7 +56,7 @@
             </div>
             <div>
               <span>Agilidad</span>
-              <strong>Gestión e inicio inmediato</strong>
+              <strong>Despido, caducidad o prescripción</strong>
             </div>
           </div>
 
@@ -85,8 +85,8 @@
             <p class="overline">Solicitud de contratación</p>
             <h2>Enviar encargo</h2>
             <p>
-              Rellena los datos, acepta las condiciones y genera una solicitud por
-              correo para iniciar el encargo.
+              Rellena los datos, acepta las condiciones y envía una solicitud cifrada
+              para iniciar el encargo.
             </p>
           </div>
 
@@ -107,14 +107,14 @@
               </label>
               <label>
                 Teléfono
-                <input autocomplete="tel" inputmode="tel" name="telefono" placeholder="Teléfono (opcional)" />
+                <input autocomplete="tel" inputmode="tel" name="telefono" placeholder="Teléfono opcional" />
               </label>
               <label>
-                Dirección (Calle, número)
+                Dirección: calle y número
                 <input autocomplete="address-line1" name="direccion" required placeholder="Tu calle y número" />
               </label>
               <label>
-                Piso, puerta (opcional)
+                Piso o puerta opcional
                 <input autocomplete="address-line2" name="piso" placeholder="Piso, puerta, bloque" />
               </label>
               <label>
@@ -144,18 +144,43 @@
             </p>
           </section>
 
+          <div class="contract-container" style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
+            <p class="overline">Revisión de tu contrato</p>
+            <h3>Hoja de Encargo y Condiciones Precontractuales</h3>
+            <p class="form-note" style="margin-bottom: 0.8rem;">
+              Revisa la Hoja de Encargo formal de prestación de servicios que se incorporará a tu solicitud. Los datos se actualizan en tiempo real mientras escribes.
+            </p>
+            <div class="contract-scroll-box" id="contract-preview" style="max-height: 180px; overflow-y: scroll; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 16px; background: var(--bg-hover); font-size: 0.85rem; line-height: 1.5; color: var(--ink-light);">
+              <div style="text-align: center; margin-bottom: 12px; font-weight: bold; color: var(--primary);">
+                CONTRATO DE PRESTACIÓN DE SERVICIOS - HOJA DE ENCARGO
+              </div>
+              <p><strong>REUNIDOS:</strong></p>
+              <p>De una parte, como prestador del servicio, <strong>Daniel Arnaiz Cuesta</strong>, con NIF 72828826Q, domicilio profesional en C/ Arroyo de la Media Legua 4, bajo derecha, 28030 Madrid, y correo de contacto danielarnaizcuesta@gmail.com.</p>
+              <p>Y de otra parte, como cliente, <strong id="preview-nombre">____________________</strong>, con DNI/NIE <strong id="preview-dni">____________________</strong> y domicilio en <strong id="preview-domicilio">________________________________________</strong>; en adelante, el Cliente.</p>
+              
+              <p><strong>ESTIPULACIONES:</strong></p>
+              <p><strong>1. OBJETO DEL ENCARGO:</strong> El Cliente encarga al profesional la redacción, presentación de la papeleta de conciliación laboral y la representación voluntaria en el acto de conciliación administrativa ante el SMAC contra la empresa <strong id="preview-empresa">____________________</strong>, siempre con poder válido.</p>
+              
+              <p><strong>2. PRECIO Y FACTURACIÓN:</strong> El precio cerrado del servicio es de 90,00 € IVA incluido. La factura correspondiente se emitirá de conformidad con la normativa de facturación vigente.</p>
+              
+              <p><strong>3. DESISTIMIENTO E INICIO DEL SERVICIO:</strong> El Cliente tiene derecho a desistir del presente contrato en un plazo de 14 días naturales sin necesidad de justificación. Si marca voluntariamente la casilla opcional de inicio inmediato, solicita y autoriza expresamente el inicio de las gestiones antes de que expire dicho plazo, especialmente en asuntos de despido, caducidad o prescripción. En tal caso, si desiste posteriormente, deberá abonar la parte proporcional de las gestiones efectivamente realizadas hasta la comunicación del desistimiento, extinguiéndose dicho derecho si el servicio ha sido completamente ejecutado por el profesional.</p>
+              
+              <p><strong>4. FIRMA Y VALIDEZ:</strong> La contratación se documenta mediante el envío de la solicitud cifrada y el marcado de la casilla obligatoria de aceptación de condiciones por parte del Cliente. Daniel Arnaiz Cuesta confirmará por escrito el inicio del encargo y el canal de documentación.</p>
+            </div>
+          </div>
+
           <fieldset>
             <legend>Condiciones del servicio</legend>
             <label class="check-row">
               <input name="aceptaCondiciones" required type="checkbox" />
               <span>
-                Acepto las <a href="aviso-legal.html" target="_blank" rel="noreferrer">condiciones del servicio</a> y la <a href="privacidad.html" target="_blank" rel="noreferrer">política de privacidad</a>.
+                Acepto las <a href="aviso-legal.html" target="_blank" rel="noreferrer">condiciones del servicio</a>, la <a href="privacidad.html" target="_blank" rel="noreferrer">política de privacidad</a> y el precio cerrado de 90,00 € IVA incluido.
               </span>
             </label>
             <label class="check-row">
               <input name="inicioInmediato" type="checkbox" />
               <span>
-                Solicito el inicio inmediato de las gestiones sin esperar al plazo legal de desistimiento. Recomendado para evitar la pérdida de plazos.
+                Si mi asunto es un despido o existe riesgo de caducidad o prescripción, solicito el inicio inmediato de las gestiones sin esperar al plazo legal de desistimiento.
               </span>
             </label>
           </fieldset>
@@ -165,7 +190,7 @@
 
 
           <div class="form-actions">
-            <button class="primary" type="submit">Preparar solicitud</button>
+            <button class="primary" type="submit">Contratar por 90 €</button>
           </div>
 
         </form>
@@ -177,8 +202,8 @@
             <p class="overline">Soporte digital</p>
             <h2>Solicitud preparada</h2>
             <p>
-              Revisa el texto, envíalo por correo y conserva copia. Daniel confirmará
-              el inicio, la factura y el canal de documentación.
+              Revisa el texto y conserva copia. Daniel confirmará el inicio, la
+              factura y el canal de documentación.
             </p>
             <div class="result-actions">
               <a class="primary" id="email-link" href="#">Abrir correo</a>
@@ -206,7 +231,7 @@
                 <li>Revisión completa de la situación del conflicto laboral.</li>
                 <li>Elaboración profesional de la papeleta de conciliación.</li>
                 <li>Presentación formal de la papeleta ante el organismo administrativo.</li>
-                <li>Representación de tus intereses en el acto de conciliación.</li>
+                <li>Representación voluntaria de tus intereses en el acto de conciliación con poder válido.</li>
               </ul>
             </article>
             <article>
@@ -215,7 +240,7 @@
                 <li>Privacidad e información protegida desde el primer contacto.</li>
                 <li>Condiciones y tarifas transparentes aceptadas online.</li>
                 <li>Coordinación ágil del expediente en tu canal preferido.</li>
-                <li>Representación flexible: puedes acudir en persona o delegarlo con una firma ante el SMAC.</li>
+                <li>Representación flexible: puedes acudir en persona o actuar mediante representación voluntaria con poder válido.</li>
               </ul>
             </article>
           </div>
@@ -233,7 +258,7 @@
       <a href="desistimiento.html">Desistimiento</a>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="assets/jspdf.umd.min.js"></script>
     <script src="app.js" defer></script>
   </body>
 </html>
