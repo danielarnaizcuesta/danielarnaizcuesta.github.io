@@ -178,11 +178,14 @@ function buildSummary(data) {
   ].join("\n");
 }
 
-function buildPayload(data, summary) {
+function buildPayload(data, summary, contractPdf) {
   return {
     submittedAt: new Date().toISOString(),
     source: "danielarnaizcuesta.github.io",
     summary,
+    documents: {
+      contractPdf,
+    },
     client: {
       name: valueOf(data, "nombre"),
       dniNie: valueOf(data, "dni"),
@@ -266,7 +269,8 @@ form.addEventListener("submit", async (event) => {
   submitButton.textContent = "Enviando solicitud segura...";
 
   try {
-    const payload = buildPayload(data, summary);
+    const contractPdf = createContractPdfAttachment(summary);
+    const payload = buildPayload(data, summary, contractPdf);
     const encryptedSubmission = await encryptSubmission(payload);
     await sendEncryptedSubmission(encryptedSubmission);
     showResult(summary, data);
@@ -294,7 +298,12 @@ copyButton.addEventListener("click", async () => {
   }
 });
 
-function generatePDF(summary, filename) {
+function pdfFilename() {
+  const date = new Date().toISOString().slice(0, 10);
+  return `contrato-solicitud-conciliacion-${date}.pdf`;
+}
+
+function buildPdfDocument(summary) {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({
     orientation: "portrait",
@@ -353,12 +362,30 @@ function generatePDF(summary, filename) {
     }
   }
 
-  doc.save(filename);
+  return doc;
+}
+
+function createContractPdfAttachment(summary) {
+  if (!window.jspdf || !window.jspdf.jsPDF) {
+    return null;
+  }
+
+  const doc = buildPdfDocument(summary);
+
+  return {
+    filename: pdfFilename(),
+    mimeType: "application/pdf",
+    base64: bytesToBase64(doc.output("arraybuffer")),
+  };
+}
+
+function generatePDF(summary, filename) {
+  buildPdfDocument(summary).save(filename);
 }
 
 downloadButton.addEventListener("click", () => {
   const date = new Date().toISOString().slice(0, 10);
-  const filename = `solicitud-conciliacion-${date}.pdf`;
+  const filename = pdfFilename();
 
   if (window.jspdf && window.jspdf.jsPDF) {
     try {
