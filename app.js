@@ -251,8 +251,15 @@ async function buildPayload(data, summary, contractPdf) {
   };
 }
 
+function evidenceSubject(evidence) {
+  const ref = evidence.reference.slice(0, 8).toUpperCase();
+  const pdfHash = evidence.contractPdfSha256.slice(0, 16).toUpperCase();
+
+  return `S-01 REF ${ref} PDF ${pdfHash}`;
+}
+
 async function sendEncryptedSubmission(encryptedSubmission, evidence) {
-  const subject = `Nueva solicitud cifrada S-01 REF ${evidence.reference} PDF-SHA256 ${evidence.contractPdfSha256}`;
+  const subject = `Nueva solicitud cifrada ${evidenceSubject(evidence)}`;
 
   const response = await fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
     method: "POST",
@@ -277,7 +284,7 @@ async function sendEncryptedSubmission(encryptedSubmission, evidence) {
 
 function setLinks(summary, data, evidence = null) {
   const subject = evidence
-    ? `Solicitud contratacion S-01 REF ${evidence.reference} PDF-SHA256 ${evidence.contractPdfSha256}`
+    ? `Solicitud contratacion ${evidenceSubject(evidence)}`
     : `Solicitud contratacion conciliacion - ${valueOf(data, "nombre")}`;
   const encodedSubject = encodeURIComponent(subject);
   const evidenceBlock = evidence
@@ -324,7 +331,7 @@ form.addEventListener("submit", async (event) => {
     const encryptedSubmission = await encryptSubmission(payload);
     await sendEncryptedSubmission(encryptedSubmission, payload.evidence);
     showResult(summary, data, payload.evidence);
-    copyStatus.textContent = `Solicitud cifrada enviada. REF ${payload.evidence.reference}. PDF SHA-256 ${payload.evidence.contractPdfSha256}`;
+    copyStatus.textContent = `Solicitud cifrada enviada. ${evidenceSubject(payload.evidence)}. Hash completo guardado en el email y el manifiesto.`;
     submitButton.textContent = "Solicitud enviada";
     submitButton.style.backgroundColor = "var(--primary)";
     submitButton.style.borderColor = "var(--primary)";
