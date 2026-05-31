@@ -113,6 +113,53 @@ form.addEventListener("submit", (event) => {
   const data = new FormData(form);
   const summary = buildSummary(data);
   showResult(summary, data);
+
+  // Enviar de forma completamente automática en segundo plano a tu email por FormSubmit (AJAX)
+  const submitButton = form.querySelector("button[type='submit']");
+  const originalText = submitButton.textContent;
+  submitButton.disabled = true;
+  submitButton.textContent = "Enviando solicitud...";
+
+  const payload = {
+    "Nombre y Apellidos": valueOf(data, "nombre"),
+    "DNI o NIE": valueOf(data, "dni"),
+    "Email": valueOf(data, "email"),
+    "Telefono": valueOf(data, "telefono") || "No indicado",
+    "Direccion": valueOf(data, "direccion"),
+    "Piso/Puerta": valueOf(data, "piso") || "No indicado",
+    "Codigo Postal": valueOf(data, "cp"),
+    "Localidad/Ciudad": valueOf(data, "localidad"),
+    "Provincia": valueOf(data, "provincia"),
+    "Empresa a reclamar": valueOf(data, "empresa"),
+    "Acepta Condiciones": data.get("aceptaCondiciones") ? "SI" : "NO",
+    "Solicita Inicio Inmediato": data.get("inicioInmediato") ? "SI" : "NO",
+    "_subject": `Nueva contratacion conciliacion - ${valueOf(data, "nombre")}`,
+    "_replyto": valueOf(data, "email")
+  };
+
+  fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify(payload)
+  })
+  .then(response => {
+    if (!response.ok) throw new Error("Submision fallida");
+    return response.json();
+  })
+  .then(res => {
+    submitButton.textContent = "¡Enviado con éxito!";
+    // Aplicar color verde bosque de éxito al botón de forma dinámica
+    submitButton.style.backgroundColor = "var(--primary)";
+    submitButton.style.borderColor = "var(--primary)";
+  })
+  .catch(error => {
+    console.error("FormSubmit failure:", error);
+    submitButton.disabled = false;
+    submitButton.textContent = originalText;
+  });
 });
 
 copyButton.addEventListener("click", async () => {
