@@ -20,32 +20,44 @@
     const btn = document.getElementById("btn");
     const msg = document.getElementById("msg");
 
+    const endpoints = [
+      "https://formsubmit.io/send/danielarnaizcuesta@gmail.com",
+      "https://formsubmit.co/ajax/danielarnaizcuesta@gmail.com"
+    ];
+
     btn.addEventListener("click", async () => {
       btn.disabled = true;
       btn.textContent = "Enviando...";
       msg.textContent = "";
 
-      try {
-        const res = await fetch("https://formsubmit.co/ajax/danielarnaizcuesta@gmail.com", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify({
-            _subject: "Activacion FormSubmit - danielarnaizcuesta.github.io",
-            _captcha: "false",
-            mensaje: "Prueba de activacion. Si recibes esto, FormSubmit ya esta activo."
-          })
-        });
+      const body = JSON.stringify({
+        _subject: "Activacion FormSubmit - danielarnaizcuesta.github.io",
+        _captcha: "false",
+        mensaje: "Prueba de activacion. Si recibes esto, FormSubmit ya esta activo."
+      });
 
-        const data = await res.json();
-        msg.style.color = res.ok ? "green" : "orange";
-        msg.textContent = res.ok
-          ? "Enviado correctamente. Revisa tu correo (incluido spam) para confirmar la activacion."
-          : "Respuesta de FormSubmit: " + JSON.stringify(data);
-      } catch (err) {
-        msg.style.color = "red";
-        msg.textContent = "Error: " + err.message;
+      for (const endpoint of endpoints) {
+        try {
+          const res = await fetch(endpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body
+          });
+
+          if (res.ok) {
+            msg.style.color = "green";
+            msg.textContent = "Enviado correctamente via " + new URL(endpoint).hostname + ". Revisa tu correo (incluido spam) para confirmar la activacion.";
+            btn.disabled = false;
+            btn.textContent = "Enviar prueba de activación";
+            return;
+          }
+        } catch (err) {
+          // try next endpoint
+        }
       }
 
+      msg.style.color = "red";
+      msg.textContent = "No se pudo enviar por ninguno de los endpoints. Ambos servicios pueden estar caidos.";
       btn.disabled = false;
       btn.textContent = "Enviar prueba de activación";
     });

@@ -272,26 +272,38 @@ function evidenceSubject(evidence) {
 
 async function sendEncryptedSubmission(encryptedSubmission, evidence) {
   const subject = `Nueva solicitud cifrada ${evidenceSubject(evidence)}`;
-
-  const response = await fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify({
-      _subject: subject,
-      _captcha: "false",
-      referencia_solicitud: evidence.reference,
-      hash_pdf_sha256: evidence.contractPdfSha256,
-      hash_texto_sha256: evidence.summarySha256,
-      solicitud_cifrada: JSON.stringify(encryptedSubmission),
-    }),
+  const payload = JSON.stringify({
+    _subject: subject,
+    _captcha: "false",
+    referencia_solicitud: evidence.reference,
+    hash_pdf_sha256: evidence.contractPdfSha256,
+    hash_texto_sha256: evidence.summarySha256,
+    solicitud_cifrada: JSON.stringify(encryptedSubmission),
   });
 
-  if (!response.ok) {
-    throw new Error("No se pudo enviar la solicitud cifrada.");
+  const endpoints = [
+    `https://formsubmit.io/send/${CONTACT_EMAIL}`,
+    `https://formsubmit.co/ajax/${CONTACT_EMAIL}`,
+  ];
+
+  let lastError;
+  for (const endpoint of endpoints) {
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: payload,
+      });
+      if (response.ok) return;
+    } catch (error) {
+      lastError = error;
+    }
   }
+
+  throw lastError || new Error("No se pudo enviar la solicitud cifrada.");
 }
 
 function setLinks(summary, data, evidence = null) {
