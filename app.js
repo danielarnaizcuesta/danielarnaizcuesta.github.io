@@ -77,10 +77,12 @@ function setLinks(summary, data) {
   const encodedBody = encodeURIComponent(summary);
   emailLink.href = `mailto:${CONTACT_EMAIL}?subject=${encodedSubject}&body=${encodedBody}`;
 
-  const shortMessage =
-    `Hola Daniel, acabo de preparar una solicitud de contratacion. ` +
-    `Soy ${valueOf(data, "nombre")} y mi asunto es: ${valueOf(data, "tipo")}.`;
-  whatsappLink.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(shortMessage)}`;
+  // Enviar el resumen completo por WhatsApp para mayor comodidad y reenvío directo
+  const waMessage = 
+    `*SOLICITUD DE CONTRATACIÓN*\n\n` +
+    `Hola Daniel, aquí tienes la solicitud de contratación que acabo de preparar desde la web:\n\n` +
+    summary;
+  whatsappLink.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessage)}`;
 }
 
 function showResult(summary, data) {
@@ -115,11 +117,80 @@ copyButton.addEventListener("click", async () => {
   }
 });
 
+function generatePDF(summary, filename) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({
+    orientation: "portrait",
+    unit: "mm",
+    format: "a4"
+  });
+
+  // Margins & Dimensions (A4 = 210mm x 297mm)
+  const marginX = 15;
+  const pageHeight = 297;
+  const wrapWidth = 180; // 210 - 2 * 15
+  
+  doc.setFont("helvetica", "normal");
+  
+  // Split the summary text into lines that fit the page width
+  const lines = doc.splitTextToSize(summary, wrapWidth);
+  
+  let y = 20;
+  
+  for (let i = 0; i < lines.length; i++) {
+    // If we reach the bottom of the page, add a new page
+    if (y > pageHeight - 20) {
+      doc.addPage();
+      y = 20;
+    }
+    
+    const line = lines[i].trim();
+    
+    if (["SOLICITUD DE CONTRATACION", "PRESTADOR", "CLIENTE", "ASUNTO", "SERVICIO SOLICITADO", "PRECIO", "ACEPTACIONES", "FIRMA / CONFIRMACION ESCRITA"].includes(line)) {
+      doc.setFont("helvetica", "bold");
+      doc.setTextColor(47, 102, 83); // Forest Green (#2f6653) matching Daniel's identity
+      doc.setFontSize(12);
+      y += 4;
+      doc.text(line, marginX, y);
+      y += 6;
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(33, 33, 33);
+      doc.setFontSize(10);
+    } else if (line.startsWith("Fecha de generacion:")) {
+      doc.setFont("helvetica", "italic");
+      doc.setTextColor(110, 110, 110);
+      doc.setFontSize(9);
+      doc.text(line, marginX, y);
+      y += 5;
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(33, 33, 33);
+      doc.setFontSize(10);
+    } else {
+      doc.text(lines[i], marginX, y); // Maintain indentation for regular lines
+      y += 6;
+    }
+  }
+  
+  doc.save(filename);
+}
+
 downloadButton.addEventListener("click", () => {
+  const date = new Date().toISOString().slice(0, 10);
+  const filename = `solicitud-conciliacion-${date}.pdf`;
+  
+  if (window.jspdf && window.jspdf.jsPDF) {
+    try {
+      generatePDF(summaryText.value, filename);
+      return;
+    } catch (e) {
+      console.error("Failed to generate PDF, falling back to text file:", e);
+    }
+  }
+  
+  // Fallback to text file in case of offline/script load failure
   const blob = new Blob([summaryText.value], { type: "text/plain;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
-  const date = new Date().toISOString().slice(0, 10);
   anchor.href = url;
   anchor.download = `solicitud-conciliacion-${date}.txt`;
   document.body.appendChild(anchor);
