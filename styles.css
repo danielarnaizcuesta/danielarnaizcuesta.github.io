@@ -536,7 +536,7 @@ button,
 
 .scope-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 24px;
   margin-top: 40px;
 }
@@ -595,27 +595,14 @@ button,
   position: relative;
   padding-left: 24px;
   font-size: 0.95rem;
-  color: #555;
 }
 .scope-grid article:nth-child(2) li::before {
-  content: '✕';
-  position: absolute;
-  left: 0;
-  color: var(--red);
-  font-weight: 900;
-}
-
-.scope-grid article:nth-child(3) li {
-  position: relative;
-  padding-left: 24px;
-  font-size: 0.95rem;
-}
-.scope-grid article:nth-child(3) li::before {
   content: '✦';
   position: absolute;
   left: 0;
   color: var(--amber);
 }
+
 
 /* CONTACT SECTION */
 .compact-section {
