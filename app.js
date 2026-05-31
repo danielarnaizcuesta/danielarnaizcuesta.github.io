@@ -28,9 +28,6 @@ function buildSummary(data) {
     timeStyle: "short",
   }).format(new Date());
 
-  const amount = valueOf(data, "importe");
-  const amountLine = amount ? `${amount} EUR` : "No indicado";
-
   return [
     "SOLICITUD DE CONTRATACION",
     "",
@@ -48,10 +45,8 @@ function buildSummary(data) {
     `Domicilio: ${valueOf(data, "domicilio")}`,
     "",
     "ASUNTO",
-    `Fecha del suceso o notificacion: ${valueOf(data, "fechaActo")}`,
-    `Empresa/empleador: ${valueOf(data, "empresa") || "No indicado"}`,
-    `Importe aproximado reclamado: ${amountLine}`,
-    "Resumen:",
+    `Empresa o empleador: ${valueOf(data, "empresa")}`,
+    "Resumen del caso:",
     valueOf(data, "resumen"),
     "",
     "SERVICIO SOLICITADO",

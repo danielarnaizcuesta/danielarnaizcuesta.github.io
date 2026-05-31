@@ -116,27 +116,19 @@
 
           <fieldset>
             <legend>Asunto laboral</legend>
-            <div class="field-grid">
-              <label>
-                Fecha del suceso o notificación
-                <input name="fechaActo" required type="date" />
-              </label>
+            <div class="field-grid" style="display: block;">
               <label>
                 Empresa o empleador
-                <input name="empresa" />
-              </label>
-              <label>
-                Importe aproximado reclamado
-                <input inputmode="decimal" min="0" name="importe" step="0.01" type="number" />
+                <input name="empresa" required placeholder="Nombre de la empresa o empleador" />
               </label>
             </div>
-            <label>
-              Resumen del problema
+            <label style="margin-top: 1rem; display: block;">
+              Cuéntanos tu caso
               <textarea
                 name="resumen"
                 required
-                rows="5"
-                placeholder="Qué ha pasado, cuándo, qué se reclama y qué plazo crees que existe."
+                rows="6"
+                placeholder="Cuéntame qué ha pasado en tu trabajo, qué te gustaría conseguir y de qué documentos dispones. Yo me encargaré de realizar la auditoría completa de tu caso, calcular los importes exactos que te corresponden y definir los plazos legales para tu reclamación."
               ></textarea>
             </label>
           </fieldset>
