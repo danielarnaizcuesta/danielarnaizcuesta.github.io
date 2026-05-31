@@ -178,12 +178,12 @@ function buildSummary(data) {
     "Papeleta de conciliacion, presentacion y representacion voluntaria ante el SMAC con poder valido.",
     "",
     "PRECIO",
-    "Precio cerrado del servicio: 90,00 EUR IVA incluido.",
+    "Precio cerrado del servicio: 150,00 EUR IVA incluido.",
     "Pago por transferencia o Bizum una vez prestado el servicio, salvo acuerdo escrito distinto.",
     "Factura del servicio conforme a la normativa de facturacion.",
     "",
     "ACEPTACIONES",
-    `Acepta condiciones del servicio, privacidad y precio cerrado de 90,00 EUR IVA incluido: ${yesNo(data, "aceptaCondiciones")}`,
+    `Acepta condiciones del servicio, privacidad y precio cerrado de 150,00 EUR IVA incluido: ${yesNo(data, "aceptaCondiciones")}`,
     `Solicita inicio inmediato si hay despido, caducidad o riesgo de prescripcion: ${yesNo(data, "inicioInmediato")}`,
     "",
     "ACEPTACION ELECTRONICA",
@@ -215,7 +215,7 @@ async function buildPayload(data, summary, contractPdf) {
       pageOrigin: window.location.origin,
       summarySha256,
       contractPdfSha256: contractPdf.sha256,
-      acceptedConditionsText: "Acepto las condiciones del servicio, la politica de privacidad y el precio cerrado de 90,00 EUR IVA incluido.",
+      acceptedConditionsText: "Acepto las condiciones del servicio, la politica de privacidad y el precio cerrado de 150,00 EUR IVA incluido.",
       immediateStartText: data.get("inicioInmediato")
         ? "Si mi asunto es un despido o existe riesgo de caducidad o prescripcion, solicito el inicio inmediato de las gestiones sin esperar al plazo legal de desistimiento."
         : null,
@@ -241,7 +241,7 @@ async function buildPayload(data, summary, contractPdf) {
     matter: {
       employer: valueOf(data, "empresa"),
       service: "S-01 papeleta de conciliacion, presentacion y representacion voluntaria ante SMAC con poder valido",
-      price: "90,00 EUR IVA incluido",
+      price: "150,00 EUR IVA incluido",
       payment: "transferencia o Bizum una vez prestado el servicio, salvo acuerdo escrito distinto",
     },
     acceptances: {
