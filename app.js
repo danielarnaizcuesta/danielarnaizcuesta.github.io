@@ -54,12 +54,15 @@ function buildSummary(data) {
     "Precio cerrado del servicio: 90,00 EUR IVA incluido.",
     "Factura del servicio conforme a la normativa de facturacion.",
     "ACEPTACIONES",
-    `Acepta condiciones del servicio y solicita inicio inmediato: ${yesNo(data, "aceptaCondiciones")}`,
+    `Acepta condiciones del servicio y privacidad: ${yesNo(data, "aceptaCondiciones")}`,
+    `Solicita inicio inmediato (sin esperar 14 dias): ${yesNo(data, "inicioInmediato")}`,
     "",
     "FIRMA / CONFIRMACION ESCRITA",
     valueOf(data, "nombre"),
     "",
-    "El cliente solicita iniciar el encargo de conciliacion y representacion de forma inmediata, aceptando las condiciones generales, la politica de privacidad y autorizando el inicio de gestiones.",
+    data.get("inicioInmediato")
+      ? "El cliente solicita iniciar el encargo de conciliacion y representacion de forma inmediata, aceptando las condiciones generales, la politica de privacidad y autorizando el inicio de gestiones."
+      : "El cliente acepta las condiciones generales y la politica de privacidad para el inicio del encargo.",
   ].join("\n");
 }
 
