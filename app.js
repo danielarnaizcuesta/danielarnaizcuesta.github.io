@@ -55,7 +55,7 @@ function buildSummary(data) {
     "Factura del servicio conforme a la normativa de facturacion.",
     "ACEPTACIONES",
     `Acepta condiciones del servicio y privacidad: ${yesNo(data, "aceptaCondiciones")}`,
-    `Solicita inicio inmediato (sin esperar 14 dias): ${yesNo(data, "inicioInmediato")}`,
+    `Solicita inicio inmediato sin esperar el plazo legal: ${yesNo(data, "inicioInmediato")}`,
     "",
     "FIRMA / CONFIRMACION ESCRITA",
     valueOf(data, "nombre"),
