@@ -46,8 +46,6 @@ function buildSummary(data) {
     "",
     "ASUNTO",
     `Empresa o empleador: ${valueOf(data, "empresa")}`,
-    "Resumen del caso:",
-    valueOf(data, "resumen"),
     "",
     "SERVICIO SOLICITADO",
     "Papeleta de conciliacion, presentacion y representacion ante el SMAC presencial o delegada con firma.",

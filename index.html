@@ -89,48 +89,33 @@
           </div>
 
           <fieldset>
-            <legend>Datos del cliente</legend>
+            <legend>Datos de facturación y contacto</legend>
             <div class="field-grid">
               <label>
                 Nombre y apellidos
-                <input autocomplete="name" name="nombre" required />
+                <input autocomplete="name" name="nombre" required placeholder="Nombre completo" />
               </label>
               <label>
                 DNI/NIE
-                <input autocomplete="off" name="dni" required />
+                <input autocomplete="off" name="dni" required placeholder="Para la factura del servicio" />
               </label>
               <label>
                 Correo electrónico
-                <input autocomplete="email" inputmode="email" name="email" required type="email" />
+                <input autocomplete="email" inputmode="email" name="email" required type="email" placeholder="Tu correo electrónico" />
               </label>
               <label>
                 Teléfono
-                <input autocomplete="tel" inputmode="tel" name="telefono" required />
+                <input autocomplete="tel" inputmode="tel" name="telefono" required placeholder="Tu teléfono" />
               </label>
-            </div>
-            <label>
-              Domicilio
-              <input autocomplete="street-address" name="domicilio" required />
-            </label>
-          </fieldset>
-
-          <fieldset>
-            <legend>Asunto laboral</legend>
-            <div class="field-grid" style="display: block;">
               <label>
-                Empresa o empleador
+                Domicilio completo
+                <input autocomplete="street-address" name="domicilio" required placeholder="Calle, número, piso, ciudad" />
+              </label>
+              <label>
+                Empresa a reclamar
                 <input name="empresa" required placeholder="Nombre de la empresa o empleador" />
               </label>
             </div>
-            <label style="margin-top: 1rem; display: block;">
-              Cuéntanos tu caso
-              <textarea
-                name="resumen"
-                required
-                rows="6"
-                placeholder="Cuéntame qué ha pasado en tu trabajo, qué te gustaría conseguir y de qué documentos dispones. Yo me encargaré de realizar la auditoría completa de tu caso, calcular los importes exactos que te corresponden y definir los plazos legales para tu reclamación."
-              ></textarea>
-            </label>
           </fieldset>
 
           <section class="price-box">
