@@ -65,7 +65,7 @@ function buildSummary(data) {
     `Acepta condiciones del servicio y solicita inicio inmediato: ${yesNo(data, "aceptaCondiciones")}`,
     "",
     "FIRMA / CONFIRMACION ESCRITA",
-    valueOf(data, "firma"),
+    valueOf(data, "nombre"),
     "",
     "El cliente solicita iniciar el encargo de conciliacion y representacion de forma inmediata, aceptando las condiciones generales, la politica de privacidad y autorizando el inicio de gestiones.",
   ].join("\n");

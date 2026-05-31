@@ -73,14 +73,7 @@
             </div>
           </fieldset>
 
-          <label style="margin-top: 1rem; display: block;">
-            Firma de confirmación escrita
-            <input
-              id="des-firma"
-              required
-              placeholder="Escribe tu nombre y apellidos como firma"
-            />
-          </label>
+
 
           <div class="form-actions" style="margin-top: 1.5rem;">
             <button class="primary" type="submit" id="download-desistimiento">Descargar PDF de Desistimiento</button>
@@ -104,7 +97,6 @@
             const dni = document.querySelector("#des-dni").value.trim();
             const email = document.querySelector("#des-email").value.trim();
             const fecha = document.querySelector("#des-fecha").value;
-            const firma = document.querySelector("#des-firma").value.trim();
             
             // Format dates nicely
             let dateFormatted = "";
@@ -217,7 +209,7 @@
             doc.setFontSize(10);
             doc.setTextColor(33, 33, 33);
             doc.text("Daniel Arnaiz Cuesta", 15, 186);
-            doc.text(firma, 125, 186);
+            doc.text(nombre, 125, 186);
 
             // Download file dynamically
             const safeName = nombre.toLowerCase().replace(/[^a-z0-9]+/g, "_");
