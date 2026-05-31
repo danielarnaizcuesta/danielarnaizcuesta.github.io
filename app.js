@@ -41,7 +41,7 @@ function buildSummary(data) {
     `Nombre: ${valueOf(data, "nombre")}`,
     `DNI/NIE: ${valueOf(data, "dni")}`,
     `Email: ${valueOf(data, "email")}`,
-    `Telefono: ${valueOf(data, "telefono")}`,
+    `Telefono: ${valueOf(data, "telefono") || "No indicado"}`,
     `Domicilio: ${valueOf(data, "domicilio")}`,
     "",
     "ASUNTO",
