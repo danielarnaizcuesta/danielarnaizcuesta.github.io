@@ -183,7 +183,7 @@ function buildSummary(data) {
     "Ley aplicable y fuero: ley espanola; para clientes consumidores, juzgados y tribunales legalmente competentes; cuando la competencia territorial sea legalmente disponible, fuero de Madrid.",
     "",
     "SERVICIO SOLICITADO",
-    "Papeleta de conciliacion, presentacion y representacion voluntaria en asunto tramitable ante el SMAC de la Comunidad de Madrid. A tal efecto, el cliente facilitara al profesional la representacion necesaria (compareciendo presencialmente para otorgar la representacion o mediante poder notarial) con anterioridad a la fecha del acto de conciliacion.",
+    "Papeleta de conciliacion, presentacion y representacion voluntaria en asunto tramitable ante el SMAC de la Comunidad de Madrid. A tal efecto, el cliente facilitara al profesional la representacion necesaria, ya sea compareciendo presencialmente para otorgar dicha representacion o mediante el correspondiente poder notarial, con anterioridad a la fecha del acto de conciliacion.",
     "",
     "PRECIO",
     "Precio cerrado del servicio: 150,00 EUR IVA incluido.",
