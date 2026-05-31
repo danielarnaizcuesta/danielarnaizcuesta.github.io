@@ -166,7 +166,7 @@ function buildSummary(data) {
     "",
     "CLIENTE",
     `Nombre: ${valueOf(data, "nombre")}`,
-    `DNI/NIE: ${valueOf(data, "dni")}`,
+    `DNI/NIE/Pasaporte: ${valueOf(data, "dni")}`,
     `Email: ${valueOf(data, "email")}`,
     `Telefono: ${valueOf(data, "telefono") || "No indicado"}`,
     `Domicilio: ${domicilioCompleto}`,
@@ -227,7 +227,7 @@ async function buildPayload(data, summary, contractPdf) {
     },
     client: {
       name: valueOf(data, "nombre"),
-      dniNie: valueOf(data, "dni"),
+      dniNiePassport: valueOf(data, "dni"),
       email: valueOf(data, "email"),
       phone: valueOf(data, "telefono"),
       address: {
