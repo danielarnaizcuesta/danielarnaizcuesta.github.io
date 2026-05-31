@@ -8,7 +8,7 @@ Web estática para publicar en GitHub Pages como página de usuario de
 - `index.html`: contratación digital de conciliación.
 - `privacidad.html`: información de protección de datos.
 - `aviso-legal.html`: titularidad, alcance, precio y hojas de reclamaciones.
-- `desistimiento.html`: contratación a distancia e inicio urgente.
+- `desistimiento.html`: contratación a distancia e inicio inmediato.
 - `app.js`: genera solicitud por correo, WhatsApp, copia y descarga local.
 - `assets/`: imagen de cabecera y favicon.
 

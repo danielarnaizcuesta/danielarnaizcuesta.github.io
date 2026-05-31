@@ -61,15 +61,13 @@ function buildSummary(data) {
     "PRECIO",
     "Precio cerrado del servicio: 90,00 EUR IVA incluido.",
     "Factura del servicio conforme a la normativa de facturacion.",
-    "",
     "ACEPTACIONES",
-    `Acepta condiciones del servicio y privacidad: ${yesNo(data, "aceptaCondiciones")}`,
-    `Solicita inicio inmediato por urgencia: ${yesNo(data, "inicioUrgente")}`,
+    `Acepta condiciones del servicio y solicita inicio inmediato: ${yesNo(data, "aceptaCondiciones")}`,
     "",
     "FIRMA / CONFIRMACION ESCRITA",
     valueOf(data, "firma"),
     "",
-    "El cliente solicita iniciar el encargo de conciliacion y representacion. Daniel Arnaiz Cuesta respondera con el inicio, la factura y el canal de documentacion. En asuntos de despido o con riesgo de caducidad o prescripcion, el cliente solicita inicio inmediato durante el plazo de desistimiento si ha marcado esa opcion.",
+    "El cliente solicita iniciar el encargo de conciliacion y representacion de forma inmediata, aceptando las condiciones generales, la politica de privacidad y autorizando el inicio de gestiones.",
   ].join("\n");
 }
 
