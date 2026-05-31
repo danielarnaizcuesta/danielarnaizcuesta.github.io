@@ -56,7 +56,7 @@ function buildSummary(data) {
     valueOf(data, "resumen"),
     "",
     "SERVICIO SOLICITADO",
-    "Papeleta de conciliacion, presentacion y representacion ante el SMAC con poder valido, y borrador posterior de demanda incluido cuando proceda.",
+    "Papeleta de conciliacion, presentacion y representacion ante el SMAC con poder valido.",
     "",
     "PRECIO",
     "Precio cerrado del servicio: 90,00 EUR IVA incluido.",
