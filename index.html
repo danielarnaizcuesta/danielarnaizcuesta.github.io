@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Daniel Arnaiz Cuesta | Papeleta y SMAC</title>
+    <meta
+      name="description"
+      content="Contratación digital del servicio S-01: papeleta de conciliación, presentación y representación voluntaria ante el SMAC con poder válido."
+    />
+    <meta name="theme-color" content="#2f6653" />
+    <meta property="og:title" content="Daniel Arnaiz Cuesta | Papeleta y SMAC" />
+    <meta
+      property="og:description"
+      content="Servicio documental laboral para trabajadores: papeleta, presentación y representación ante SMAC."
+    />
+    <meta property="og:image" content="assets/hero-documental.png" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Daniel Arnaiz Cuesta">
+        <span class="brand-mark">DA</span>
+        <span>
+          <strong>Daniel Arnaiz Cuesta</strong>
+          <small>Servicio documental laboral</small>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Navegación principal">
+        <a href="#contratar">Contratar</a>
+        <a href="#servicio">Servicio</a>
+        <a href="privacidad.html">Privacidad</a>
+        <a href="aviso-legal.html">Aviso legal</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="workbench" id="contratar" aria-labelledby="page-title">
+        <div class="workbench-copy">
+          <p class="overline">Contratación digital</p>
+          <h1 id="page-title">Papeleta de conciliación y representación ante SMAC</h1>
+          <p class="lead">
+            Servicio privado para trabajadores: preparación y presentación de papeleta,
+            representación voluntaria ante el SMAC con poder válido y borrador posterior
+            incluido cuando proceda y pueda entregarse en plazo.
+          </p>
+
+          <div class="service-facts" aria-label="Datos esenciales del servicio">
+            <div>
+              <span>Precio inicial</span>
+              <strong>90 € IVA incluido</strong>
+            </div>
+            <div>
+              <span>Complemento</span>
+              <strong>Solo si hay avenencia y cobro</strong>
+            </div>
+            <div>
+              <span>Límite total</span>
+              <strong>Máximo 150 €</strong>
+            </div>
+          </div>
+
+          <img
+            class="hero-art"
+            src="assets/hero-documental.png"
+            width="1600"
+            height="900"
+            alt="Formulario digital de contratación y papeleta de conciliación"
+          />
+        </div>
+
+        <form class="hire-panel" id="hire-form" novalidate>
+          <div class="panel-heading">
+            <p class="overline">Solicitud de contratación</p>
+            <h2>Enviar encargo S-01</h2>
+            <p>
+              Rellena los datos, acepta las condiciones y genera una solicitud por
+              correo. No se adjuntan documentos desde esta web.
+            </p>
+          </div>
+
+          <fieldset>
+            <legend>Datos del cliente</legend>
+            <div class="field-grid">
+              <label>
+                Nombre y apellidos
+                <input autocomplete="name" name="nombre" required />
+              </label>
+              <label>
+                DNI/NIE
+                <input autocomplete="off" name="dni" required />
+              </label>
+              <label>
+                Correo electrónico
+                <input autocomplete="email" inputmode="email" name="email" required type="email" />
+              </label>
+              <label>
+                Teléfono
+                <input autocomplete="tel" inputmode="tel" name="telefono" required />
+              </label>
+            </div>
+            <label>
+              Domicilio
+              <input autocomplete="street-address" name="domicilio" required />
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <legend>Asunto laboral</legend>
+            <div class="field-grid">
+              <label>
+                Tipo de asunto
+                <select name="tipo" required>
+                  <option value="">Seleccionar</option>
+                  <option>Despido</option>
+                  <option>Sanción</option>
+                  <option>Cantidad</option>
+                  <option>Modificación de condiciones</option>
+                  <option>Extinción o baja forzada</option>
+                  <option>Otro conflicto laboral</option>
+                </select>
+              </label>
+              <label>
+                Fecha del acto o comunicación
+                <input name="fechaActo" required type="date" />
+              </label>
+              <label>
+                Empresa o empleador
+                <input name="empresa" />
+              </label>
+              <label>
+                Importe aproximado reclamado
+                <input inputmode="decimal" min="0" name="importe" step="0.01" type="number" />
+              </label>
+            </div>
+            <label>
+              Resumen del problema
+              <textarea
+                name="resumen"
+                required
+                rows="5"
+                placeholder="Qué ha pasado, cuándo, qué se reclama y qué plazo crees que existe."
+              ></textarea>
+            </label>
+          </fieldset>
+
+          <section class="price-box" aria-live="polite">
+            <h3>Precio S-01</h3>
+            <p>
+              Pago previo: <strong>90,00 € IVA incluido</strong>. Si hay avenencia
+              dineraria ante SMAC y cobro efectivo, podrá existir complemento hasta que
+              el precio total alcance el menor entre el 10 % de lo cobrado y 150,00 €.
+            </p>
+            <p class="estimate" id="estimate-output">
+              Introduce un importe aproximado para ver el posible máximo orientativo.
+            </p>
+          </section>
+
+          <fieldset>
+            <legend>Condiciones esenciales</legend>
+            <label class="check-row">
+              <input name="aceptaServicio" required type="checkbox" />
+              <span>
+                Solicito contratar el servicio S-01: papeleta, presentación,
+                representación voluntaria ante SMAC con poder válido y borrador posterior
+                incluido cuando proceda.
+              </span>
+            </label>
+            <label class="check-row">
+              <input name="aceptaLimites" required type="checkbox" />
+              <span>
+                Entiendo que Daniel Arnaiz Cuesta no actúa como abogado ni graduado
+                social, no presta asistencia letrada y no asume juicio, ejecución,
+                recursos ni representación judicial.
+              </span>
+            </label>
+            <label class="check-row">
+              <input name="aceptaPrivacidad" required type="checkbox" />
+              <span>
+                He leído la <a href="privacidad.html" target="_blank" rel="noreferrer">información de protección de datos</a>
+                antes de enviar esta solicitud.
+              </span>
+            </label>
+            <label class="check-row">
+              <input name="aceptaDesistimiento" required type="checkbox" />
+              <span>
+                He leído la <a href="desistimiento.html" target="_blank" rel="noreferrer">información de desistimiento</a>
+                aplicable a contratación a distancia.
+              </span>
+            </label>
+            <label class="check-row">
+              <input name="inicioUrgente" type="checkbox" />
+              <span>
+                Solicito que el servicio pueda empezar antes de finalizar el plazo de
+                desistimiento si Daniel acepta el encargo y el asunto es urgente.
+              </span>
+            </label>
+            <label class="check-row">
+              <input name="sinAdjuntos" required type="checkbox" />
+              <span>
+                No envío documentos por esta web; esperaré confirmación del canal de
+                documentación.
+              </span>
+            </label>
+          </fieldset>
+
+          <label>
+            Firma escrita del cliente
+            <input
+              name="firma"
+              required
+              placeholder="Escribe tu nombre y apellidos como confirmación"
+            />
+          </label>
+
+          <div class="form-actions">
+            <button class="primary" type="submit">Preparar solicitud</button>
+            <a class="secondary" href="mailto:danielarnaizcuesta@gmail.com">Escribir sin formulario</a>
+          </div>
+          <p class="form-note">
+            La solicitud no se envía a ningún servidor de esta web. Se prepara en tu
+            dispositivo para mandarla por correo o copiarla.
+          </p>
+        </form>
+      </section>
+
+      <section class="result-section" id="resultado" hidden>
+        <div class="section-inner two-column">
+          <div>
+            <p class="overline">Soporte digital</p>
+            <h2>Solicitud preparada</h2>
+            <p>
+              Revisa el texto, envíalo por correo y conserva copia. Daniel confirmará
+              aceptación del encargo, pago y canal de documentación.
+            </p>
+            <div class="result-actions">
+              <a class="primary" id="email-link" href="#">Abrir correo</a>
+              <a class="secondary" id="whatsapp-link" href="#" target="_blank" rel="noreferrer">Avisar por WhatsApp</a>
+              <button class="secondary" id="copy-button" type="button">Copiar texto</button>
+              <button class="secondary" id="download-button" type="button">Descargar copia</button>
+            </div>
+            <p class="status" id="copy-status" role="status" aria-live="polite"></p>
+          </div>
+          <label class="summary-label">
+            Texto de la solicitud
+            <textarea id="summary-text" rows="18" readonly></textarea>
+          </label>
+        </div>
+      </section>
+
+      <section class="section-band" id="servicio" aria-labelledby="service-title">
+        <div class="section-inner">
+          <p class="overline">Alcance claro</p>
+          <h2 id="service-title">Qué incluye y qué no incluye</h2>
+          <div class="scope-grid">
+            <article>
+              <h3>Incluye</h3>
+              <ul>
+                <li>Revisión inicial del conflicto y plazos aportados por el cliente.</li>
+                <li>Redacción y presentación de papeleta de conciliación.</li>
+                <li>Representación voluntaria ante SMAC con poder válido.</li>
+                <li>Borrador posterior de demanda si procede y puede entregarse en plazo.</li>
+              </ul>
+            </article>
+            <article>
+              <h3>No incluye</h3>
+              <ul>
+                <li>Asistencia letrada ni actuación como abogado o graduado social.</li>
+                <li>Representación judicial, juicio, ejecución, recursos o subsanaciones.</li>
+                <li>Garantía de resultado, acuerdo o cobro.</li>
+                <li>Actuaciones fuera del acta SMAC salvo nuevo encargo posible.</li>
+              </ul>
+            </article>
+            <article>
+              <h3>Antes de documentos</h3>
+              <ul>
+                <li>Privacidad entregada y aceptada.</li>
+                <li>Condiciones esenciales aceptadas por correo.</li>
+                <li>Canal de documentación confirmado por Daniel.</li>
+                <li>Poder válido antes de actuar ante SMAC.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-inner compact-section" aria-labelledby="contact-title">
+        <div>
+          <p class="overline">Contacto directo</p>
+          <h2 id="contact-title">Datos profesionales</h2>
+        </div>
+        <div class="contact-grid">
+          <a href="mailto:danielarnaizcuesta@gmail.com">danielarnaizcuesta@gmail.com</a>
+          <a href="tel:+34615860227">615 860 227</a>
+          <span>C/ Arroyo de la Media Legua 4, bajo derecha, 28030 Madrid</span>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>© 2026 Daniel Arnaiz Cuesta</span>
+      <a href="aviso-legal.html">Aviso legal</a>
+      <a href="privacidad.html">Privacidad</a>
+      <a href="desistimiento.html">Desistimiento</a>
+    </footer>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
