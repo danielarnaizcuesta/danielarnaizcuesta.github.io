@@ -1,6 +1,5 @@
 const CONTACT_EMAIL = "danielarnaizcuesta@gmail.com";
 const WHATSAPP_NUMBER = "34615860227";
-const BASE_PRICE = 90;
 
 const form = document.querySelector("#hire-form");
 const resultSection = document.querySelector("#resultado");
@@ -10,13 +9,6 @@ const whatsappLink = document.querySelector("#whatsapp-link");
 const copyButton = document.querySelector("#copy-button");
 const downloadButton = document.querySelector("#download-button");
 const copyStatus = document.querySelector("#copy-status");
-
-function euro(value) {
-  return new Intl.NumberFormat("es-ES", {
-    style: "currency",
-    currency: "EUR",
-  }).format(value);
-}
 
 function clean(value) {
   return String(value || "").trim();
