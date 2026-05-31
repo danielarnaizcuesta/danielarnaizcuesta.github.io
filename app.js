@@ -16,6 +16,8 @@ CyiSWbqj5TdOzbaQqB+j4Ai+gPAFT/rwYXWEJVuFOc1AWPJfx7rBGKVbkAgJY646
 F45WvXRbliUcAMO0nuWuUycCAwEAAQ==
 -----END PUBLIC KEY-----`;
 
+let lastGeneratedPdf = null;
+
 const form = document.querySelector("#hire-form");
 const resultSection = document.querySelector("#resultado");
 const summaryText = document.querySelector("#summary-text");
@@ -311,7 +313,10 @@ function setLinks(summary, data, evidence = null) {
 }
 
 function showResult(summary, data, evidence = null) {
-  summaryText.value = summary;
+  const evidenceBlock = evidence
+    ? `\n\nTRAZABILIDAD\nReferencia: ${evidence.reference}\nPDF SHA-256: ${evidence.contractPdfSha256}\nTexto SHA-256: ${evidence.summarySha256}`
+    : "";
+  summaryText.value = summary + evidenceBlock;
   setLinks(summary, data, evidence);
   resultSection.hidden = false;
   resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -336,6 +341,7 @@ form.addEventListener("submit", async (event) => {
 
   try {
     const contractPdf = await createContractPdfAttachment(summary);
+    lastGeneratedPdf = contractPdf;
     const payload = await buildPayload(data, summary, contractPdf);
     const encryptedSubmission = await encryptSubmission(payload);
     await sendEncryptedSubmission(encryptedSubmission, payload.evidence);
@@ -457,9 +463,37 @@ downloadButton.addEventListener("click", () => {
   const date = new Date().toISOString().slice(0, 10);
   const filename = pdfFilename();
 
+  if (lastGeneratedPdf) {
+    try {
+      const binary = atob(lastGeneratedPdf.base64);
+      const len = binary.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i += 1) {
+        bytes[i] = binary.charCodeAt(i);
+      }
+      const blob = new Blob([bytes], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = lastGeneratedPdf.filename || filename;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(url);
+      return;
+    } catch (error) {
+      console.error("Cached PDF download failed, falling back to regeneration:", error);
+    }
+  }
+
   if (window.jspdf && window.jspdf.jsPDF) {
     try {
-      generatePDF(summaryText.value, filename);
+      let textToPdf = summaryText.value;
+      const traceIdx = textToPdf.indexOf("\n\nTRAZABILIDAD");
+      if (traceIdx !== -1) {
+        textToPdf = textToPdf.slice(0, traceIdx);
+      }
+      generatePDF(textToPdf, filename);
       return;
     } catch (error) {
       console.error("PDF generation failed:", error);
