@@ -184,13 +184,13 @@ function buildSummary(data) {
     "",
     "ACEPTACIONES",
     `Acepta condiciones del servicio, privacidad y precio cerrado de 150,00 EUR IVA incluido: ${yesNo(data, "aceptaCondiciones")}`,
-    `Solicita inicio inmediato si hay despido, caducidad o riesgo de prescripcion: ${yesNo(data, "inicioInmediato")}`,
+    `Solicita inicio inmediato sin esperar al plazo legal de desistimiento: ${yesNo(data, "inicioInmediato")}`,
     "",
     "ACEPTACION ELECTRONICA",
     valueOf(data, "nombre"),
     "",
     data.get("inicioInmediato")
-      ? "El cliente solicita iniciar el encargo de conciliacion y representacion de forma inmediata por la posible existencia de plazos de despido, caducidad o prescripcion."
+      ? "El cliente solicita iniciar el encargo de conciliacion y representacion de forma inmediata sin esperar al plazo legal de desistimiento."
       : "El cliente acepta las condiciones generales, la politica de privacidad y el precio del servicio, quedando contratado el encargo con el envio de la solicitud cifrada.",
   ].join("\n");
 }
@@ -217,7 +217,7 @@ async function buildPayload(data, summary, contractPdf) {
       contractPdfSha256: contractPdf.sha256,
       acceptedConditionsText: "Acepto las condiciones del servicio, la politica de privacidad y el precio cerrado de 150,00 EUR IVA incluido.",
       immediateStartText: data.get("inicioInmediato")
-        ? "Si mi asunto es un despido o existe riesgo de caducidad o prescripcion, solicito el inicio inmediato de las gestiones sin esperar al plazo legal de desistimiento."
+        ? "Solicito el inicio inmediato de las gestiones sin esperar al plazo legal de desistimiento."
         : null,
       browser: {
         userAgent: navigator.userAgent,
