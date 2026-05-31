@@ -186,12 +186,12 @@ function buildSummary(data) {
     `Acepta condiciones del servicio, privacidad y precio cerrado de 90,00 EUR IVA incluido: ${yesNo(data, "aceptaCondiciones")}`,
     `Solicita inicio inmediato si hay despido, caducidad o riesgo de prescripcion: ${yesNo(data, "inicioInmediato")}`,
     "",
-    "FIRMA / CONFIRMACION ESCRITA",
+    "ACEPTACION ELECTRONICA",
     valueOf(data, "nombre"),
     "",
     data.get("inicioInmediato")
       ? "El cliente solicita iniciar el encargo de conciliacion y representacion de forma inmediata por la posible existencia de plazos de despido, caducidad o prescripcion."
-      : "El cliente acepta las condiciones generales y la politica de privacidad para el inicio del encargo.",
+      : "El cliente acepta las condiciones generales, la politica de privacidad y el precio del servicio, quedando contratado el encargo con el envio de la solicitud cifrada.",
   ].join("\n");
 }
 
@@ -392,7 +392,7 @@ function buildPdfDocument(summary) {
         "SERVICIO SOLICITADO",
         "PRECIO",
         "ACEPTACIONES",
-        "FIRMA / CONFIRMACION ESCRITA",
+        "ACEPTACION ELECTRONICA",
       ].includes(line)
     ) {
       doc.setFont("helvetica", "bold");
