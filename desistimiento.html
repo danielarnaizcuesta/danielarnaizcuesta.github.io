@@ -40,16 +40,191 @@
           una vez que el encargo haya sido completamente ejecutado.
         </p>
 
-        <h2>Modelo de comunicación</h2>
-        <div class="notice-box">
-          <p>A la atención de Daniel Arnaiz Cuesta, danielarnaizcuesta@gmail.com:</p>
-          <p>
-            Yo, [NOMBRE Y APELLIDOS], comunico que desisto del contrato de servicios
-            celebrado el [FECHA], relativo al servicio de conciliación y representación.
-          </p>
-          <p>Fecha: [FECHA]</p>
-          <p>Firma o confirmación escrita: [NOMBRE]</p>
-        </div>
+        <h2>Formulario de desistimiento formal</h2>
+        <p>
+          Si deseas desistir del servicio contratado dentro del plazo de 14 días naturales, rellena los siguientes datos para generar y descargar un documento de desistimiento formal en PDF listo para enviar por correo electrónico:
+        </p>
+
+        <form class="hire-panel" id="desistimiento-form" novalidate style="margin-top: 2rem; max-width: 650px;">
+          <div class="panel-heading">
+            <p class="overline">Generador de documento</p>
+            <h3>Completar desistimiento</h3>
+          </div>
+
+          <fieldset>
+            <legend>Datos identificativos</legend>
+            <div class="field-grid">
+              <label>
+                Nombre y apellidos
+                <input autocomplete="name" id="des-nombre" required placeholder="Tu nombre completo" />
+              </label>
+              <label>
+                DNI/NIE
+                <input autocomplete="off" id="des-dni" required placeholder="Tu identificación" />
+              </label>
+              <label>
+                Correo electrónico
+                <input autocomplete="email" id="des-email" required type="email" placeholder="Tu correo electrónico" />
+              </label>
+              <label>
+                Fecha de contratación
+                <input id="des-fecha" required type="date" />
+              </label>
+            </div>
+          </fieldset>
+
+          <label style="margin-top: 1rem; display: block;">
+            Firma de confirmación escrita
+            <input
+              id="des-firma"
+              required
+              placeholder="Escribe tu nombre y apellidos como firma"
+            />
+          </label>
+
+          <div class="form-actions" style="margin-top: 1.5rem;">
+            <button class="primary" type="submit" id="download-desistimiento">Descargar PDF de Desistimiento</button>
+          </div>
+        </form>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const form = document.querySelector("#desistimiento-form");
+          
+          form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            
+            if (!form.checkValidity()) {
+              form.reportValidity();
+              return;
+            }
+            
+            const nombre = document.querySelector("#des-nombre").value.trim();
+            const dni = document.querySelector("#des-dni").value.trim();
+            const email = document.querySelector("#des-email").value.trim();
+            const fecha = document.querySelector("#des-fecha").value;
+            const firma = document.querySelector("#des-firma").value.trim();
+            
+            // Format dates nicely
+            let dateFormatted = "";
+            try {
+              const parts = fecha.split('-');
+              const dateObj = new Date(parts[0], parts[1] - 1, parts[2]);
+              dateFormatted = new Intl.DateTimeFormat("es-ES", { dateStyle: "long" }).format(dateObj);
+            } catch (err) {
+              dateFormatted = fecha;
+            }
+            
+            const todayFormatted = new Intl.DateTimeFormat("es-ES", {
+              dateStyle: "long"
+            }).format(new Date());
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({
+              orientation: "portrait",
+              unit: "mm",
+              format: "a4"
+            });
+
+            // Forest Green header
+            doc.setFillColor(47, 102, 83);
+            doc.rect(0, 0, 210, 8, "F");
+
+            // Title
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(16);
+            doc.setTextColor(47, 102, 83);
+            doc.text("DOCUMENTO DE DESISTIMIENTO FORMAL", 15, 25);
+
+            // Law reference
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(9);
+            doc.setTextColor(110, 110, 110);
+            doc.text("Ejercicio del derecho de desistimiento regulado en la LGDCU (Real Decreto Legislativo 1/2007)", 15, 31);
+
+            // Divider
+            doc.setDrawColor(200, 200, 200);
+            doc.setLineWidth(0.3);
+            doc.line(15, 35, 195, 35);
+
+            // Destinatario details
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(11);
+            doc.setTextColor(47, 102, 83);
+            doc.text("DESTINATARIO DEL DESISTIMIENTO", 15, 45);
+
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(10);
+            doc.setTextColor(33, 33, 33);
+            doc.text("Nombre del profesional: Daniel Arnaiz Cuesta", 15, 51);
+            doc.text("NIF: 72828826Q", 15, 56);
+            doc.text("Domicilio profesional: C/ Arroyo de la Media Legua 4, bajo derecha, 28030 Madrid", 15, 61);
+            doc.text("Email de contacto: danielarnaizcuesta@gmail.com", 15, 66);
+
+            // Remitente details
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(11);
+            doc.setTextColor(47, 102, 83);
+            doc.text("DATOS DE LA PERSONA CONSUMIDORA (REMITENTE)", 15, 78);
+
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(10);
+            doc.setTextColor(33, 33, 33);
+            doc.text(`Nombre y apellidos: ${nombre}`, 15, 84);
+            doc.text(`DNI / NIE: ${dni}`, 15, 89);
+            doc.text(`Email de contacto: ${email}`, 15, 94);
+
+            // Statement
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(11);
+            doc.setTextColor(47, 102, 83);
+            doc.text("DECLARACIÓN DE DESISTIMIENTO", 15, 106);
+
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(10);
+            doc.setTextColor(33, 33, 33);
+            
+            const statementText = `Por la presente, le comunico que desisto de mi contrato de prestación del servicio documental laboral de preparación de papeleta de conciliación y representación ante el SMAC, el cual fue celebrado con fecha ${dateFormatted}.`;
+            const wrappedStatement = doc.splitTextToSize(statementText, 180);
+            doc.text(wrappedStatement, 15, 112);
+
+            // Consumer law note
+            const noteText = "Esta declaración se realiza dentro del plazo legal de 14 días naturales desde la celebración del contrato a distancia, de conformidad con la normativa de defensa de los consumidores y usuarios vigente.";
+            const wrappedNote = doc.splitTextToSize(noteText, 180);
+            doc.setFont("helvetica", "italic");
+            doc.setTextColor(110, 110, 110);
+            doc.setFontSize(9);
+            doc.text(wrappedNote, 15, 130);
+
+            // Signatures
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(10);
+            doc.setTextColor(47, 102, 83);
+            doc.text(`Fecha del desistimiento: ${todayFormatted}`, 15, 155);
+
+            doc.setDrawColor(200, 200, 200);
+            doc.line(15, 175, 85, 175);
+            doc.line(125, 175, 195, 175);
+
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(8);
+            doc.setTextColor(110, 110, 110);
+            doc.text("Firma del Profesional", 15, 180);
+            doc.text("Firma de la Persona Consumidora", 125, 180);
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(10);
+            doc.setTextColor(33, 33, 33);
+            doc.text("Daniel Arnaiz Cuesta", 15, 186);
+            doc.text(firma, 125, 186);
+
+            // Download file dynamically
+            const safeName = nombre.toLowerCase().replace(/[^a-z0-9]+/g, "_");
+            doc.save(`desistimiento_${safeName}.pdf`);
+          });
+        });
+        </script>
       </section>
     </main>
 
