@@ -32,7 +32,7 @@ function buildSummary(data) {
   const amountLine = amount ? `${amount} EUR` : "No indicado";
 
   return [
-    "SOLICITUD DE CONTRATACION S-01",
+    "SOLICITUD DE CONTRATACION",
     "",
     `Fecha de generacion: ${generatedAt}`,
     "",
@@ -57,14 +57,14 @@ function buildSummary(data) {
     valueOf(data, "resumen"),
     "",
     "SERVICIO SOLICITADO",
-    "S-01: redaccion y presentacion de papeleta de conciliacion, una representacion ante SMAC con poder valido y borrador posterior incluido cuando proceda y pueda entregarse en plazo.",
+    "Papeleta de conciliacion, presentacion y representacion ante el SMAC con poder valido, y borrador posterior de demanda incluido cuando proceda.",
     "",
     "PRECIO",
     "Precio cerrado del servicio: 90,00 EUR IVA incluido.",
     "Factura del servicio conforme a la normativa de facturacion.",
     "",
     "ACEPTACIONES",
-    `Solicita contratar S-01: ${yesNo(data, "aceptaServicio")}`,
+    `Solicita contratar servicio: ${yesNo(data, "aceptaServicio")}`,
     `Conoce limites profesionales y judiciales: ${yesNo(data, "aceptaLimites")}`,
     `Ha leido proteccion de datos: ${yesNo(data, "aceptaPrivacidad")}`,
     `Ha leido desistimiento: ${yesNo(data, "aceptaDesistimiento")}`,
@@ -74,18 +74,18 @@ function buildSummary(data) {
     "FIRMA / CONFIRMACION ESCRITA",
     valueOf(data, "firma"),
     "",
-    "El cliente solicita iniciar el encargo S-01. Daniel Arnaiz Cuesta respondera con el inicio, la factura y el canal de documentacion. En asuntos de despido o con riesgo de caducidad o prescripcion, el cliente solicita inicio inmediato durante el plazo de desistimiento si ha marcado esa opcion.",
+    "El cliente solicita iniciar el encargo de conciliacion y representacion. Daniel Arnaiz Cuesta respondera con el inicio, la factura y el canal de documentacion. En asuntos de despido o con riesgo de caducidad o prescripcion, el cliente solicita inicio inmediato durante el plazo de desistimiento si ha marcado esa opcion.",
   ].join("\n");
 }
 
 function setLinks(summary, data) {
-  const subject = `Solicitud contratacion S-01 - ${valueOf(data, "nombre")}`;
+  const subject = `Solicitud contratacion conciliacion - ${valueOf(data, "nombre")}`;
   const encodedSubject = encodeURIComponent(subject);
   const encodedBody = encodeURIComponent(summary);
   emailLink.href = `mailto:${CONTACT_EMAIL}?subject=${encodedSubject}&body=${encodedBody}`;
 
   const shortMessage =
-    `Hola Daniel, acabo de preparar una solicitud de contratacion S-01. ` +
+    `Hola Daniel, acabo de preparar una solicitud de contratacion. ` +
     `Soy ${valueOf(data, "nombre")} y mi asunto es: ${valueOf(data, "tipo")}.`;
   whatsappLink.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(shortMessage)}`;
 }
@@ -128,7 +128,7 @@ downloadButton.addEventListener("click", () => {
   const anchor = document.createElement("a");
   const date = new Date().toISOString().slice(0, 10);
   anchor.href = url;
-  anchor.download = `solicitud-s01-${date}.txt`;
+  anchor.download = `solicitud-conciliacion-${date}.txt`;
   document.body.appendChild(anchor);
   anchor.click();
   anchor.remove();
