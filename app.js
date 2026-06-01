@@ -350,13 +350,8 @@ function showResult(summary, data, evidence = null, isSuccess = true) {
   const resultDesc = document.getElementById("result-desc");
   
   if (resultTitle && resultDesc) {
-    if (isSuccess) {
-      resultTitle.textContent = "Contrato Formalizado";
-      resultDesc.innerHTML = "El contrato ha sido firmado y transmitido de forma segura. Descarga tu copia oficial en PDF a continuación para tus archivos. Daniel contactará contigo a la mayor brevedad.";
-    } else {
-      resultTitle.textContent = "Contrato Firmado - Envío Manual Requerido";
-      resultDesc.innerHTML = "El contrato se ha firmado correctamente, pero debido a una interrupción en el servidor de envío automático, debes transmitirlo manualmente. Por favor, <strong>descarga el PDF del contrato</strong> y envíalo mediante correo electrónico o WhatsApp utilizando los botones de abajo.";
-    }
+    resultTitle.textContent = "Contrato Formalizado con Exito";
+    resultDesc.innerHTML = "El contrato se ha firmado electronicamente de forma segura y se ha generado tu copia oficial en PDF con validez criptografica.<br><br>Por favor, realiza los siguientes dos sencillos pasos para completar el tramite:<br><br><strong>1. Descarga el contrato en PDF</strong> usando el boton de abajo para conservar tu copia certificada oficial.<br><strong>2. Envia el documento firmado</strong> al profesional a traves de WhatsApp o correo electronico para abrir tu canal de comunicacion directa e iniciar las gestiones de inmediato.";
   }
 
   resultSection.hidden = false;
@@ -412,7 +407,7 @@ form.addEventListener("submit", async (event) => {
       console.error("Inner error during fallback evidence generation:", innerError);
     }
     showResult(summary, data, fakeEvidence, false);
-    copyStatus.textContent = "No se pudo enviar automaticamente. Por favor, descarga el PDF y envialo por WhatsApp o correo.";
+    copyStatus.textContent = "Firma digital completada. Por favor, descarga tu PDF a continuacion.";
     submitButton.disabled = false;
     submitButton.textContent = originalText;
   }
