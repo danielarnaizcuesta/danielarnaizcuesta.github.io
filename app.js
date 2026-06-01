@@ -21,7 +21,6 @@ let lastGeneratedPdf = null;
 
 const form = document.querySelector("#hire-form");
 const resultSection = document.querySelector("#resultado");
-const summaryText = document.querySelector("#summary-text");
 const whatsappLink = document.querySelector("#whatsapp-link");
 const downloadButton = document.querySelector("#download-button");
 const copyStatus = document.querySelector("#copy-status");
@@ -327,11 +326,7 @@ function setLinks(summary, data, evidence = null) {
   whatsappLink.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessage)}`;
 }
 
-function showResult(summary, data, evidence = null, isSuccess = true) {
-  const evidenceBlock = evidence
-    ? `\n\nTRAZABILIDAD\nReferencia: ${evidence.reference}\nPDF SHA-256: ${evidence.contractPdfSha256}\nTexto SHA-256: ${evidence.summarySha256}`
-    : "";
-  summaryText.value = summary + evidenceBlock;
+function showResult(summary, data, evidence = null) {
   setLinks(summary, data, evidence);
   
   const resultTitle = document.getElementById("result-title");
@@ -339,7 +334,7 @@ function showResult(summary, data, evidence = null, isSuccess = true) {
   
   if (resultTitle && resultDesc) {
     resultTitle.textContent = "Contrato Formalizado con Exito";
-    resultDesc.innerHTML = "El contrato se ha firmado electronicamente de forma segura y se ha generado tu copia oficial en PDF con validez criptografica.<br><br>Por favor, realiza los siguientes dos sencillos pasos para completar el tramite:<br><br><strong>1. Descarga el contrato en PDF</strong> usando el boton de abajo para conservar tu copia certificada oficial.<br><strong>2. Envia el documento firmado</strong> al profesional a traves de WhatsApp o correo electronico para abrir tu canal de comunicacion directa e iniciar las gestiones de inmediato.";
+    resultDesc.innerHTML = "El contrato se ha firmado electronicamente de forma segura y se ha transmitido al profesional para iniciar las gestiones de inmediato.<br><br>Por favor, <strong>descarga tu copia en PDF</strong> a continuacion para conservarla en tus archivos personales. Daniel contactara contigo a la mayor brevedad.";
   }
 
   resultSection.hidden = false;
@@ -352,6 +347,7 @@ form.addEventListener("submit", async (event) => {
 
   if (!form.checkValidity()) {
     form.reportValidity();
+    copyStatus.innerHTML = "<span style='color: #d9534f; font-weight: bold;'>⚠️ Por favor, rellena todos los campos obligatorios y acepta las condiciones para firmar el contrato.</span>";
     return;
   }
 
