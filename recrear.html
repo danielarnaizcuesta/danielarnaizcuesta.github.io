@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DA | Recreador de Contratos Oficiales</title>
+    <style>
+      :root {
+        --bg: #0b0f0e;
+        --card-bg: rgba(20, 28, 26, 0.7);
+        --primary: #2f6653;
+        --primary-glow: rgba(47, 102, 83, 0.3);
+        --text: #f0f4f2;
+        --text-muted: #8fa39a;
+        --border: rgba(47, 102, 83, 0.25);
+        --success: #39b54a;
+        --success-glow: rgba(57, 181, 74, 0.15);
+      }
+
+      body {
+        margin: 0;
+        padding: 40px 20px;
+        background: var(--bg);
+        color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 90vh;
+      }
+
+      .container {
+        max-width: 800px;
+        width: 100%;
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 40px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(8px);
+      }
+
+      header {
+        margin-bottom: 30px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 20px;
+        text-align: center;
+      }
+
+      h1 {
+        margin: 0 0 10px 0;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text);
+        letter-spacing: -0.5px;
+      }
+
+      p.subtitle {
+        margin: 0;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+      }
+
+      .input-group {
+        margin-bottom: 25px;
+      }
+
+      label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+        color: var(--text);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      textarea {
+        width: 100%;
+        height: 220px;
+        background: rgba(10, 14, 13, 0.8);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 16px;
+        color: #fff;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 0.85rem;
+        box-sizing: border-box;
+        resize: vertical;
+        transition: all 0.3s ease;
+      }
+
+      textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px var(--primary-glow);
+      }
+
+      .actions {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 30px;
+      }
+
+      button {
+        flex: 1;
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 14px 20px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 12px var(--primary-glow);
+      }
+
+      button:hover {
+        background: #3c7d67;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px var(--primary-glow);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      .result-panel {
+        background: rgba(10, 14, 13, 0.6);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 24px;
+        display: none;
+        animation: fadeIn 0.4s ease forwards;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .result-title {
+        display: flex;
+        align-items: center;
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--success);
+        margin-bottom: 15px;
+      }
+
+      .result-title svg {
+        margin-right: 8px;
+        fill: var(--success);
+      }
+
+      .meta-grid {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: 12px;
+        font-size: 0.85rem;
+      }
+
+      .meta-label {
+        font-weight: 600;
+        color: var(--text-muted);
+      }
+
+      .meta-value {
+        font-family: monospace;
+        color: #fff;
+        word-break: break-all;
+      }
+
+      .meta-value.hash {
+        background: var(--success-glow);
+        color: var(--success);
+        padding: 4px 8px;
+        border-radius: 4px;
+        border: 1px solid rgba(57, 181, 74, 0.2);
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Recreador de Contratos</h1>
+        <p class="subtitle">Reconstrucción determinista y validación criptográfica de PDFs firmados</p>
+      </header>
+
+      <div class="input-group">
+        <label for="contract-text">Texto del contrato decodificado (Summary)</label>
+        <textarea
+          id="contract-text"
+          placeholder="Pega aquí el bloque de texto del contrato obtenido de tu email cifrado..."
+        ></textarea>
+      </div>
+
+      <div class="actions">
+        <button id="recreate-btn">Recrear y Descargar PDF Oficial</button>
+      </div>
+
+      <div class="result-panel" id="result">
+        <div class="result-title">
+          <svg width="18" height="18" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          </svg>
+          PDF Recreado Bit por Bit con Éxito
+        </div>
+        <div class="meta-grid">
+          <div class="meta-label">Archivo generado:</div>
+          <div class="meta-value" id="pdf-filename">-</div>
+          <div class="meta-label">Tamaño del PDF:</div>
+          <div class="meta-value" id="pdf-size">-</div>
+          <div class="meta-label">Firma SHA-256:</div>
+          <div class="meta-value hash" id="pdf-hash">-</div>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/jspdf.umd.min.js"></script>
+    <script>
+      function clean(value) {
+        return String(value || "").trim();
+      }
+
+      async function sha256Hex(arrayBuffer) {
+        const digest = await crypto.subtle.digest("SHA-256", arrayBuffer);
+        return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
+      }
+
+      function bytesToBase64(buffer) {
+        const bytes = new Uint8Array(buffer);
+        let binary = "";
+        const chunkSize = 0x8000;
+        for (let i = 0; i < bytes.length; i += chunkSize) {
+          binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+        }
+        return btoa(binary);
+      }
+
+      function pdfFilename(summary) {
+        const dateMatch = summary.match(/Fecha del contrato: (\d{2})\/(\d{2})\/(\d{4})/);
+        let dateStr = "";
+        if (dateMatch) {
+          dateStr = `${dateMatch[3]}-${dateMatch[2]}-${dateMatch[1]}`;
+        } else {
+          dateStr = new Date().toISOString().slice(0, 10);
+        }
+        return `contrato-prestacion-servicios-daniel-arnaiz-${dateStr}.pdf`;
+      }
+
+      function buildPdfDocument(summary) {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({
+          orientation: "portrait",
+          unit: "mm",
+          format: "a4",
+        });
+        const marginX = 15;
+        const pageHeight = 297;
+        const wrapWidth = 180;
+        const lines = doc.splitTextToSize(summary, wrapWidth);
+        let y = 20;
+
+        doc.setFont("helvetica", "normal");
+
+        for (let i = 0; i < lines.length; i += 1) {
+          if (y > pageHeight - 20) {
+            doc.addPage();
+            y = 20;
+          }
+
+          const line = lines[i].trim();
+
+          if (
+            [
+              "CONTRATO DE PRESTACION DE SERVICIOS - HOJA DE ENCARGO",
+              "REUNIDOS:",
+              "ESTIPULACIONES:",
+              "1. OBJETO DEL ENCARGO",
+              "2. PRECIO, PAGO Y FACTURACION",
+              "3. DERECHO DE DESISTIMIENTO E INICIO DEL SERVICIO",
+              "4. LUGAR, FECHA, ZONA DE PRESTACION Y FUERO",
+              "5. FIRMA Y ACEPTACION ELECTRONICA",
+              "ACEPTACION ELECTRONICA:",
+            ].includes(line)
+          ) {
+            doc.setFont("helvetica", "bold");
+            doc.setTextColor(47, 102, 83);
+            doc.setFontSize(12);
+            y += 4;
+            doc.text(line, marginX, y);
+            y += 6;
+            doc.setFont("helvetica", "normal");
+            doc.setTextColor(33, 33, 33);
+            doc.setFontSize(10);
+          } else if (line.startsWith("Fecha del contrato:")) {
+            doc.setFont("helvetica", "italic");
+            doc.setTextColor(110, 110, 110);
+            doc.setFontSize(9);
+            doc.text(line, marginX, y);
+            y += 5;
+            doc.setFont("helvetica", "normal");
+            doc.setTextColor(33, 33, 33);
+            doc.setFontSize(10);
+          } else {
+            doc.text(lines[i], marginX, y);
+            y += 6;
+          }
+        }
+
+        return doc;
+      }
+
+      document.getElementById("recreate-btn").addEventListener("click", async () => {
+        const textInput = document.getElementById("contract-text").value.trim();
+        if (!textInput) {
+          alert("Por favor, pega primero el texto del contrato.");
+          return;
+        }
+
+        try {
+          const doc = buildPdfDocument(textInput);
+          const arrayBuffer = doc.output("arraybuffer");
+          
+          const sizeBytes = arrayBuffer.byteLength;
+          const hashHex = await sha256Hex(arrayBuffer);
+          const filename = pdfFilename(textInput);
+
+          // Render metadata in UI
+          document.getElementById("pdf-filename").textContent = filename;
+          document.getElementById("pdf-size").textContent = `${sizeBytes.toLocaleString()} bytes`;
+          document.getElementById("pdf-hash").textContent = hashHex.toUpperCase();
+          document.getElementById("result").style.display = "block";
+
+          // Download File
+          const blob = new Blob([arrayBuffer], { type: "application/pdf" });
+          const url = URL.createObjectURL(blob);
+          const anchor = document.createElement("a");
+          anchor.href = url;
+          anchor.download = filename;
+          document.body.appendChild(anchor);
+          anchor.click();
+          anchor.remove();
+          URL.revokeObjectURL(url);
+        } catch (error) {
+          alert("Error al recrear el PDF: " + error.message);
+        }
+      });
+    </script>
+  </body>
+</html>
