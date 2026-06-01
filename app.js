@@ -347,7 +347,33 @@ form.addEventListener("submit", async (event) => {
 
   if (!form.checkValidity()) {
     form.reportValidity();
-    copyStatus.innerHTML = "<span style='color: #d9534f; font-weight: bold;'>⚠️ Por favor, rellena todos los campos obligatorios y acepta las condiciones para firmar el contrato.</span>";
+    
+    const fieldNames = {
+      nombre: "Nombre y apellidos",
+      dni: "DNI/NIE/Pasaporte",
+      email: "Correo electronico",
+      direccion: "Direccion",
+      piso: "Piso o puerta",
+      cp: "Codigo Postal",
+      localidad: "Localidad o Ciudad",
+      provincia: "Provincia",
+      empresa: "Empresa a reclamar",
+      aceptaCondiciones: "Aceptar condiciones del servicio y privacidad"
+    };
+
+    const invalidFields = [];
+    const elements = form.elements;
+    for (let i = 0; i < elements.length; i += 1) {
+      const el = elements[i];
+      if (el.hasAttribute("required") && !el.checkValidity()) {
+        const friendlyName = fieldNames[el.name] || el.placeholder || el.name;
+        invalidFields.push(friendlyName);
+      }
+    }
+
+    if (invalidFields.length > 0) {
+      copyStatus.innerHTML = `<span style='color: #d9534f; font-weight: bold;'>⚠️ Falta completar: ${invalidFields.join(", ")}.</span>`;
+    }
     return;
   }
 
