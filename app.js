@@ -23,7 +23,6 @@ const form = document.querySelector("#hire-form");
 const resultSection = document.querySelector("#resultado");
 const summaryText = document.querySelector("#summary-text");
 const whatsappLink = document.querySelector("#whatsapp-link");
-const copyButton = document.querySelector("#copy-button");
 const downloadButton = document.querySelector("#download-button");
 const copyStatus = document.querySelector("#copy-status");
 
@@ -370,7 +369,8 @@ form.addEventListener("submit", async (event) => {
     const payload = await buildPayload(data, summary, contractPdf);
     const encryptedSubmission = await encryptSubmission(payload);
     await sendEncryptedSubmission(encryptedSubmission, payload.evidence);
-    showResult(summary, data, payload.evidence, true);
+    showResult(summary, data, payload.evidence);
+    downloadCachedPdf();
     copyStatus.textContent = `Contrato firmado y enviado de forma segura. ${evidenceSubject(payload.evidence)}. Hash completo guardado en el email y el manifiesto.`;
     submitButton.textContent = "Contrato firmado y enviado";
     submitButton.style.backgroundColor = "var(--primary)";
@@ -402,16 +402,7 @@ form.addEventListener("submit", async (event) => {
   }
 });
 
-copyButton.addEventListener("click", async () => {
-  try {
-    await navigator.clipboard.writeText(summaryText.value);
-    copyStatus.textContent = "Texto copiado.";
-  } catch (error) {
-    summaryText.select();
-    document.execCommand("copy");
-    copyStatus.textContent = "Texto seleccionado y copiado.";
-  }
-});
+
 
 function pdfFilename() {
   const date = new Date().toISOString().slice(0, 10);
@@ -502,10 +493,7 @@ function generatePDF(summary, filename) {
   buildPdfDocument(summary).save(filename);
 }
 
-downloadButton.addEventListener("click", () => {
-  const date = new Date().toISOString().slice(0, 10);
-  const filename = pdfFilename();
-
+function downloadCachedPdf() {
   if (lastGeneratedPdf) {
     try {
       const binary = atob(lastGeneratedPdf.base64);
@@ -518,41 +506,18 @@ downloadButton.addEventListener("click", () => {
       const url = URL.createObjectURL(blob);
       const anchor = document.createElement("a");
       anchor.href = url;
-      anchor.download = lastGeneratedPdf.filename || filename;
+      anchor.download = lastGeneratedPdf.filename;
       document.body.appendChild(anchor);
       anchor.click();
       anchor.remove();
       URL.revokeObjectURL(url);
-      return;
     } catch (error) {
-      console.error("Cached PDF download failed, falling back to regeneration:", error);
+      console.error("Cached PDF download failed:", error);
     }
   }
+}
 
-  if (window.jspdf && window.jspdf.jsPDF) {
-    try {
-      let textToPdf = summaryText.value;
-      const traceIdx = textToPdf.indexOf("\n\nTRAZABILIDAD");
-      if (traceIdx !== -1) {
-        textToPdf = textToPdf.slice(0, traceIdx);
-      }
-      generatePDF(textToPdf, filename);
-      return;
-    } catch (error) {
-      console.error("PDF generation failed:", error);
-    }
-  }
-
-  const blob = new Blob([summaryText.value], { type: "text/plain;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const anchor = document.createElement("a");
-  anchor.href = url;
-  anchor.download = `solicitud-conciliacion-${date}.txt`;
-  document.body.appendChild(anchor);
-  anchor.click();
-  anchor.remove();
-  URL.revokeObjectURL(url);
-});
+downloadButton.addEventListener("click", downloadCachedPdf);
 
 const inputNombre = form.querySelector("input[name='nombre']");
 const inputDni = form.querySelector("input[name='dni']");
