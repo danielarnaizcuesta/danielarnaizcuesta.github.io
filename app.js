@@ -1,7 +1,7 @@
 const CONTACT_EMAIL = "danielarnaizcuesta@gmail.com";
 const WHATSAPP_NUMBER = "34615860227";
 const SITE_EVIDENCE_VERSION = "2026-06-01-evidence-v1";
-const WEB3FORMS_ACCESS_KEY = "TU_ACCESS_KEY_AQUI"; // Consigue una clave gratuita e instantanea en web3forms.com para activar el envio automatico. Dejala vacia o como esta para usar directamente el envio manual profesional (WhatsApp/Email) sin demoras.
+const WEB3FORMS_ACCESS_KEY = "477dfd54-4a9e-43e8-8cb9-2a547b6e789c"; // Consigue una clave gratuita e instantanea en web3forms.com para activar el envio automatico. Dejala vacia o como esta para usar directamente el envio manual profesional (WhatsApp/Email) sin demoras.
 const ENCRYPTION_PUBLIC_KEY_PEM = `-----BEGIN PUBLIC KEY-----
 MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA8c9htGPDxR2ulaLJRRS5
 n4xlEfSihcUIkqTxadXlDrawq5W64JwIfzHafODOZNPCBadBrZk72nyXYpd8XXN8
