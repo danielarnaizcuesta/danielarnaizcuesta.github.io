@@ -22,7 +22,6 @@ let lastGeneratedPdf = null;
 const form = document.querySelector("#hire-form");
 const resultSection = document.querySelector("#resultado");
 const summaryText = document.querySelector("#summary-text");
-const emailLink = document.querySelector("#email-link");
 const whatsappLink = document.querySelector("#whatsapp-link");
 const copyButton = document.querySelector("#copy-button");
 const downloadButton = document.querySelector("#download-button");
@@ -210,7 +209,12 @@ async function buildPayload(data, summary, contractPdf) {
     source: "danielarnaizcuesta.github.io",
     summary,
     documents: {
-      contractPdf,
+      contractPdf: {
+        filename: contractPdf.filename,
+        mimeType: contractPdf.mimeType,
+        size: contractPdf.size,
+        sha256: contractPdf.sha256
+      }
     },
     evidence: {
       reference,
@@ -315,27 +319,12 @@ async function sendEncryptedSubmission(encryptedSubmission, evidence) {
 }
 
 function setLinks(summary, data, evidence = null) {
-  const subject = evidence
-    ? `Contrato firmado ${evidenceSubject(evidence)}`
-    : `Contrato firmado - ${valueOf(data, "nombre")}`;
-  const encodedSubject = encodeURIComponent(subject);
-  const evidenceBlock = evidence
-    ? `\n\nTRAZABILIDAD\nReferencia: ${evidence.reference}\nPDF SHA-256: ${evidence.contractPdfSha256}\nTexto SHA-256: ${evidence.summarySha256}`
-    : "";
-  
-  const emailBody = evidence
-    ? `Hola Daniel,\n\nHe formalizado el contrato de prestacion de servicios desde la web.\n\nAdjunto a este correo te envio el documento PDF del contrato firmado, el cual acabo de descargar de la web.\n\nDATOS DE VERIFICACION Y TRAZABILIDAD:\nReferencia: ${evidence.reference}\nPDF SHA-256: ${evidence.contractPdfSha256}\nTexto SHA-256: ${evidence.summarySha256}\n\nPor favor, revisa el archivo PDF adjunto.\n\nUn saludo.`
-    : `Hola Daniel,\n\nHe formalizado el contrato de prestacion de servicios desde la web.\n\nAdjunto a este correo te envio el documento PDF del contrato firmado, el cual acabo de descargar de la web.\n\nPor favor, revisa el archivo PDF adjunto.\n\nUn saludo.`;
-
   const waMessage =
-    "*CONTRATO DE PRESTACION DE SERVICIOS - HOJA DE ENCARGO*\n\n" +
-    "Hola Daniel, acabo de formalizar el contrato desde la web. A continuacion te adjunto el PDF del contrato que he descargado de la web.\n\n" +
-    (evidence
-      ? `Referencia: ${evidence.reference}\nPDF SHA-256: ${evidence.contractPdfSha256}\nTexto SHA-256: ${evidence.summarySha256}\n\n`
-      : "") +
-    "Por favor, revisa el archivo PDF adjunto.";
+    "*Contrato Formalizado*\n\n" +
+    `Hola Daniel, acabo de formalizar el contrato desde la web.\n\n` +
+    (evidence ? `Referencia: ${evidence.reference}\n` : "") +
+    "Quedo a la espera de que contactes conmigo. ¡Un saludo!";
 
-  emailLink.href = `mailto:${CONTACT_EMAIL}?subject=${encodedSubject}&body=${encodeURIComponent(emailBody)}`;
   whatsappLink.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessage)}`;
 }
 
