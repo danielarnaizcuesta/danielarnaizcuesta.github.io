@@ -15,6 +15,8 @@
         --border: rgba(47, 102, 83, 0.25);
         --success: #39b54a;
         --success-glow: rgba(57, 181, 74, 0.15);
+        --danger: #d9534f;
+        --danger-glow: rgba(217, 83, 79, 0.15);
       }
 
       body {
@@ -28,8 +30,105 @@
         justify-content: center;
         align-items: center;
         min-height: 90vh;
+        overflow-x: hidden;
       }
 
+      /* Locked / Login Screen Overlay */
+      #auth-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: var(--bg);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        transition: opacity 0.5s ease, visibility 0.5s;
+      }
+
+      .auth-card {
+        max-width: 380px;
+        width: 100%;
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 40px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(8px);
+        text-align: center;
+      }
+
+      .auth-card h2 {
+        margin: 0 0 10px 0;
+        font-size: 1.4rem;
+        font-weight: 700;
+      }
+
+      .auth-card p {
+        margin: 0 0 25px 0;
+        color: var(--text-muted);
+        font-size: 0.88rem;
+      }
+
+      .auth-field {
+        margin-bottom: 20px;
+      }
+
+      .auth-field input {
+        width: 100%;
+        background: rgba(10, 14, 13, 0.8);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 14px;
+        color: #fff;
+        font-size: 0.95rem;
+        box-sizing: border-box;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .auth-field input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px var(--primary-glow);
+      }
+
+      .auth-card button {
+        width: 100%;
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 14px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 12px var(--primary-glow);
+      }
+
+      .auth-card button:hover {
+        background: #3c7d67;
+      }
+
+      #auth-error {
+        margin-top: 15px;
+        font-size: 0.85rem;
+        color: var(--danger);
+        font-weight: 600;
+        display: none;
+        animation: shake 0.3s ease-in-out;
+      }
+
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-6px); }
+        75% { transform: translateX(6px); }
+      }
+
+      /* Main Workspace Grid (Hidden until authenticated) */
       .container {
         max-width: 800px;
         width: 100%;
@@ -39,6 +138,14 @@
         padding: 40px;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         backdrop-filter: blur(8px);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+      }
+
+      .container.unlocked {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       header {
@@ -103,7 +210,7 @@
         margin-bottom: 30px;
       }
 
-      button {
+      .actions button {
         flex: 1;
         background: var(--primary);
         color: #fff;
@@ -117,13 +224,13 @@
         box-shadow: 0 4px 12px var(--primary-glow);
       }
 
-      button:hover {
+      .actions button:hover {
         background: #3c7d67;
         transform: translateY(-1px);
         box-shadow: 0 6px 16px var(--primary-glow);
       }
 
-      button:active {
+      .actions button:active {
         transform: translateY(0);
       }
 
@@ -184,7 +291,21 @@
     </style>
   </head>
   <body>
-    <div class="container">
+    <!-- Locked Auth Overlay -->
+    <div id="auth-overlay">
+      <div class="auth-card">
+        <h2>Panel de Administrador</h2>
+        <p>Introduce la contraseña de validación para desbloquear el recreador de contratos.</p>
+        <div class="auth-field">
+          <input type="password" id="auth-password" placeholder="Contraseña de acceso" autocomplete="current-password" />
+        </div>
+        <button id="auth-btn">Acceder al Panel</button>
+        <div id="auth-error">Contraseña incorrecta. Acceso denegado.</div>
+      </div>
+    </div>
+
+    <!-- Main Workspace Container -->
+    <div class="container" id="main-container">
       <header>
         <h1>Recreador de Contratos</h1>
         <p class="subtitle">Reconstrucción determinista y validación criptográfica de PDFs firmados</p>
@@ -222,25 +343,57 @@
 
     <script src="assets/jspdf.umd.min.js"></script>
     <script>
-      function clean(value) {
-        return String(value || "").trim();
-      }
+      // Secure hardcoded SHA-256 hash of password: cuesta2026
+      const AUTH_HASH = "5c63c5f5fb2c4777034fa0cd7785a1bbe0b7287bbd69e47f77068c322e7ff89e";
 
       async function sha256Hex(arrayBuffer) {
         const digest = await crypto.subtle.digest("SHA-256", arrayBuffer);
         return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
       }
 
-      function bytesToBase64(buffer) {
-        const bytes = new Uint8Array(buffer);
-        let binary = "";
-        const chunkSize = 0x8000;
-        for (let i = 0; i < bytes.length; i += chunkSize) {
-          binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
-        }
-        return btoa(binary);
+      async function hashString(str) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(str);
+        return await sha256Hex(data);
       }
 
+      function unlockPanel() {
+        const overlay = document.getElementById("auth-overlay");
+        const container = document.getElementById("main-container");
+        overlay.style.opacity = "0";
+        overlay.style.visibility = "hidden";
+        container.classList.add("unlocked");
+      }
+
+      // Check sessionStorage for previous unlock in this session
+      if (sessionStorage.getItem("recreador_auth") === "true") {
+        unlockPanel();
+      }
+
+      // Handle Authentication Click / Enter key
+      async function handleAuth() {
+        const pwdInput = document.getElementById("auth-password");
+        const errorDiv = document.getElementById("auth-error");
+        
+        errorDiv.style.display = "none";
+        
+        const hash = await hashString(pwdInput.value.trim());
+        if (hash === AUTH_HASH) {
+          sessionStorage.setItem("recreador_auth", "true");
+          unlockPanel();
+        } else {
+          pwdInput.value = "";
+          errorDiv.style.display = "block";
+          pwdInput.focus();
+        }
+      }
+
+      document.getElementById("auth-btn").addEventListener("click", handleAuth);
+      document.getElementById("auth-password").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") handleAuth();
+      });
+
+      // PDF Recreation Logic
       function pdfFilename(summary) {
         const dateMatch = summary.match(/Fecha del contrato: (\d{2})\/(\d{2})\/(\d{4})/);
         let dateStr = "";
