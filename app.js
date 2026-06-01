@@ -1,6 +1,7 @@
 const CONTACT_EMAIL = "danielarnaizcuesta@gmail.com";
 const WHATSAPP_NUMBER = "34615860227";
-const SITE_EVIDENCE_VERSION = "2026-05-31-evidence-v1";
+const SITE_EVIDENCE_VERSION = "2026-06-01-evidence-v1";
+const WEB3FORMS_ACCESS_KEY = "TU_ACCESS_KEY_AQUI"; // Consigue una clave gratuita e instantanea en web3forms.com para activar el envio automatico. Dejala vacia o como esta para usar directamente el envio manual profesional (WhatsApp/Email) sin demoras.
 const ENCRYPTION_PUBLIC_KEY_PEM = `-----BEGIN PUBLIC KEY-----
 MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA8c9htGPDxR2ulaLJRRS5
 n4xlEfSihcUIkqTxadXlDrawq5W64JwIfzHafODOZNPCBadBrZk72nyXYpd8XXN8
@@ -267,42 +268,50 @@ function evidenceSubject(evidence) {
 
 async function sendEncryptedSubmission(encryptedSubmission, evidence) {
   const subject = `Nuevo contrato firmado ${evidenceSubject(evidence)}`;
+
+  if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY === "TU_ACCESS_KEY_AQUI" || WEB3FORMS_ACCESS_KEY.trim() === "") {
+    throw new Error("Envio automatico no configurado o clave por defecto. Usando directamente flujo manual.");
+  }
+
   const payload = JSON.stringify({
-    _subject: subject,
-    _captcha: "false",
+    access_key: WEB3FORMS_ACCESS_KEY,
+    subject: subject,
     referencia_solicitud: evidence.reference,
     hash_pdf_sha256: evidence.contractPdfSha256,
     hash_texto_sha256: evidence.summarySha256,
     solicitud_cifrada: JSON.stringify(encryptedSubmission),
   });
 
-  const endpoints = [
-    `https://formsubmit.io/send/${CONTACT_EMAIL}`,
-    `https://formsubmit.co/ajax/${CONTACT_EMAIL}`,
-  ];
-
-  let lastError;
-  for (const endpoint of endpoints) {
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 8000);
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: payload,
-        signal: controller.signal,
-      });
-      clearTimeout(timeoutId);
-      if (response.ok) return;
-    } catch (error) {
-      lastError = error;
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 8000);
+  
+  try {
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: payload,
+      signal: controller.signal,
+    });
+    
+    clearTimeout(timeoutId);
+    
+    if (response.ok) {
+      const resData = await response.json();
+      if (resData.success) {
+        return;
+      } else {
+        throw new Error(resData.message || "Web3Forms rechazo el envio.");
+      }
     }
+    
+    throw new Error(`Web3Forms devolvio un estado de error: ${response.status}`);
+  } catch (error) {
+    clearTimeout(timeoutId);
+    throw error;
   }
-
-  throw lastError || new Error("No se pudo enviar la solicitud cifrada.");
 }
 
 function setLinks(summary, data, evidence = null) {
