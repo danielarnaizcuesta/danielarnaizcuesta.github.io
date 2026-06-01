@@ -288,6 +288,87 @@
         border: 1px solid rgba(57, 181, 74, 0.2);
         display: inline-block;
       }
+
+      /* Tabs layout */
+      .tabs-header {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 25px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 12px;
+      }
+      .tab-btn {
+        background: transparent;
+        color: var(--text-muted);
+        border: none;
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+      }
+      .tab-btn:hover {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.05);
+      }
+      .tab-btn.active {
+        color: #fff;
+        background: var(--primary);
+        box-shadow: 0 4px 12px var(--primary-glow);
+      }
+      .tab-content {
+        display: none;
+      }
+      .tab-content.active {
+        display: block;
+        animation: fadeIn 0.4s ease forwards;
+      }
+      
+      /* Decrypt helper styles */
+      .key-section {
+        background: rgba(47, 102, 83, 0.05);
+        border: 1px dashed var(--border);
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      .key-actions {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        margin-top: 10px;
+      }
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid var(--border) !important;
+        color: var(--text) !important;
+        box-shadow: none !important;
+      }
+      .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.1) !important;
+      }
+      .key-status-label {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+      .key-status-label.loaded {
+        color: var(--success);
+        font-weight: bold;
+      }
+      
+      .checkbox-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-top: 12px;
+        cursor: pointer;
+      }
+      .checkbox-row input {
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
@@ -307,28 +388,68 @@
     <!-- Main Workspace Container -->
     <div class="container" id="main-container">
       <header>
-        <h1>Recreador de Contratos</h1>
-        <p class="subtitle">Reconstrucción determinista y validación criptográfica de PDFs firmados</p>
+        <h1>Panel de Contratos</h1>
+        <p class="subtitle">Descifrado de solicitudes y recreación determinista bit a bit de PDFs oficiales</p>
       </header>
 
-      <div class="input-group">
-        <label for="contract-text">Texto del contrato decodificado (Summary)</label>
-        <textarea
-          id="contract-text"
-          placeholder="Pega aquí el bloque de texto del contrato obtenido de tu email cifrado..."
-        ></textarea>
+      <!-- Tabs Header -->
+      <div class="tabs-header">
+        <button class="tab-btn active" id="btn-tab-decrypt">Descifrar Solicitud</button>
+        <button class="tab-btn" id="btn-tab-recreate">Recreador Manual</button>
       </div>
 
-      <div class="actions">
-        <button id="recreate-btn">Recrear y Descargar PDF Oficial</button>
+      <!-- Tab Content: Decrypt -->
+      <div class="tab-content active" id="tab-decrypt-content">
+        <!-- Private Key Importer Section -->
+        <div class="key-section">
+          <label>Clave Privada RSA (Formato PEM)</label>
+          <p class="subtitle" style="font-size:0.82rem; margin:0 0 12px 0;">Carga tu archivo de clave privada para realizar el descifrado seguro de forma 100% local en tu navegador.</p>
+          <div class="key-actions">
+            <button class="tab-btn btn-secondary" id="btn-upload-key" type="button">📂 Cargar clave_privada_formulario.pem</button>
+            <input type="file" id="private-key-file" accept=".pem,.key" style="display:none;" />
+            <span id="key-status" class="key-status-label">Clave privada no cargada</span>
+          </div>
+          <label class="checkbox-row">
+            <input type="checkbox" id="chk-save-key" checked />
+            <span>Recordar clave privada de forma segura en este navegador (Local Storage)</span>
+          </label>
+        </div>
+
+        <div class="input-group">
+          <label for="encrypted-payload">Solicitud Cifrada (Copiada del Email)</label>
+          <textarea
+            id="encrypted-payload"
+            placeholder='Pega aquí todo el bloque del JSON cifrado que recibiste en el correo (el que tiene "version", "encryptedKey", "iv", "ciphertext")...'
+          ></textarea>
+        </div>
+
+        <div class="actions">
+          <button id="decrypt-btn" type="button">🔓 Descifrar e Importar al Recreador</button>
+        </div>
       </div>
 
+      <!-- Tab Content: Recreate -->
+      <div class="tab-content" id="tab-recreate-content">
+        <div class="input-group">
+          <label for="contract-text">Texto del contrato decodificado (Summary)</label>
+          <textarea
+            id="contract-text"
+            placeholder="Pega aquí el bloque de texto del contrato (Summary)..."
+          ></textarea>
+        </div>
+
+        <div class="actions">
+          <button id="recreate-btn" type="button">Recrear y Descargar PDF Oficial</button>
+        </div>
+      </div>
+
+      <!-- Result Panel -->
       <div class="result-panel" id="result">
         <div class="result-title">
           <svg width="18" height="18" viewBox="0 0 24 24">
             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
           </svg>
-          PDF Recreado Bit por Bit con Éxito
+          <span id="result-status-title">PDF Recreado Bit por Bit con Éxito</span>
         </div>
         <div class="meta-grid">
           <div class="meta-label">Archivo generado:</div>
@@ -582,6 +703,182 @@
 
         return doc;
       }
+
+      // Tab switching
+      const btnTabDecrypt = document.getElementById("btn-tab-decrypt");
+      const btnTabRecreate = document.getElementById("btn-tab-recreate");
+      const tabDecryptContent = document.getElementById("tab-decrypt-content");
+      const tabRecreateContent = document.getElementById("tab-recreate-content");
+
+      btnTabDecrypt.addEventListener("click", () => {
+        btnTabDecrypt.classList.add("active");
+        btnTabRecreate.classList.remove("active");
+        tabDecryptContent.classList.add("active");
+        tabRecreateContent.classList.remove("active");
+      });
+
+      btnTabRecreate.addEventListener("click", () => {
+        btnTabRecreate.classList.add("active");
+        btnTabDecrypt.classList.remove("active");
+        tabRecreateContent.classList.add("active");
+        tabDecryptContent.classList.remove("active");
+      });
+
+      // Private Key Management and Persistence
+      let loadedPrivateKeyPem = localStorage.getItem("private_key_pem") || null;
+      const keyStatus = document.getElementById("key-status");
+      const chkSaveKey = document.getElementById("chk-save-key");
+
+      function updateKeyStatusUI() {
+        if (loadedPrivateKeyPem) {
+          keyStatus.textContent = "✓ Clave privada cargada y lista";
+          keyStatus.classList.add("loaded");
+        } else {
+          keyStatus.textContent = "Clave privada no cargada";
+          keyStatus.classList.remove("loaded");
+        }
+      }
+      updateKeyStatusUI();
+
+      // File upload handler
+      const fileInput = document.getElementById("private-key-file");
+      const btnUploadKey = document.getElementById("btn-upload-key");
+
+      btnUploadKey.addEventListener("click", () => fileInput.click());
+      
+      fileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          const content = evt.target.result.trim();
+          if (content.includes("BEGIN PRIVATE KEY") || content.includes("BEGIN RSA PRIVATE KEY")) {
+            loadedPrivateKeyPem = content;
+            if (chkSaveKey.checked) {
+              localStorage.setItem("private_key_pem", content);
+            }
+            updateKeyStatusUI();
+            alert("✓ Clave privada cargada con éxito localmente.");
+          } else {
+            alert("❌ El archivo no parece ser una clave privada en formato PEM válido.");
+          }
+        };
+        reader.readAsText(file);
+      });
+
+      // Save/persist key logic check
+      chkSaveKey.addEventListener("change", () => {
+        if (!chkSaveKey.checked) {
+          localStorage.removeItem("private_key_pem");
+        } else if (loadedPrivateKeyPem) {
+          localStorage.setItem("private_key_pem", loadedPrivateKeyPem);
+        }
+      });
+
+      // Web Crypto Decryption
+      function base64ToBytes(base64) {
+        const binary = atob(base64.trim());
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i += 1) {
+          bytes[i] = binary.charCodeAt(i);
+        }
+        return bytes;
+      }
+
+      async function decryptPrivateKeyPEM(pemContent) {
+        const cleanPem = pemContent
+          .replace("-----BEGIN PRIVATE KEY-----", "")
+          .replace("-----END PRIVATE KEY-----", "")
+          .replace("-----BEGIN RSA PRIVATE KEY-----", "")
+          .replace("-----END RSA PRIVATE KEY-----", "")
+          .replace(/\s/g, "");
+        
+        const keyBytes = base64ToBytes(cleanPem);
+        
+        return await crypto.subtle.importKey(
+          "pkcs8",
+          keyBytes,
+          { name: "RSA-OAEP", hash: "SHA-256" },
+          false,
+          ["decrypt"]
+        );
+      }
+
+      const decryptBtn = document.getElementById("decrypt-btn");
+      const encryptedPayloadText = document.getElementById("encrypted-payload");
+      const contractText = document.getElementById("contract-text");
+
+      decryptBtn.addEventListener("click", async () => {
+        if (!loadedPrivateKeyPem) {
+          alert("Por favor, carga primero tu clave privada .pem antes de descifrar.");
+          return;
+        }
+
+        const rawJson = encryptedPayloadText.value.trim();
+        if (!rawJson) {
+          alert("Por favor, pega el bloque JSON cifrado del email.");
+          return;
+        }
+
+        try {
+          const payload = JSON.parse(rawJson);
+          if (!payload.encryptedKey || !payload.iv || !payload.ciphertext) {
+            throw new Error("El JSON no contiene las propiedades requeridas (encryptedKey, iv, ciphertext). Asegúrate de pegar todo el bloque JSON.");
+          }
+
+          // Import keys and decrypt
+          const privateKey = await decryptPrivateKeyPEM(loadedPrivateKeyPem);
+          
+          const encryptedKeyBytes = base64ToBytes(payload.encryptedKey);
+          const ivBytes = base64ToBytes(payload.iv);
+          const ciphertextBytes = base64ToBytes(payload.ciphertext);
+
+          // 1. Decrypt AES key with RSA-OAEP
+          const decryptedAesKeyBytes = await crypto.subtle.decrypt(
+            { name: "RSA-OAEP" },
+            privateKey,
+            encryptedKeyBytes
+          );
+
+          // 2. Import raw AES key
+          const aesKey = await crypto.subtle.importKey(
+            "raw",
+            decryptedAesKeyBytes,
+            { name: "AES-GCM" },
+            false,
+            ["decrypt"]
+          );
+
+          // 3. Decrypt ciphertext with AES-GCM
+          const decryptedPlaintextBytes = await crypto.subtle.decrypt(
+            { name: "AES-GCM", iv: ivBytes },
+            aesKey,
+            ciphertextBytes
+          );
+
+          // 4. Decode plaintext
+          const decodedText = new TextDecoder().decode(decryptedPlaintextBytes);
+          const decryptedData = JSON.parse(decodedText);
+
+          if (!decryptedData.summary) {
+            throw new Error("El contrato descifrado no contiene el campo 'summary'.");
+          }
+
+          // Fill into manual recreate textarea and switch tabs
+          contractText.value = decryptedData.summary;
+          
+          btnTabRecreate.click();
+          alert("✓ ¡Solicitud descifrada con éxito! Los datos han sido cargados en el Recreador Manual.");
+          
+          // Smooth scroll to the textarea
+          contractText.scrollIntoView({ behavior: "smooth", block: "center" });
+
+        } catch (error) {
+          console.error("Decryption failed:", error);
+          alert("❌ Error al descifrar: " + error.message + "\n\nVerifica que la clave privada corresponda a la clave pública de este contrato y que hayas pegado correctamente el bloque de datos.");
+        }
+      });
 
       document.getElementById("recreate-btn").addEventListener("click", async () => {
         const textInput = document.getElementById("contract-text").value.trim();
