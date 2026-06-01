@@ -157,50 +157,45 @@ function buildSummary(data) {
     .filter(Boolean)
     .join(", ");
 
+  const inicioInmediatoTexto = data.get("inicioInmediato")
+    ? "El Cliente solicita y autoriza de forma expresa el inicio inmediato de las gestiones profesionales sin esperar al plazo legal de desistimiento. Si decide desistir con posterioridad, debera abonar al Profesional la parte proporcional a las gestiones efectivamente realizadas hasta ese momento. Este derecho se extinguira por completo una vez el servicio haya sido ejecutado en su totalidad."
+    : "El Cliente acepta las condiciones del servicio, reservandose el inicio de las gestiones hasta el transcurso del plazo legal de desistimiento, salvo solicitud posterior.";
+
   return [
-    "SOLICITUD DE CONTRATACION",
+    "CONTRATO DE PRESTACION DE SERVICIOS - HOJA DE ENCARGO",
     "",
-    `Fecha de generacion: ${generatedAt}`,
+    `Fecha del contrato: ${generatedAt}`,
+    "Lugar de celebracion: Madrid",
     "",
-    "PRESTADOR",
-    "Daniel Arnaiz Cuesta, NIF 72828826Q",
-    "Servicio documental laboral para asuntos tramitables ante el SMAC de la Comunidad de Madrid.",
+    "REUNIDOS:",
     "",
-    "CLIENTE",
-    `Nombre: ${valueOf(data, "nombre")}`,
-    `DNI/NIE/Pasaporte: ${valueOf(data, "dni")}`,
-    `Email: ${valueOf(data, "email")}`,
-    `Telefono: ${valueOf(data, "telefono") || "No indicado"}`,
-    `Domicilio: ${domicilioCompleto}`,
+    "De una parte, como prestador del servicio, en adelante designado como el Profesional: DANIEL ARNAIZ CUESTA, con NIF 72828826Q, domicilio profesional en C/ Arroyo de la Media Legua 4, bajo derecha, 28030 Madrid, y correo electronico de contacto danielarnaizcuesta@gmail.com.",
     "",
-    "ASUNTO",
-    `Empresa o empleador: ${valueOf(data, "empresa")}`,
+    `De otra parte, como cliente, en adelante designado como el Cliente: Nombre y apellidos: ${valueOf(data, "nombre")}, con DNI o NIE o Pasaporte: ${valueOf(data, "dni")}, correo electronico: ${valueOf(data, "email")}, telefono: ${valueOf(data, "telefono") || "No indicado"} y domicilio en: ${domicilioCompleto}.`,
     "",
-    "LUGAR, FECHA, ZONA Y FUERO",
-    "Lugar de contratacion: Madrid.",
-    `Fecha de contratacion: ${generatedAt}`,
-    "Zona de prestacion: Comunidad de Madrid.",
-    "Ley aplicable y fuero: ley espanola; para clientes consumidores, juzgados y tribunales legalmente competentes; cuando la competencia territorial sea legalmente disponible, fuero de Madrid.",
+    "El Profesional y el Cliente, reconociendose la capacidad legal necesaria, acuerdan formalizar el presente contrato de conformidad con las siguientes",
     "",
-    "SERVICIO SOLICITADO",
-    "Papeleta de conciliacion, presentacion y representacion voluntaria en asunto tramitable ante el SMAC de la Comunidad de Madrid. A tal efecto, el cliente facilitara al profesional la representacion necesaria, ya sea compareciendo presencialmente para otorgar dicha representacion o mediante el correspondiente poder notarial, con anterioridad a la fecha del acto de conciliacion.",
+    "ESTIPULACIONES:",
     "",
-    "PRECIO",
-    "Precio cerrado del servicio: 150,00 EUR IVA incluido.",
-    "La aportacion de los datos solicitados es obligatoria para la ejecucion del encargo y su facturacion.",
-    "Pago por transferencia o Bizum una vez prestado el servicio.",
-    "Factura del servicio conforme a la normativa de facturacion.",
+    "1. OBJETO DEL ENCARGO",
+    `El Cliente encarga al Profesional la redaccion, presentacion de la papeleta de conciliacion laboral y la representacion voluntaria en el acto de conciliacion administrativa ante el SMAC contra la empresa ${valueOf(data, "empresa")}. El servicio esta limitado a asuntos tramitables ante el SMAC de la Comunidad de Madrid. A tal efecto, el Cliente facilitara al Profesional la representacion necesaria, ya sea compareciendo presencialmente para otorgar dicha representacion o mediante el correspondiente poder notarial, con anterioridad a la fecha del acto de conciliacion.`,
     "",
-    "ACEPTACIONES",
-    `Acepta condiciones del servicio, privacidad y precio cerrado de 150,00 EUR IVA incluido: ${yesNo(data, "aceptaCondiciones")}`,
-    `Solicita inicio inmediato sin esperar al plazo legal de desistimiento: ${yesNo(data, "inicioInmediato")}`,
+    "2. PRECIO, PAGO Y FACTURACION",
+    "El precio cerrado por la prestacion de este servicio es de 150,00 EUR con IVA incluido. La aportacion de los datos solicitados por el Cliente es obligatoria para la correcta ejecucion del encargo y su facturacion. El pago se realizara mediante transferencia bancaria o Bizum una vez que el servicio haya sido prestado. El Profesional emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.",
     "",
-    "ACEPTACION ELECTRONICA",
-    valueOf(data, "nombre"),
+    "3. DERECHO DE DESISTIMIENTO E INICIO DEL SERVICIO",
+    `El Cliente tiene derecho a desistir del presente contrato en un plazo de 14 dias naturales sin necesidad de justificacion. ${inicioInmediatoTexto}`,
     "",
-    data.get("inicioInmediato")
-      ? "El cliente solicita iniciar el encargo de conciliacion y representacion de forma inmediata sin esperar al plazo legal de desistimiento."
-      : "El cliente acepta las condiciones generales, la politica de privacidad y el precio del servicio, quedando contratado el encargo con el envio de la solicitud cifrada.",
+    "4. LUGAR, FECHA, ZONA DE PRESTACION Y FUERO",
+    "El presente contrato se celebra en Madrid en la fecha y hora indicadas. La zona geografica de prestacion del servicio es exclusivamente la Comunidad de Madrid. Este contrato se rige por la legislacion espanola. Para clientes que tengan la consideracion de consumidores, seran competentes los juzgados y tribunales que correspondan segun la normativa aplicable. En caso de que la competencia territorial sea legalmente disponible, ambas partes se someten expresamente a los juzgados y tribunales de la ciudad de Madrid.",
+    "",
+    "5. FIRMA Y ACEPTACION ELECTRONICA",
+    "La contratacion queda formalizada y perfeccionada mediante la cumplimentacion y envio de la solicitud web cifrada y el marcado electronico de la casilla obligatoria de aceptacion de condiciones, politica de privacidad y precio.",
+    "",
+    "ACEPTACION ELECTRONICA:",
+    `Firmado electronicamente por el Cliente: ${valueOf(data, "nombre")}`,
+    `Acepta condiciones de servicio, privacidad y precio cerrado de 150,00 EUR: ${yesNo(data, "aceptaCondiciones")}`,
+    `Solicita inicio inmediato del servicio: ${yesNo(data, "inicioInmediato")}`,
   ].join("\n");
 }
 
@@ -271,7 +266,7 @@ function evidenceSubject(evidence) {
 }
 
 async function sendEncryptedSubmission(encryptedSubmission, evidence) {
-  const subject = `Nueva solicitud cifrada ${evidenceSubject(evidence)}`;
+  const subject = `Nuevo contrato firmado ${evidenceSubject(evidence)}`;
   const payload = JSON.stringify({
     _subject: subject,
     _captcha: "false",
@@ -289,6 +284,8 @@ async function sendEncryptedSubmission(encryptedSubmission, evidence) {
   let lastError;
   for (const endpoint of endpoints) {
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 8000);
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
@@ -296,7 +293,9 @@ async function sendEncryptedSubmission(encryptedSubmission, evidence) {
           Accept: "application/json",
         },
         body: payload,
+        signal: controller.signal,
       });
+      clearTimeout(timeoutId);
       if (response.ok) return;
     } catch (error) {
       lastError = error;
@@ -308,29 +307,49 @@ async function sendEncryptedSubmission(encryptedSubmission, evidence) {
 
 function setLinks(summary, data, evidence = null) {
   const subject = evidence
-    ? `Solicitud contratacion ${evidenceSubject(evidence)}`
-    : `Solicitud contratacion conciliacion - ${valueOf(data, "nombre")}`;
+    ? `Contrato firmado ${evidenceSubject(evidence)}`
+    : `Contrato firmado - ${valueOf(data, "nombre")}`;
   const encodedSubject = encodeURIComponent(subject);
   const evidenceBlock = evidence
     ? `\n\nTRAZABILIDAD\nReferencia: ${evidence.reference}\nPDF SHA-256: ${evidence.contractPdfSha256}\nTexto SHA-256: ${evidence.summarySha256}`
     : "";
-  const encodedBody = encodeURIComponent(`${summary}${evidenceBlock}`);
-  const waMessage =
-    "*SOLICITUD DE CONTRATACION*\n\n" +
-    "Hola Daniel, aqui tienes la solicitud de contratacion que acabo de preparar desde la web:\n\n" +
-    summary +
-    evidenceBlock;
+  
+  const emailBody = evidence
+    ? `Hola Daniel,\n\nHe formalizado el contrato de prestacion de servicios desde la web.\n\nAdjunto a este correo te envio el documento PDF del contrato firmado, el cual acabo de descargar de la web.\n\nDATOS DE VERIFICACION Y TRAZABILIDAD:\nReferencia: ${evidence.reference}\nPDF SHA-256: ${evidence.contractPdfSha256}\nTexto SHA-256: ${evidence.summarySha256}\n\nPor favor, revisa el archivo PDF adjunto.\n\nUn saludo.`
+    : `Hola Daniel,\n\nHe formalizado el contrato de prestacion de servicios desde la web.\n\nAdjunto a este correo te envio el documento PDF del contrato firmado, el cual acabo de descargar de la web.\n\nPor favor, revisa el archivo PDF adjunto.\n\nUn saludo.`;
 
-  emailLink.href = `mailto:${CONTACT_EMAIL}?subject=${encodedSubject}&body=${encodedBody}`;
+  const waMessage =
+    "*CONTRATO DE PRESTACION DE SERVICIOS - HOJA DE ENCARGO*\n\n" +
+    "Hola Daniel, acabo de formalizar el contrato desde la web. A continuacion te adjunto el PDF del contrato que he descargado de la web.\n\n" +
+    (evidence
+      ? `Referencia: ${evidence.reference}\nPDF SHA-256: ${evidence.contractPdfSha256}\nTexto SHA-256: ${evidence.summarySha256}\n\n`
+      : "") +
+    "Por favor, revisa el archivo PDF adjunto.";
+
+  emailLink.href = `mailto:${CONTACT_EMAIL}?subject=${encodedSubject}&body=${encodeURIComponent(emailBody)}`;
   whatsappLink.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessage)}`;
 }
 
-function showResult(summary, data, evidence = null) {
+function showResult(summary, data, evidence = null, isSuccess = true) {
   const evidenceBlock = evidence
     ? `\n\nTRAZABILIDAD\nReferencia: ${evidence.reference}\nPDF SHA-256: ${evidence.contractPdfSha256}\nTexto SHA-256: ${evidence.summarySha256}`
     : "";
   summaryText.value = summary + evidenceBlock;
   setLinks(summary, data, evidence);
+  
+  const resultTitle = document.getElementById("result-title");
+  const resultDesc = document.getElementById("result-desc");
+  
+  if (resultTitle && resultDesc) {
+    if (isSuccess) {
+      resultTitle.textContent = "Contrato Formalizado";
+      resultDesc.innerHTML = "El contrato ha sido firmado y transmitido de forma segura. Descarga tu copia oficial en PDF a continuación para tus archivos. Daniel contactará contigo a la mayor brevedad.";
+    } else {
+      resultTitle.textContent = "Contrato Firmado - Envío Manual Requerido";
+      resultDesc.innerHTML = "El contrato se ha firmado correctamente, pero debido a una interrupción en el servidor de envío automático, debes transmitirlo manualmente. Por favor, <strong>descarga el PDF del contrato</strong> y envíalo mediante correo electrónico o WhatsApp utilizando los botones de abajo.";
+    }
+  }
+
   resultSection.hidden = false;
   resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
 }
@@ -350,7 +369,7 @@ form.addEventListener("submit", async (event) => {
   const originalText = submitButton.textContent;
 
   submitButton.disabled = true;
-  submitButton.textContent = "Enviando solicitud segura...";
+  submitButton.textContent = "Firmando y enviando contrato...";
 
   try {
     const contractPdf = await createContractPdfAttachment(summary);
@@ -358,15 +377,33 @@ form.addEventListener("submit", async (event) => {
     const payload = await buildPayload(data, summary, contractPdf);
     const encryptedSubmission = await encryptSubmission(payload);
     await sendEncryptedSubmission(encryptedSubmission, payload.evidence);
-    showResult(summary, data, payload.evidence);
-    copyStatus.textContent = `Solicitud cifrada enviada. ${evidenceSubject(payload.evidence)}. Hash completo guardado en el email y el manifiesto.`;
-    submitButton.textContent = "Solicitud enviada";
+    showResult(summary, data, payload.evidence, true);
+    copyStatus.textContent = `Contrato firmado y enviado de forma segura. ${evidenceSubject(payload.evidence)}. Hash completo guardado en el email y el manifiesto.`;
+    submitButton.textContent = "Contrato firmado y enviado";
     submitButton.style.backgroundColor = "var(--primary)";
     submitButton.style.borderColor = "var(--primary)";
   } catch (error) {
     console.error("Encrypted submission failure:", error);
-    showResult(summary, data);
-    copyStatus.textContent = "No se pudo enviar automaticamente. Usa correo, WhatsApp, copia o PDF.";
+    let fakeEvidence = null;
+    try {
+      const summarySha256 = await sha256Hex(summary);
+      let pdfSha256 = "ERROR_DE_GENERACION_DE_PDF";
+      if (!lastGeneratedPdf) {
+        lastGeneratedPdf = await createContractPdfAttachment(summary);
+      }
+      if (lastGeneratedPdf) {
+        pdfSha256 = lastGeneratedPdf.sha256;
+      }
+      fakeEvidence = {
+        reference: submissionReference(),
+        contractPdfSha256: pdfSha256,
+        summarySha256: summarySha256,
+      };
+    } catch (innerError) {
+      console.error("Inner error during fallback evidence generation:", innerError);
+    }
+    showResult(summary, data, fakeEvidence, false);
+    copyStatus.textContent = "No se pudo enviar automaticamente. Por favor, descarga el PDF y envialo por WhatsApp o correo.";
     submitButton.disabled = false;
     submitButton.textContent = originalText;
   }
@@ -385,7 +422,7 @@ copyButton.addEventListener("click", async () => {
 
 function pdfFilename() {
   const date = new Date().toISOString().slice(0, 10);
-  return `contrato-solicitud-conciliacion-${date}.pdf`;
+  return `contrato-prestacion-servicios-daniel-arnaiz-${date}.pdf`;
 }
 
 function buildPdfDocument(summary) {
@@ -413,15 +450,15 @@ function buildPdfDocument(summary) {
 
     if (
       [
-        "SOLICITUD DE CONTRATACION",
-        "PRESTADOR",
-        "CLIENTE",
-        "ASUNTO",
-        "LUGAR, FECHA, ZONA Y FUERO",
-        "SERVICIO SOLICITADO",
-        "PRECIO",
-        "ACEPTACIONES",
-        "ACEPTACION ELECTRONICA",
+        "CONTRATO DE PRESTACION DE SERVICIOS - HOJA DE ENCARGO",
+        "REUNIDOS:",
+        "ESTIPULACIONES:",
+        "1. OBJETO DEL ENCARGO",
+        "2. PRECIO, PAGO Y FACTURACION",
+        "3. DERECHO DE DESISTIMIENTO E INICIO DEL SERVICIO",
+        "4. LUGAR, FECHA, ZONA DE PRESTACION Y FUERO",
+        "5. FIRMA Y ACEPTACION ELECTRONICA",
+        "ACEPTACION ELECTRONICA:",
       ].includes(line)
     ) {
       doc.setFont("helvetica", "bold");
@@ -433,7 +470,7 @@ function buildPdfDocument(summary) {
       doc.setFont("helvetica", "normal");
       doc.setTextColor(33, 33, 33);
       doc.setFontSize(10);
-    } else if (line.startsWith("Fecha de generacion:")) {
+    } else if (line.startsWith("Fecha del contrato:")) {
       doc.setFont("helvetica", "italic");
       doc.setTextColor(110, 110, 110);
       doc.setFontSize(9);
