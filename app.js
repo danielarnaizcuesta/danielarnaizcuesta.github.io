@@ -299,7 +299,7 @@ function buildSummary(data) {
     `El Cliente encarga al Profesional la redaccion, presentacion de la papeleta de conciliacion laboral y la representacion voluntaria en el acto de conciliacion administrativa ante el SMAC contra la empresa ${valueOf(data, "empresa")}. El servicio esta limitado a asuntos tramitables ante el SMAC de la Comunidad de Madrid. A tal efecto, el Cliente facilitara al Profesional la representacion necesaria, ya sea compareciendo presencialmente para otorgar dicha representacion o mediante el correspondiente poder notarial, con anterioridad a la fecha del acto de conciliacion.`,
     "",
     "2. PRECIO, PAGO Y FACTURACION",
-    "El precio cerrado por la prestacion de este servicio es de 150,00 EUR con IVA incluido. La aportacion de los datos solicitados por el Cliente es obligatoria para la correcta ejecucion del encargo y su facturacion. El pago se realizara mediante transferencia bancaria o Bizum una vez que el servicio haya sido prestado. El Profesional emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.",
+    "El precio cerrado por la prestacion de este servicio es de 150,00 EUR con IVA incluido. No se exige provision de fondos inicial. La aportacion de los datos solicitados por el Cliente es obligatoria para la correcta ejecucion del encargo y su facturacion. El pago se realizara mediante transferencia bancaria o Bizum una vez que el servicio haya sido prestado. El Profesional emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.",
     "",
     "3. DERECHO DE DESISTIMIENTO E INICIO DEL SERVICIO",
     `El Cliente tiene derecho a desistir del presente contrato en un plazo de 14 dias naturales sin necesidad de justificacion. ${inicioInmediatoTexto}`,
@@ -345,7 +345,7 @@ async function buildPayload(data, summary, contractPdf) {
       contractPlace: "Madrid",
       serviceZone: "Comunidad de Madrid. Solo asuntos tramitables ante el SMAC de la Comunidad de Madrid.",
       governingLawAndForum: "Ley espanola. Para clientes consumidores, juzgados y tribunales legalmente competentes. Cuando la competencia territorial sea legalmente disponible, fuero de Madrid.",
-      acceptedConditionsText: "Acepto las condiciones del servicio, la politica de privacidad y el precio cerrado de 150,00 EUR IVA incluido.",
+      acceptedConditionsText: "Acepto las condiciones del servicio, la politica de privacidad, el precio cerrado de 150,00 EUR IVA incluido, sin provision de fondos inicial y con pago una vez prestado el servicio.",
       immediateStartText: data.get("inicioInmediato")
         ? "Solicito el inicio inmediato de las gestiones sin esperar al plazo legal de desistimiento."
         : null,
@@ -372,7 +372,7 @@ async function buildPayload(data, summary, contractPdf) {
       employer: valueOf(data, "empresa"),
       service: "S-01 papeleta de conciliacion, presentacion y representacion voluntaria en asunto tramitable ante el SMAC de la Comunidad de Madrid",
       price: "150,00 EUR IVA incluido",
-      payment: "transferencia o Bizum una vez prestado el servicio",
+      payment: "sin provision de fondos inicial; transferencia o Bizum una vez prestado el servicio",
     },
     acceptances: {
       conditionsAndPrivacy: Boolean(data.get("aceptaCondiciones")),
