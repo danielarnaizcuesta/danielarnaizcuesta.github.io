@@ -389,32 +389,11 @@
     <div class="container" id="main-container">
       <header>
         <h1>Panel de Contratos</h1>
-        <p class="subtitle">Descifrado de solicitudes y recreación determinista bit a bit de PDFs oficiales</p>
+        <p class="subtitle">Descifrado y recreación instantánea de PDFs firmados oficiales</p>
       </header>
 
-      <!-- Tabs Header -->
-      <div class="tabs-header">
-        <button class="tab-btn active" id="btn-tab-decrypt">Descifrar Solicitud</button>
-        <button class="tab-btn" id="btn-tab-recreate">Recreador Manual</button>
-      </div>
-
-      <!-- Tab Content: Decrypt -->
-      <div class="tab-content active" id="tab-decrypt-content">
-        <!-- Private Key Importer Section -->
-        <div class="key-section">
-          <label>Clave Privada RSA (Formato PEM)</label>
-          <p class="subtitle" style="font-size:0.82rem; margin:0 0 12px 0;">Carga tu archivo de clave privada para realizar el descifrado seguro de forma 100% local en tu navegador.</p>
-          <div class="key-actions">
-            <button class="tab-btn btn-secondary" id="btn-upload-key" type="button">📂 Cargar clave_privada_formulario.pem</button>
-            <input type="file" id="private-key-file" accept=".pem,.key" style="display:none;" />
-            <span id="key-status" class="key-status-label">Clave privada no cargada</span>
-          </div>
-          <label class="checkbox-row">
-            <input type="checkbox" id="chk-save-key" checked />
-            <span>Recordar clave privada de forma segura en este navegador (Local Storage)</span>
-          </label>
-        </div>
-
+      <!-- Main Action Section: Single Step Decrypt & Recreate -->
+      <div id="decrypt-section">
         <div class="input-group">
           <label for="encrypted-payload">Solicitud Cifrada (Copiada del Email)</label>
           <textarea
@@ -424,22 +403,29 @@
         </div>
 
         <div class="actions">
-          <button id="decrypt-btn" type="button">🔓 Descifrar e Importar al Recreador</button>
+          <button id="decrypt-btn" type="button">🔓 Descifrar y Descargar PDF Oficial</button>
         </div>
       </div>
 
-      <!-- Tab Content: Recreate -->
-      <div class="tab-content" id="tab-recreate-content">
+      <!-- Advanced Section Toggle -->
+      <div style="margin-top: 20px; text-align: center;">
+        <a href="#" id="toggle-advanced" style="color: var(--text-muted); font-size: 0.85rem; text-decoration: none; border-bottom: 1px dashed var(--border);">
+          Mostrar opciones avanzadas (Recreador Manual)
+        </a>
+      </div>
+
+      <!-- Advanced Section: Hidden by default -->
+      <div id="advanced-section" style="display: none; margin-top: 25px; border-top: 1px solid var(--border); padding-top: 25px;">
         <div class="input-group">
           <label for="contract-text">Texto del contrato decodificado (Summary)</label>
           <textarea
             id="contract-text"
-            placeholder="Pega aquí el bloque de texto del contrato (Summary)..."
+            placeholder="Pega aquí el bloque de texto del contrato (Summary) para recrearlo manualmente..."
           ></textarea>
         </div>
 
         <div class="actions">
-          <button id="recreate-btn" type="button">Recrear y Descargar PDF Oficial</button>
+          <button id="recreate-btn" type="button">Recrear y Descargar PDF Manual</button>
         </div>
       </div>
 
@@ -466,6 +452,9 @@
     <script>
       // Secure hardcoded SHA-256 hash of password: cuesta2026
       const AUTH_HASH = "5c63c5f5fb2c4777034fa0cd7785a1bbe0b7287bbd69e47f77068c322e7ff89e";
+
+      const ENCRYPTED_PRIVATE_KEY_IV = "nHHDQqIwQxPnU3kk";
+      const ENCRYPTED_PRIVATE_KEY_CIPHERTEXT = "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:BychEVuwoKiDVX0k6BMJ2w==";
 
       function sha256PureJS(asciiOrBytes) {
         let bytes = asciiOrBytes;
@@ -593,6 +582,69 @@
         return await sha256Hex(data);
       }
 
+
+      // Global Private Key loaded in memory upon successful login
+      let globalPrivateKey = null;
+
+      // Base64 helper
+      function base64ToBytes(base64) {
+        const binary = atob(base64.trim());
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i += 1) {
+          bytes[i] = binary.charCodeAt(i);
+        }
+        return bytes;
+      }
+
+      // Decrypt the hardcoded private key using GCM with the user's password
+      async function decryptEmbeddedKey(pwd) {
+        const aesKeyBytes = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(pwd.trim()));
+        const aesKey = await crypto.subtle.importKey(
+          "raw",
+          aesKeyBytes,
+          { name: "AES-GCM" },
+          false,
+          ["decrypt"]
+        );
+
+        const parts = ENCRYPTED_PRIVATE_KEY_CIPHERTEXT.split(':');
+        const ciphertextBytes = base64ToBytes(parts[0]);
+        const tagBytes = base64ToBytes(parts[1]);
+        const ivBytes = base64ToBytes(ENCRYPTED_PRIVATE_KEY_IV);
+
+        const combinedBytes = new Uint8Array(ciphertextBytes.length + tagBytes.length);
+        combinedBytes.set(ciphertextBytes, 0);
+        combinedBytes.set(tagBytes, ciphertextBytes.length);
+
+        const decryptedBytes = await crypto.subtle.decrypt(
+          { name: "AES-GCM", iv: ivBytes },
+          aesKey,
+          combinedBytes
+        );
+
+        return new TextDecoder().decode(decryptedBytes);
+      }
+
+      // Import the decrypted PKCS#8 private key
+      async function importPrivateKeyPEM(pemContent) {
+        const cleanPem = pemContent
+          .replace("-----BEGIN PRIVATE KEY-----", "")
+          .replace("-----END PRIVATE KEY-----", "")
+          .replace("-----BEGIN RSA PRIVATE KEY-----", "")
+          .replace("-----END RSA PRIVATE KEY-----", "")
+          .replace(/\s/g, "");
+        
+        const keyBytes = base64ToBytes(cleanPem);
+        
+        return await crypto.subtle.importKey(
+          "pkcs8",
+          keyBytes,
+          { name: "RSA-OAEP", hash: "SHA-256" },
+          false,
+          ["decrypt"]
+        );
+      }
+
       function unlockPanel() {
         const overlay = document.getElementById("auth-overlay");
         const container = document.getElementById("main-container");
@@ -602,8 +654,19 @@
       }
 
       // Check sessionStorage for previous unlock in this session
-      if (sessionStorage.getItem("recreador_auth") === "true") {
-        unlockPanel();
+      const storedPwd = sessionStorage.getItem("recreador_pwd");
+      if (sessionStorage.getItem("recreador_auth") === "true" && storedPwd) {
+        (async () => {
+          try {
+            const decryptedKeyPem = await decryptEmbeddedKey(storedPwd);
+            globalPrivateKey = await importPrivateKeyPEM(decryptedKeyPem);
+            unlockPanel();
+          } catch (e) {
+            console.error("Session key decryption failed:", e);
+            sessionStorage.clear();
+            window.location.reload();
+          }
+        })();
       }
 
       // Handle Authentication Click / Enter key
@@ -613,10 +676,20 @@
         
         errorDiv.style.display = "none";
         
-        const hash = await hashString(pwdInput.value.trim());
+        const pwd = pwdInput.value.trim();
+        const hash = await hashString(pwd);
         if (hash === AUTH_HASH) {
-          sessionStorage.setItem("recreador_auth", "true");
-          unlockPanel();
+          try {
+            const decryptedKeyPem = await decryptEmbeddedKey(pwd);
+            globalPrivateKey = await importPrivateKeyPEM(decryptedKeyPem);
+            
+            sessionStorage.setItem("recreador_auth", "true");
+            sessionStorage.setItem("recreador_pwd", pwd);
+            unlockPanel();
+          } catch (e) {
+            console.error("Failed to decrypt private key:", e);
+            alert("Error crítico de inicialización criptográfica: no se pudo descifrar la clave privada interna.");
+          }
         } else {
           pwdInput.value = "";
           errorDiv.style.display = "block";
@@ -704,114 +777,14 @@
         return doc;
       }
 
-      // Tab switching
-      const btnTabDecrypt = document.getElementById("btn-tab-decrypt");
-      const btnTabRecreate = document.getElementById("btn-tab-recreate");
-      const tabDecryptContent = document.getElementById("tab-decrypt-content");
-      const tabRecreateContent = document.getElementById("tab-recreate-content");
-
-      btnTabDecrypt.addEventListener("click", () => {
-        btnTabDecrypt.classList.add("active");
-        btnTabRecreate.classList.remove("active");
-        tabDecryptContent.classList.add("active");
-        tabRecreateContent.classList.remove("active");
-      });
-
-      btnTabRecreate.addEventListener("click", () => {
-        btnTabRecreate.classList.add("active");
-        btnTabDecrypt.classList.remove("active");
-        tabRecreateContent.classList.add("active");
-        tabDecryptContent.classList.remove("active");
-      });
-
-      // Private Key Management and Persistence
-      let loadedPrivateKeyPem = localStorage.getItem("private_key_pem") || null;
-      const keyStatus = document.getElementById("key-status");
-      const chkSaveKey = document.getElementById("chk-save-key");
-
-      function updateKeyStatusUI() {
-        if (loadedPrivateKeyPem) {
-          keyStatus.textContent = "✓ Clave privada cargada y lista";
-          keyStatus.classList.add("loaded");
-        } else {
-          keyStatus.textContent = "Clave privada no cargada";
-          keyStatus.classList.remove("loaded");
-        }
-      }
-      updateKeyStatusUI();
-
-      // File upload handler
-      const fileInput = document.getElementById("private-key-file");
-      const btnUploadKey = document.getElementById("btn-upload-key");
-
-      btnUploadKey.addEventListener("click", () => fileInput.click());
-      
-      fileInput.addEventListener("change", (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = (evt) => {
-          const content = evt.target.result.trim();
-          if (content.includes("BEGIN PRIVATE KEY") || content.includes("BEGIN RSA PRIVATE KEY")) {
-            loadedPrivateKeyPem = content;
-            if (chkSaveKey.checked) {
-              localStorage.setItem("private_key_pem", content);
-            }
-            updateKeyStatusUI();
-            alert("✓ Clave privada cargada con éxito localmente.");
-          } else {
-            alert("❌ El archivo no parece ser una clave privada en formato PEM válido.");
-          }
-        };
-        reader.readAsText(file);
-      });
-
-      // Save/persist key logic check
-      chkSaveKey.addEventListener("change", () => {
-        if (!chkSaveKey.checked) {
-          localStorage.removeItem("private_key_pem");
-        } else if (loadedPrivateKeyPem) {
-          localStorage.setItem("private_key_pem", loadedPrivateKeyPem);
-        }
-      });
-
-      // Web Crypto Decryption
-      function base64ToBytes(base64) {
-        const binary = atob(base64.trim());
-        const bytes = new Uint8Array(binary.length);
-        for (let i = 0; i < binary.length; i += 1) {
-          bytes[i] = binary.charCodeAt(i);
-        }
-        return bytes;
-      }
-
-      async function decryptPrivateKeyPEM(pemContent) {
-        const cleanPem = pemContent
-          .replace("-----BEGIN PRIVATE KEY-----", "")
-          .replace("-----END PRIVATE KEY-----", "")
-          .replace("-----BEGIN RSA PRIVATE KEY-----", "")
-          .replace("-----END RSA PRIVATE KEY-----", "")
-          .replace(/\s/g, "");
-        
-        const keyBytes = base64ToBytes(cleanPem);
-        
-        return await crypto.subtle.importKey(
-          "pkcs8",
-          keyBytes,
-          { name: "RSA-OAEP", hash: "SHA-256" },
-          false,
-          ["decrypt"]
-        );
-      }
-
+      // One-Click Decryption & PDF Download
       const decryptBtn = document.getElementById("decrypt-btn");
       const encryptedPayloadText = document.getElementById("encrypted-payload");
       const contractText = document.getElementById("contract-text");
 
       decryptBtn.addEventListener("click", async () => {
-        if (!loadedPrivateKeyPem) {
-          alert("Por favor, carga primero tu clave privada .pem antes de descifrar.");
+        if (!globalPrivateKey) {
+          alert("❌ Error: La clave privada no está cargada en memoria. Por favor, inicia sesión de nuevo.");
           return;
         }
 
@@ -824,12 +797,9 @@
         try {
           const payload = JSON.parse(rawJson);
           if (!payload.encryptedKey || !payload.iv || !payload.ciphertext) {
-            throw new Error("El JSON no contiene las propiedades requeridas (encryptedKey, iv, ciphertext). Asegúrate de pegar todo el bloque JSON.");
+            throw new Error("El JSON no contiene las propiedades requeridas (encryptedKey, iv, ciphertext). Asegúrate de copiar y pegar todo el bloque JSON.");
           }
 
-          // Import keys and decrypt
-          const privateKey = await decryptPrivateKeyPEM(loadedPrivateKeyPem);
-          
           const encryptedKeyBytes = base64ToBytes(payload.encryptedKey);
           const ivBytes = base64ToBytes(payload.iv);
           const ciphertextBytes = base64ToBytes(payload.ciphertext);
@@ -837,7 +807,7 @@
           // 1. Decrypt AES key with RSA-OAEP
           const decryptedAesKeyBytes = await crypto.subtle.decrypt(
             { name: "RSA-OAEP" },
-            privateKey,
+            globalPrivateKey,
             encryptedKeyBytes
           );
 
@@ -865,23 +835,61 @@
             throw new Error("El contrato descifrado no contiene el campo 'summary'.");
           }
 
-          // Fill into manual recreate textarea and switch tabs
-          contractText.value = decryptedData.summary;
+          const summaryText = decryptedData.summary;
+          const doc = buildPdfDocument(summaryText);
+          const arrayBuffer = doc.output("arraybuffer");
           
-          btnTabRecreate.click();
-          alert("✓ ¡Solicitud descifrada con éxito! Los datos han sido cargados en el Recreador Manual.");
-          
-          // Smooth scroll to the textarea
-          contractText.scrollIntoView({ behavior: "smooth", block: "center" });
+          const sizeBytes = arrayBuffer.byteLength;
+          const hashHex = await sha256Hex(arrayBuffer);
+          const filename = pdfFilename(summaryText);
+
+          // Render metadata in UI
+          document.getElementById("pdf-filename").textContent = filename;
+          document.getElementById("pdf-size").textContent = `${sizeBytes.toLocaleString()} bytes`;
+          document.getElementById("pdf-hash").textContent = hashHex.toUpperCase();
+          document.getElementById("result-status-title").textContent = "Contrato Descifrado y PDF Generado con Éxito";
+          document.getElementById("result").style.display = "block";
+
+          // Download File
+          const blob = new Blob([arrayBuffer], { type: "application/pdf" });
+          const url = URL.createObjectURL(blob);
+          const anchor = document.createElement("a");
+          anchor.href = url;
+          anchor.download = filename;
+          document.body.appendChild(anchor);
+          anchor.click();
+          anchor.remove();
+          URL.revokeObjectURL(url);
+
+          // Pre-fill the manual recreate textarea just in case
+          contractText.value = summaryText;
+
+          alert("✓ ¡Contrato descifrado y PDF descargado con éxito!");
 
         } catch (error) {
           console.error("Decryption failed:", error);
-          alert("❌ Error al descifrar: " + error.message + "\n\nVerifica que la clave privada corresponda a la clave pública de este contrato y que hayas pegado correctamente el bloque de datos.");
+          alert("❌ Error al descifrar: " + error.message + "\n\nVerifica que hayas copiado correctamente el bloque JSON completo.");
         }
       });
 
+      // Advanced manual recreate toggle
+      const toggleAdvanced = document.getElementById("toggle-advanced");
+      const advancedSection = document.getElementById("advanced-section");
+
+      toggleAdvanced.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (advancedSection.style.display === "none") {
+          advancedSection.style.display = "block";
+          toggleAdvanced.textContent = "Ocultar opciones avanzadas (Recreador Manual)";
+        } else {
+          advancedSection.style.display = "none";
+          toggleAdvanced.textContent = "Mostrar opciones avanzadas (Recreador Manual)";
+        }
+      });
+
+      // Manual Recreate Action
       document.getElementById("recreate-btn").addEventListener("click", async () => {
-        const textInput = document.getElementById("contract-text").value.trim();
+        const textInput = contractText.value.trim();
         if (!textInput) {
           alert("Por favor, pega primero el texto del contrato.");
           return;
@@ -899,6 +907,7 @@
           document.getElementById("pdf-filename").textContent = filename;
           document.getElementById("pdf-size").textContent = `${sizeBytes.toLocaleString()} bytes`;
           document.getElementById("pdf-hash").textContent = hashHex.toUpperCase();
+          document.getElementById("result-status-title").textContent = "PDF Recreado Bit por Bit con Éxito";
           document.getElementById("result").style.display = "block";
 
           // Download File
