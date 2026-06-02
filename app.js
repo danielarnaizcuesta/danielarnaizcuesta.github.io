@@ -24,6 +24,30 @@ CyiSWbqj5TdOzbaQqB+j4Ai+gPAFT/rwYXWEJVuFOc1AWPJfx7rBGKVbkAgJY646
 F45WvXRbliUcAMO0nuWuUycCAwEAAQ==
 -----END PUBLIC KEY-----`;
 
+const PAYPAL_CLIENT_ID = "sb"; // Reemplaza por tu Client ID de PayPal de producción. Usa "sb" para pruebas sandbox.
+
+let paypalSdkLoaded = false;
+let paypalButtonsRendered = false;
+
+function loadPayPalSDK(clientId, callback) {
+  if (window.paypal) {
+    paypalSdkLoaded = true;
+    callback();
+    return;
+  }
+  const script = document.createElement("script");
+  script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=EUR&locale=es_ES`;
+  script.onload = () => {
+    paypalSdkLoaded = true;
+    callback();
+  };
+  script.onerror = () => {
+    console.error("No se pudo cargar el SDK de PayPal.");
+    alert("Error al cargar la pasarela de PayPal. Por favor, selecciona Pago posterior o inténtalo más tarde.");
+  };
+  document.head.appendChild(script);
+}
+
 let lastGeneratedPdf = null;
 
 const SERVICES = {
@@ -311,7 +335,7 @@ async function encryptSubmission(payload) {
   };
 }
 
-function buildSummary(data) {
+function buildSummary(data, paymentInfo = null) {
   const service = selectedServiceFromData(data);
   const generatedAt = new Intl.DateTimeFormat("es-ES", {
     dateStyle: "short",
@@ -336,6 +360,15 @@ function buildSummary(data) {
     ? "El Cliente solicita y autoriza de forma expresa el inicio inmediato de las gestiones profesionales sin esperar al plazo legal de desistimiento. Si decide desistir con posterioridad, debera abonar al Profesional la parte proporcional a las gestiones efectivamente realizadas hasta ese momento. Este derecho se extinguira por completo una vez el servicio haya sido ejecutado en su totalidad."
     : "El Cliente acepta las condiciones del servicio, reservandose el inicio de las gestiones hasta el transcurso del plazo legal de desistimiento, salvo solicitud posterior.";
 
+  let pagoTexto = "";
+  if (paymentInfo && paymentInfo.method === "paypal") {
+    pagoTexto = `El precio cerrado por la prestacion de este servicio es de ${service.price}, el cual ha sido abonado integramente en este acto mediante PayPal (ID de transaccion: ${paymentInfo.transactionId}). El Profesional emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.`;
+  } else if (paymentInfo && paymentInfo.method === "bizum") {
+    pagoTexto = `El precio cerrado por la prestacion de este servicio es de ${service.price}, el cual ha sido abonado en este acto mediante Bizum inmediato desde el telefono ${paymentInfo.telefono} con el concepto "${paymentInfo.concepto}". El Profesional emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.`;
+  } else {
+    pagoTexto = `El precio cerrado por la prestacion de este servicio es de ${service.price}. No se exige provision de fondos inicial. La aportacion de los datos solicitados por el Cliente es obligatoria para la correcta ejecucion del encargo y su facturacion. El pago se realizara mediante transferencia bancaria o Bizum una vez que el servicio haya sido prestado. El Profesional emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.`;
+  }
+
   return [
     "CONTRATO DE PRESTACION DE SERVICIOS - HOJA DE ENCARGO",
     `Servicio contratado: ${service.code} - ${service.title}`,
@@ -357,7 +390,7 @@ function buildSummary(data) {
     service.objectClause(valueOf(data, "empresa")),
     "",
     "2. PRECIO, PAGO Y FACTURACION",
-    `El precio cerrado por la prestacion de este servicio es de ${service.price}. No se exige provision de fondos inicial. La aportacion de los datos solicitados por el Cliente es obligatoria para la correcta ejecucion del encargo y su facturacion. El pago se realizara mediante transferencia bancaria o Bizum una vez que el servicio haya sido prestado. El Profesional emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.`,
+    pagoTexto,
     "",
     "3. DERECHO DE DESISTIMIENTO E INICIO DEL SERVICIO",
     `El Cliente tiene derecho a desistir del presente contrato en un plazo de 14 dias naturales sin necesidad de justificacion. ${inicioInmediatoTexto}`,
@@ -373,6 +406,7 @@ function buildSummary(data) {
     `Servicio contratado: ${service.code} - ${service.title}`,
     `Acepta condiciones de servicio, privacidad y precio cerrado de ${service.price}: ${yesNo(data, "aceptaCondiciones")}`,
     `Solicita inicio inmediato del servicio: ${yesNo(data, "inicioInmediato")}`,
+    paymentInfo ? `Metodo de Pago: Pagado mediante ${paymentInfo.method.toUpperCase()} (${paymentInfo.method === "paypal" ? "ID de Transaccion: " + paymentInfo.transactionId : "Telefono emisor: " + paymentInfo.telefono + ", Concepto: " + paymentInfo.concepto})` : "Metodo de Pago: Pago posterior (Bizum / Transferencia tras el servicio)"
   ].join("\n");
 }
 
@@ -519,12 +553,119 @@ function showResult(summary, data, evidence = null) {
   const resultDesc = document.getElementById("result-desc");
   
   if (resultTitle && resultDesc) {
-    resultTitle.textContent = "Contrato Formalizado con Exito";
-    resultDesc.innerHTML = "El contrato se ha firmado electronicamente de forma segura y se ha transmitido al profesional para iniciar las gestiones de inmediato.<br><br>Por favor, <strong>descarga tu copia en PDF</strong> a continuacion para conservarla en tus archivos personales. Daniel contactara contigo a la mayor brevedad.";
+resultSection.hidden = false;
+  resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+async function processContractSubmission(paymentInfo = null) {
+  copyStatus.textContent = "";
+
+  const data = new FormData(form);
+  const service = selectedServiceFromData(data);
+  const summary = buildSummary(data, paymentInfo);
+  const submitButton = form.querySelector("button[type='submit']");
+  const originalText = submitButton.textContent;
+
+  submitButton.disabled = true;
+  submitButton.textContent = "Firmando y enviando contrato...";
+
+  // Si se paga por PayPal o Bizum, mostramos estados e indicadores de carga
+  const paypalContainer = document.getElementById("paypal-button-container");
+  const bizumPanel = document.getElementById("bizum-payment-panel");
+  if (paymentInfo) {
+    if (paypalContainer) {
+      paypalContainer.style.pointerEvents = "none";
+      paypalContainer.style.opacity = "0.5";
+    }
+    if (bizumPanel) {
+      bizumPanel.style.pointerEvents = "none";
+      bizumPanel.style.opacity = "0.7";
+    }
+    if (paymentInfo.method === "paypal") {
+      copyStatus.innerHTML = `<span style='color: var(--primary); font-weight: bold;'>⏳ Pago de ${service.price} autorizado (Transacción: ${paymentInfo.transactionId}). Firmando y registrando contrato...</span>`;
+    } else if (paymentInfo.method === "bizum") {
+      copyStatus.innerHTML = `<span style='color: var(--primary); font-weight: bold;'>⏳ Bizum registrado (Móvil: ${paymentInfo.telefono}). Firmando y formalizando contrato...</span>`;
+    }
   }
 
-  resultSection.hidden = false;
-  resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  try {
+    const contractPdf = await createContractPdfAttachment(summary, service);
+    lastGeneratedPdf = contractPdf;
+    const payload = await buildPayload(data, summary, contractPdf);
+    
+    // Inyectar información de pago en el payload si existe
+    if (paymentInfo) {
+      if (paymentInfo.method === "paypal") {
+        payload.matter.payment = `abonado mediante PayPal en fecha de formalización. ID de transacción: ${paymentInfo.transactionId}`;
+      } else if (paymentInfo.method === "bizum") {
+        payload.matter.payment = `abonado mediante Bizum en fecha de formalización. Teléfono emisor: ${paymentInfo.telefono}, Concepto: ${paymentInfo.concepto}`;
+      }
+      payload.evidence.paymentInfo = paymentInfo;
+    }
+
+    const encryptedSubmission = await encryptSubmission(payload);
+    await sendEncryptedSubmission(encryptedSubmission, payload.evidence);
+    showResult(summary, data, payload.evidence);
+    downloadCachedPdf();
+    
+    let successMsg = `Contrato firmado y enviado de forma segura. ${evidenceSubject(payload.evidence)}. Hash completo guardado en el email y el manifiesto.`;
+    if (paymentInfo) {
+      if (paymentInfo.method === "paypal") {
+        successMsg += ` Pago por PayPal registrado.`;
+      } else if (paymentInfo.method === "bizum") {
+        successMsg += ` Pago por Bizum registrado para verificación de Daniel.`;
+      }
+    }
+    copyStatus.textContent = successMsg;
+    
+    submitButton.textContent = "Contrato firmado y enviado";
+    submitButton.style.backgroundColor = "var(--primary)";
+    submitButton.style.borderColor = "var(--primary)";
+  } catch (error) {
+    console.error("Encrypted submission failure:", error);
+    
+    const errMsg = error ? (error.message || String(error)) : "Error desconocido";
+    const errStack = (error && error.stack) ? error.stack : "";
+    
+    alert("FALLO DURANTE LA TRANSMISION:\n" + errMsg + "\n\nStack: " + errStack);
+    
+    let fakeEvidence = null;
+    try {
+      const summarySha256 = await sha256Hex(summary);
+      let pdfSha256 = "ERROR_DE_GENERACION_DE_PDF";
+      if (!lastGeneratedPdf) {
+        lastGeneratedPdf = await createContractPdfAttachment(summary, service);
+      }
+      if (lastGeneratedPdf) {
+        pdfSha256 = lastGeneratedPdf.sha256;
+      }
+      fakeEvidence = {
+        reference: submissionReference(),
+        contractPdfSha256: pdfSha256,
+        summarySha256: summarySha256,
+        serviceCode: service.code,
+      };
+      if (paymentInfo) {
+        fakeEvidence.paymentInfo = paymentInfo;
+      }
+    } catch (innerError) {
+      console.error("Inner error during fallback evidence generation:", innerError);
+    }
+    
+    showResult(summary, data, fakeEvidence);
+    copyStatus.textContent = "Firma digital completada. Por favor, descarga tu PDF a continuación.";
+    submitButton.disabled = false;
+    submitButton.textContent = originalText;
+  } finally {
+    if (paypalContainer) {
+      paypalContainer.style.pointerEvents = "auto";
+      paypalContainer.style.opacity = "1";
+    }
+    if (bizumPanel) {
+      bizumPanel.style.pointerEvents = "auto";
+      bizumPanel.style.opacity = "1";
+    }
+  }
 }
 
 form.addEventListener("submit", async (event) => {
@@ -564,62 +705,160 @@ form.addEventListener("submit", async (event) => {
     return;
   }
 
-  const data = new FormData(form);
-  const service = selectedServiceFromData(data);
-  const summary = buildSummary(data);
-  const submitButton = form.querySelector("button[type='submit']");
-  const originalText = submitButton.textContent;
+  // Validación específica para Bizum inmediato
+  const selectedInput = paymentInputs.find((input) => input.checked);
+  const selectedMethod = selectedInput ? selectedInput.value : "deferred";
 
-  submitButton.disabled = true;
-  submitButton.textContent = "Firmando y enviando contrato...";
-
-  try {
-    const contractPdf = await createContractPdfAttachment(summary, service);
-    lastGeneratedPdf = contractPdf;
-    const payload = await buildPayload(data, summary, contractPdf);
-    const encryptedSubmission = await encryptSubmission(payload);
-    await sendEncryptedSubmission(encryptedSubmission, payload.evidence);
-    showResult(summary, data, payload.evidence);
-    downloadCachedPdf();
-    copyStatus.textContent = `Contrato firmado y enviado de forma segura. ${evidenceSubject(payload.evidence)}. Hash completo guardado en el email y el manifiesto.`;
-    submitButton.textContent = "Contrato firmado y enviado";
-    submitButton.style.backgroundColor = "var(--primary)";
-    submitButton.style.borderColor = "var(--primary)";
-  } catch (error) {
-    console.error("Encrypted submission failure:", error);
-    
-    // Safely extract error message and stack trace to prevent TypeError inside the catch block
-    const errMsg = error ? (error.message || String(error)) : "Error desconocido";
-    const errStack = (error && error.stack) ? error.stack : "";
-    
-    alert("FALLO DURANTE LA TRANSMISION:\n" + errMsg + "\n\nStack: " + errStack);
-    
-    let fakeEvidence = null;
-    try {
-      const summarySha256 = await sha256Hex(summary);
-      let pdfSha256 = "ERROR_DE_GENERACION_DE_PDF";
-      if (!lastGeneratedPdf) {
-        lastGeneratedPdf = await createContractPdfAttachment(summary, service);
+  if (selectedMethod === "bizum") {
+    const bizumTel = form.querySelector("input[name='bizumTelefono']");
+    const bizumCon = form.querySelector("input[name='bizumConcepto']");
+    if (!bizumTel.value.trim() || !bizumCon.value.trim()) {
+      copyStatus.innerHTML = `<span style='color: #d9534f; font-weight: bold;'>⚠️ Falta completar: Móvil y Concepto del Bizum para verificación de Daniel.</span>`;
+      if (!bizumTel.value.trim()) {
+        bizumTel.focus();
+      } else {
+        bizumCon.focus();
       }
-      if (lastGeneratedPdf) {
-        pdfSha256 = lastGeneratedPdf.sha256;
-      }
-      fakeEvidence = {
-        reference: submissionReference(),
-        contractPdfSha256: pdfSha256,
-        summarySha256: summarySha256,
-        serviceCode: service.code,
-      };
-    } catch (innerError) {
-      console.error("Inner error during fallback evidence generation:", innerError);
+      return;
     }
     
-    showResult(summary, data, fakeEvidence);
-    copyStatus.textContent = "Firma digital completada. Por favor, descarga tu PDF a continuacion.";
-    submitButton.disabled = false;
-    submitButton.textContent = originalText;
+    await processContractSubmission({
+      method: "bizum",
+      telefono: bizumTel.value.trim(),
+      concepto: bizumCon.value.trim()
+    });
+  } else {
+    await processContractSubmission();
   }
 });
+
+// Obtener elementos de los tabs de pago
+const paymentTabs = Array.from(document.querySelectorAll("[data-payment-tab]"));
+const paymentInputs = Array.from(form.querySelectorAll("input[name='metodoPago']"));
+const standardSubmitActions = document.getElementById("standard-submit-actions");
+const paypalSubmitActions = document.getElementById("paypal-submit-actions");
+const bizumSubmitActions = document.getElementById("bizum-submit-actions");
+const bizumPaymentPanel = document.getElementById("bizum-payment-panel");
+const paymentMethodNote = document.getElementById("payment-method-note");
+
+function updatePaymentMethod() {
+  const selectedInput = paymentInputs.find((input) => input.checked);
+  const selectedMethod = selectedInput ? selectedInput.value : "deferred";
+
+  paymentTabs.forEach((tab) => {
+    const active = tab.dataset.paymentTab === selectedMethod;
+    tab.setAttribute("aria-selected", active ? "true" : "false");
+  });
+
+  if (selectedMethod === "paypal") {
+    standardSubmitActions.style.display = "none";
+    bizumSubmitActions.style.display = "none";
+    paypalSubmitActions.style.display = "flex";
+    if (bizumPaymentPanel) bizumPaymentPanel.style.display = "none";
+    if (paymentMethodNote) {
+      paymentMethodNote.textContent = "Pagas en este acto de forma segura mediante PayPal o tarjeta de débito/crédito.";
+    }
+    
+    // Cargar SDK y renderizar botones si es necesario
+    loadPayPalSDK(PAYPAL_CLIENT_ID, () => {
+      initPayPalButtons();
+    });
+  } else if (selectedMethod === "bizum") {
+    standardSubmitActions.style.display = "none";
+    paypalSubmitActions.style.display = "none";
+    bizumSubmitActions.style.display = "flex";
+    if (bizumPaymentPanel) bizumPaymentPanel.style.display = "flex";
+    if (paymentMethodNote) {
+      paymentMethodNote.textContent = "Envía un Bizum al número de Daniel y completa la información de validación a continuación.";
+    }
+  } else {
+    standardSubmitActions.style.display = "flex";
+    paypalSubmitActions.style.display = "none";
+    bizumSubmitActions.style.display = "none";
+    if (bizumPaymentPanel) bizumPaymentPanel.style.display = "none";
+    if (paymentMethodNote) {
+      paymentMethodNote.textContent = "Pagas después del servicio por Bizum o transferencia bancaria. No pagas nada ahora.";
+    }
+  }
+}
+
+function initPayPalButtons() {
+  if (paypalButtonsRendered) return;
+  if (!window.paypal) return;
+
+  paypalButtonsRendered = true;
+  window.paypal.Buttons({
+    style: {
+      layout: 'vertical',
+      color:  'gold',
+      shape:  'rect',
+      label:  'paypal'
+    },
+    onClick: function(data, actions) {
+      copyStatus.textContent = "";
+      if (!form.checkValidity()) {
+        form.reportValidity();
+
+        const fieldNames = {
+          nombre: "Nombre y apellidos",
+          dni: "DNI/NIE/Pasaporte",
+          email: "Correo electrónico",
+          direccion: "Dirección",
+          piso: "Piso o puerta",
+          cp: "Código Postal",
+          localidad: "Localidad o Ciudad",
+          provincia: "Provincia",
+          empresa: "Empresa a reclamar",
+          aceptaCondiciones: "Aceptar condiciones del servicio y privacidad"
+        };
+
+        const invalidFields = [];
+        const elements = form.elements;
+        for (let i = 0; i < elements.length; i += 1) {
+          const el = elements[i];
+          if (el.hasAttribute("required") && !el.checkValidity()) {
+            const friendlyName = fieldNames[el.name] || el.placeholder || el.name;
+            invalidFields.push(friendlyName);
+          }
+        }
+
+        if (invalidFields.length > 0) {
+          copyStatus.innerHTML = `<span style='color: #d9534f; font-weight: bold;'>⚠️ Falta completar: ${invalidFields.join(", ")}.</span>`;
+        }
+        return actions.reject();
+      } else {
+        return actions.resolve();
+      }
+    },
+    createOrder: function(data, actions) {
+      const service = selectedServiceFromForm();
+      const amountValue = service.code === "S-02" ? "50.00" : "150.00";
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            currency_code: 'EUR',
+            value: amountValue
+          },
+          description: `Servicio Documental Laboral - ${service.title}`
+        }]
+      });
+    },
+    onApprove: async function(data, actions) {
+      const details = await actions.order.capture();
+      const transactionId = details.id;
+      
+      // Proceder con el envío
+      await processContractSubmission({
+        method: "paypal",
+        transactionId: transactionId
+      });
+    },
+    onError: function(err) {
+      console.error("PayPal Smart Buttons Error:", err);
+      alert("Se produjo un error al procesar el pago. Por favor, vuelve a intentarlo o selecciona Pago posterior.");
+    }
+  }).render('#paypal-button-container');
+}
 
 
 
@@ -819,6 +1058,15 @@ function updatePreview() {
     submitButtonPreview.textContent = service.buttonText;
   }
 
+  const bizumAmountText = document.getElementById("bizum-amount-text");
+  const bizumSubmitButton = document.getElementById("bizum-submit-button");
+  if (bizumAmountText) {
+    bizumAmountText.textContent = service.priceHtml;
+  }
+  if (bizumSubmitButton) {
+    bizumSubmitButton.textContent = `Confirmar Bizum y Enviar por ${service.code === "S-02" ? "50" : "150"} €`;
+  }
+
   if (previewNombre) {
     previewNombre.textContent = inputNombre.value.trim() || "____________________";
   }
@@ -863,4 +1111,12 @@ serviceInputs.forEach((input) => {
   input.addEventListener("change", updatePreview);
 });
 
+paymentInputs.forEach((input) => {
+  input.addEventListener("change", () => {
+    updatePaymentMethod();
+    updatePreview();
+  });
+});
+
 updatePreview();
+updatePaymentMethod();

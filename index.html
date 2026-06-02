@@ -302,6 +302,44 @@
             </div>
           </div>
 
+          <fieldset id="payment-method-fieldset" style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
+            <legend>Método de pago</legend>
+            <div class="service-tabs" role="tablist" aria-label="Método de pago" style="grid-template-columns: repeat(3, minmax(0, 1fr));">
+              <label class="service-tab" role="tab" aria-selected="true" data-payment-tab="deferred">
+                <input type="radio" name="metodoPago" value="deferred" checked />
+                <span>Pago posterior</span>
+              </label>
+              <label class="service-tab" role="tab" aria-selected="false" data-payment-tab="bizum">
+                <input type="radio" name="metodoPago" value="bizum" />
+                <span>Bizum inmediato</span>
+              </label>
+              <label class="service-tab" role="tab" aria-selected="false" data-payment-tab="paypal">
+                <input type="radio" name="metodoPago" value="paypal" />
+                <span>PayPal / Tarjeta</span>
+              </label>
+            </div>
+            <p class="form-note" id="payment-method-note" style="margin-top: 0.8rem; text-align: left; color: var(--muted); font-size: 0.85rem;">
+              Pagas después del servicio por Bizum o transferencia bancaria. No pagas nada ahora.
+            </p>
+            
+            <div id="bizum-payment-panel" style="display: none; margin-top: 1rem; padding: 16px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--wash); gap: 16px; flex-direction: column;">
+              <div style="border-left: 4px solid var(--primary); padding-left: 12px; font-size: 0.9rem; color: var(--ink);">
+                <p style="margin-bottom: 6px;"><strong>Instrucciones de pago por Bizum:</strong></p>
+                <p>Realiza un Bizum de <strong id="bizum-amount-text">150,00 €</strong> al número de Daniel: <strong>615 860 227</strong> indicando tu nombre completo en el concepto.</p>
+              </div>
+              <div class="field-grid" style="grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 8px;">
+                <label style="font-size: 0.85rem;">
+                  Móvil desde el que envías
+                  <input name="bizumTelefono" type="tel" placeholder="Ej. 600000000" style="min-height: 40px; padding: 8px 12px;" />
+                </label>
+                <label style="font-size: 0.85rem;">
+                  Concepto del Bizum
+                  <input name="bizumConcepto" type="text" placeholder="Ej. Juan Pérez" style="min-height: 40px; padding: 8px 12px;" />
+                </label>
+              </div>
+            </div>
+          </fieldset>
+
           <fieldset>
             <legend>Condiciones del servicio</legend>
             <label class="check-row">
@@ -318,12 +356,16 @@
             </label>
           </fieldset>
 
-
-
-
-
-          <div class="form-actions">
+          <div class="form-actions" id="standard-submit-actions">
             <button class="primary" type="submit">Contratar revisión y SMAC por 150 €</button>
+          </div>
+
+          <div class="form-actions" id="bizum-submit-actions" style="display: none; flex-direction: column; width: 100%; gap: 12px; margin-top: 8px;">
+            <button class="primary" type="submit" id="bizum-submit-button">Confirmar Bizum y Enviar por 150 €</button>
+          </div>
+
+          <div class="form-actions" id="paypal-submit-actions" style="display: none; flex-direction: column; width: 100%; gap: 12px; margin-top: 8px;">
+            <div id="paypal-button-container" style="width: 100%; min-height: 150px;"></div>
           </div>
 
         </form>
