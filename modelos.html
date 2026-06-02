@@ -3,19 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Modelos gratuitos de papeleta laboral | Daniel Arnaiz Cuesta</title>
+    <title>Modelos gratuitos laborales, SEPE, INSS y mutuas | Daniel Arnaiz Cuesta</title>
     <meta
       name="description"
-      content="Modelos gratuitos de papeleta o escrito laboral para sanciones, modificación sustancial, órdenes ilegales y categoría profesional."
+      content="Modelos gratuitos de papeleta laboral y reclamaciones administrativas frente a SEPE, INSS y mutuas, con enlaces oficiales para obtener vida laboral, cotizaciones y certificados."
     />
     <meta name="theme-color" content="#2f6653" />
     <link rel="canonical" href="https://danielarnaizcuesta.github.io/modelos.html" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://danielarnaizcuesta.github.io/modelos.html" />
-    <meta property="og:title" content="Modelos gratuitos de papeleta laboral" />
+    <meta property="og:title" content="Modelos gratuitos laborales, SEPE, INSS y mutuas" />
     <meta
       property="og:description"
-      content="Genera un modelo gratuito para sanción, modificación sustancial, orden ilegal o categoría profesional."
+      content="Genera un modelo gratuito para sanción, modificación sustancial, orden ilegal, categoría profesional, SEPE, INSS o mutuas."
     />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
     <link rel="stylesheet" href="styles.css" />
@@ -45,7 +45,8 @@
         <h1 id="models-title">Papeletas y escritos laborales básicos</h1>
         <p class="lead">
           Genera un texto base para asuntos donde muchas veces compensa empezar con un modelo gratuito:
-          sanciones, amonestaciones, modificación sustancial, órdenes empresariales ilegales y categoría profesional.
+          sanciones, amonestaciones, modificación sustancial, órdenes empresariales ilegales, categoría profesional
+          y reclamaciones sencillas ante SEPE, INSS o mutuas.
         </p>
         <div class="hero-actions">
           <a class="primary" href="#generador-modelos">Generar modelo</a>
@@ -64,6 +65,9 @@
                 <option value="msct">Modificación sustancial</option>
                 <option value="orden">Orden empresarial ilegal</option>
                 <option value="categoria">Categoría profesional</option>
+                <option value="sepe">Reclamación al SEPE</option>
+                <option value="inss">Reclamación al INSS</option>
+                <option value="mutua">Reclamación a mutua</option>
               </select>
             </label>
             <p class="model-note" id="model-note"></p>
@@ -80,12 +84,12 @@
           </fieldset>
 
           <fieldset>
-            <legend>Empresa</legend>
+            <legend>Empresa, organismo o mutua</legend>
             <div class="field-grid">
-              <label>Empresa <input name="empresa" placeholder="Nombre de la empresa" /></label>
-              <label>CIF opcional <input name="cif" placeholder="CIF si lo tienes" /></label>
-              <label>Domicilio de la empresa <input name="domicilioEmpresa" placeholder="Dirección de la empresa" /></label>
-              <label>Centro de trabajo <input name="centro" placeholder="Centro de trabajo" /></label>
+              <label>Empresa, organismo o mutua <input name="empresa" placeholder="Empresa, SEPE, INSS o mutua" /></label>
+              <label>CIF/NIF opcional <input name="cif" placeholder="CIF/NIF si lo tienes" /></label>
+              <label>Domicilio o sede <input name="domicilioEmpresa" placeholder="Dirección de empresa, oficina o sede" /></label>
+              <label>Centro, oficina o expediente <input name="centro" placeholder="Centro de trabajo, oficina o expediente" /></label>
             </div>
           </fieldset>
 
@@ -93,15 +97,15 @@
             <legend>Datos del asunto</legend>
             <div class="field-grid">
               <label>Fecha clave <input name="fechaClave" type="date" /></label>
-              <label>Puesto o categoría actual <input name="puesto" placeholder="Ej. Administrativo, camarero, técnico..." /></label>
+              <label>Puesto, categoría o prestación <input name="puesto" placeholder="Ej. Administrativo, prestación, baja médica..." /></label>
             </div>
             <label>
               Hechos principales
-              <textarea name="hechos" placeholder="Cuenta qué pasó, cuándo, quién lo comunicó y qué documentos tienes."></textarea>
+              <textarea name="hechos" placeholder="Cuenta qué pasó, cuándo, quién lo comunicó, número de expediente si existe y qué documentos tienes."></textarea>
             </label>
             <label>
               Qué pides
-              <textarea name="peticion" placeholder="Ej. que se deje sin efecto la sanción, que se repongan condiciones, que se reconozca categoría..."></textarea>
+              <textarea name="peticion" placeholder="Ej. que se deje sin efecto la sanción, que se repongan condiciones, que se revise una resolución, que se pague una prestación..."></textarea>
             </label>
           </fieldset>
 
@@ -123,6 +127,51 @@
         </section>
       </section>
 
+      <section class="section-inner official-links-section" aria-labelledby="official-links-title">
+        <p class="overline">Enlaces oficiales</p>
+        <h2 id="official-links-title">Documentos que puede sacar el cliente</h2>
+        <p class="lead">
+          Accesos directos a sedes oficiales para obtener pruebas habituales antes de preparar una reclamación laboral, de prestaciones o de mutua.
+        </p>
+        <div class="official-link-grid">
+          <a class="official-link-card" href="https://portal.seg-social.gob.es/wps/portal/importass/importass/Categorias/Vida+laboral+e+informes/Informes+sobre+tu+situacion+laboral/Informe+de+tu+vida+laboral" target="_blank" rel="noopener">
+            <span>Import@ss</span>
+            <strong>Vida laboral</strong>
+            <p>Altas, bajas y periodos trabajados en Seguridad Social.</p>
+          </a>
+          <a class="official-link-card" href="https://portal.seg-social.gob.es/wps/portal/importass/importass/Categorias/Vida+laboral+e+informes/Informes+de+tus+cotizaciones/Informe+de+bases+de+cotizacion" target="_blank" rel="noopener">
+            <span>Import@ss</span>
+            <strong>Bases de cotización</strong>
+            <p>Importes declarados por periodo para comprobar bases y prestaciones.</p>
+          </a>
+          <a class="official-link-card" href="https://sede.sepe.gob.es/portalSede/procedimientos-y-servicios/personas/proteccion-por-desempleo/obtencion-de-certificados.html" target="_blank" rel="noopener">
+            <span>SEPE</span>
+            <strong>Certificados de prestaciones</strong>
+            <p>Situación, prestación actual e importes por periodo, incluidos meses concretos.</p>
+          </a>
+          <a class="official-link-card" href="https://sede.sepe.gob.es/portalSede/procedimientos-y-servicios/personas/proteccion-por-desempleo/consultas.html" target="_blank" rel="noopener">
+            <span>SEPE</span>
+            <strong>Consulta de prestación</strong>
+            <p>Estado, recibos, denegaciones, solicitudes y datos de la prestación.</p>
+          </a>
+          <a class="official-link-card" href="https://sede.sepe.gob.es/portalSede/procedimientos-y-servicios/personas/otros-tramites-y-procedimientos.html" target="_blank" rel="noopener">
+            <span>SEPE</span>
+            <strong>Reclamaciones y alegaciones</strong>
+            <p>Indicación oficial para presentar escritos mediante registro o en oficina.</p>
+          </a>
+          <a class="official-link-card" href="https://sede.seg-social.gob.es/wps/portal/sede/sede/Ciudadanos/otros%2Bprocedimientos/inss_2.37" target="_blank" rel="noopener">
+            <span>INSS</span>
+            <strong>Escritos al INSS</strong>
+            <p>Registro de solicitudes, recursos, comunicaciones y reclamaciones sin trámite específico.</p>
+          </a>
+          <a class="official-link-card" href="https://sede.seg-social.gob.es/wps/portal/sede/sede/Inicio/MisExpedientesAdministrativos?1dmy=&current=true&urile=wcm%3Apath%3A%2FSede_Contenidos%2FSede%2FCiudadanos%2FOtros%2BProcedimientos%2F202286" target="_blank" rel="noopener">
+            <span>Seguridad Social</span>
+            <strong>Reclamaciones a mutuas</strong>
+            <p>Canal oficial para reclamar actuaciones de mutuas colaboradoras.</p>
+          </a>
+        </div>
+      </section>
+
       <section class="section-band" aria-labelledby="free-models-title">
         <div class="section-inner">
           <p class="overline">Cuándo usarlo</p>
@@ -135,6 +184,7 @@
                 <li>Órdenes empresariales claramente problemáticas.</li>
                 <li>Cambios de jornada, horario, funciones o salario que quieras dejar reclamados.</li>
                 <li>Categoría profesional cuando tienes funciones claras y comparables.</li>
+                <li>Reclamaciones sencillas al SEPE, INSS o mutua con resolución o expediente claro.</li>
               </ul>
             </article>
             <article>
