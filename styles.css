@@ -576,6 +576,12 @@ textarea:focus {
   pointer-events: none;
 }
 
+.service-tab span {
+  min-width: 0;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
 .service-pane {
   margin-top: 12px;
   padding: 16px;
@@ -595,6 +601,10 @@ textarea:focus {
   color: var(--muted);
   font-size: 0.9rem;
   line-height: 1.45;
+}
+
+.service-region-field {
+  margin-top: 14px;
 }
 
 /* PRICE BOX BANNER */

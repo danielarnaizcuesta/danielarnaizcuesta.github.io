@@ -3,19 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Papeletas laborales, SMAC Madrid e Inspección | Daniel Arnaiz Cuesta</title>
+    <title>Papeletas laborales, representación e Inspección | Daniel Arnaiz Cuesta</title>
     <meta
       name="description"
-      content="Papeletas de conciliación laboral para trabajadores en toda España, representación en SMAC Madrid y denuncia ante Inspección de Trabajo desde 50 euros."
+      content="Papeletas de conciliación laboral para trabajadores en toda España, representación en conciliación actualmente disponible en Madrid y denuncia ante Inspección de Trabajo desde 50 euros."
     />
     <meta name="theme-color" content="#2f6653" />
     <link rel="canonical" href="https://danielarnaizcuesta.github.io/" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://danielarnaizcuesta.github.io/" />
-    <meta property="og:title" content="Papeletas laborales, SMAC Madrid e Inspección" />
+    <meta property="og:title" content="Papeletas laborales, representación e Inspección" />
     <meta
       property="og:description"
-      content="Servicios para trabajadores: papeleta laboral por 90 euros, SMAC Madrid por 150 euros y denuncia ante Inspección por 50 euros, sin provisión inicial."
+      content="Servicios para trabajadores: papeleta laboral por 90 euros, representación en conciliación por 150 euros y denuncia ante Inspección por 50 euros, sin provisión inicial."
     />
     <meta property="og:image" content="https://danielarnaizcuesta.github.io/assets/hero-documental.png" />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
@@ -70,7 +70,7 @@
             "name": "¿Hay provisión de fondos?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "No hay provisión de fondos. La redacción de papeleta tiene precio cerrado de 90 euros IVA incluido, el servicio de SMAC Madrid tiene precio cerrado de 150 euros IVA incluido y la denuncia ante Inspección de Trabajo tiene precio cerrado de 50 euros IVA incluido."
+              "text": "No hay provisión de fondos. La redacción de papeleta tiene precio cerrado de 90 euros IVA incluido, la representación en conciliación tiene precio cerrado de 150 euros IVA incluido y la denuncia ante Inspección de Trabajo tiene precio cerrado de 50 euros IVA incluido."
             }
           },
           {
@@ -110,7 +110,7 @@
     <main>
       <section class="workbench" id="contratar" aria-labelledby="page-title">
         <div class="workbench-copy">
-          <p class="overline">Papeletas laborales, SMAC Madrid e Inspección para trabajadores</p>
+          <p class="overline">Papeletas laborales, representación e Inspección para trabajadores</p>
           <h1 id="page-title">Sin provisión de fondos: pagas después del servicio</h1>
           <p class="lead">
             Si te han despedido, te deben cantidades, necesitas redactar una papeleta de conciliación o denunciar
@@ -128,7 +128,7 @@
             <article>
               <span>1</span>
               <h2>Servicios desde 50 €</h2>
-              <p>Papeleta laboral por 90 € IVA incluido. SMAC Madrid por 150 € IVA incluido. Denuncia ante Inspección por 50 € IVA incluido.</p>
+              <p>Papeleta laboral por 90 € IVA incluido. Representación por 150 € IVA incluido. Denuncia ante Inspección por 50 € IVA incluido.</p>
             </article>
             <article>
               <span>2</span>
@@ -207,7 +207,7 @@
               </label>
               <label class="service-tab" role="tab" aria-selected="false" data-service-tab="smac">
                 <input type="radio" name="servicio" value="smac" />
-                <span>SMAC Madrid</span>
+                <span>Representación</span>
               </label>
               <label class="service-tab" role="tab" aria-selected="false" data-service-tab="inspeccion">
                 <input type="radio" name="servicio" value="inspeccion" />
@@ -220,8 +220,15 @@
                 <p>90,00 € IVA incluido. Redacción de papeleta para trabajadores en toda España. No incluye presentación administrativa, asistencia al acto ni representación presencial.</p>
               </section>
               <section class="service-pane" data-service-panel="smac" hidden>
-                <h3>SMAC Madrid: papeleta, preparación y representación</h3>
-                <p>150,00 € IVA incluido. Para asuntos tramitables ante el SMAC de Madrid. Incluye preparación de la conciliación y representación voluntaria presencial cuando proceda.</p>
+                <h3>Representación en conciliación laboral</h3>
+                <p>150,00 € IVA incluido. Incluye preparación de la conciliación y representación voluntaria presencial cuando proceda.</p>
+                <label class="service-region-field">
+                  Comunidad autónoma disponible
+                  <select name="representacionComunidad" id="representacion-comunidad">
+                    <option value="madrid">Comunidad de Madrid</option>
+                  </select>
+                  <span class="input-hint">Por ahora solo hay representación presencial en la Comunidad de Madrid.</span>
+                </label>
               </section>
               <section class="service-pane" data-service-panel="inspeccion" hidden>
                 <h3>Denuncia ante Inspección de Trabajo</h3>
@@ -399,7 +406,7 @@
       <section class="section-band" id="servicio" aria-labelledby="service-title">
         <div class="section-inner">
           <p class="overline">Qué contratas</p>
-          <h2 id="service-title">Papeleta, SMAC Madrid o denuncia ante Inspección</h2>
+          <h2 id="service-title">Papeleta, representación o denuncia ante Inspección</h2>
           <div class="scope-grid">
             <article>
               <h3>Papeleta España</h3>
@@ -411,12 +418,12 @@
               </ul>
             </article>
             <article>
-              <h3>SMAC Madrid</h3>
+              <h3>Representación</h3>
               <ul>
                 <li>Preparación de papeleta, documentación y estrategia de conciliación.</li>
-                <li>Representación voluntaria presencial en el SMAC de Madrid.</li>
+                <li>Representación voluntaria presencial según comunidad disponible.</li>
+                <li>Actualmente disponible solo en la Comunidad de Madrid.</li>
                 <li>Preparación de posición negociadora y límites antes de acudir al acto.</li>
-                <li>Coordinación directa por WhatsApp, email o llamada.</li>
                 <li>Precio cerrado de 150 € IVA incluido, sin provisión de fondos.</li>
               </ul>
             </article>
@@ -554,7 +561,7 @@
           <div class="faq-grid">
             <details open>
               <summary>¿Puedo contactarte antes de contratar?</summary>
-              <p>Sí. La prioridad es entender si tu asunto encaja en SMAC Madrid y si hay un plazo que obligue a actuar rápido.</p>
+              <p>Sí. La prioridad es entender si tu asunto encaja, si hay una comunidad disponible para representación y si existe un plazo que obligue a actuar rápido.</p>
             </details>
             <details>
               <summary>¿Qué pasa si ya presenté la papeleta?</summary>
@@ -566,7 +573,7 @@
             </details>
             <details>
               <summary>¿Cuándo pago?</summary>
-              <p>No hay provisión de fondos. La papeleta laboral tiene precio cerrado de 90,00 € IVA incluido, SMAC Madrid tiene precio cerrado de 150,00 € IVA incluido y la denuncia ante Inspección de Trabajo tiene precio cerrado de 50,00 € IVA incluido. El pago se realiza una vez prestado el servicio.</p>
+              <p>No hay provisión de fondos. La papeleta laboral tiene precio cerrado de 90,00 € IVA incluido, la representación en conciliación tiene precio cerrado de 150,00 € IVA incluido y la denuncia ante Inspección de Trabajo tiene precio cerrado de 50,00 € IVA incluido. El pago se realiza una vez prestado el servicio.</p>
             </details>
             <details>
               <summary>¿La denuncia a Inspección garantiza que sancionen a la empresa?</summary>
@@ -578,7 +585,7 @@
             </details>
             <details>
               <summary>¿Atiendes presencialmente?</summary>
-              <p>Sí, solo en Madrid. La redacción de papeleta para toda España no incluye representación presencial ni asistencia al acto; el servicio de SMAC Madrid sí incluye representación voluntaria presencial cuando el asunto encaja.</p>
+              <p>Sí, solo en las comunidades disponibles en el formulario. Ahora mismo solo aparece Comunidad de Madrid. La redacción de papeleta para toda España no incluye representación presencial ni asistencia al acto.</p>
             </details>
             <details>
               <summary>¿Esto garantiza un acuerdo o cobro?</summary>

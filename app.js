@@ -50,6 +50,15 @@ function loadPayPalSDK(clientId, callback) {
 
 let lastGeneratedPdf = null;
 
+const REPRESENTATION_REGIONS = {
+  madrid: {
+    label: "Comunidad de Madrid",
+    serviceZone: "Comunidad de Madrid. Solo asuntos tramitables ante el SMAC de la Comunidad de Madrid.",
+    previewZone: "Comunidad de Madrid. Solo asuntos tramitables ante el SMAC de la Comunidad de Madrid.",
+    organ: "SMAC de la Comunidad de Madrid"
+  }
+};
+
 const SERVICES = {
   papeleta: {
     code: "S-03",
@@ -75,9 +84,9 @@ const SERVICES = {
   },
   smac: {
     code: "S-01",
-    title: "Papeleta, preparacion y representacion voluntaria ante el SMAC de Madrid",
-    titleHtml: "SMAC Madrid: papeleta, preparacion y representacion",
-    previewHeading: "HOJA DE ENCARGO - SMAC MADRID",
+    title: "Papeleta, preparacion y representacion voluntaria en conciliacion laboral",
+    titleHtml: "Representacion en conciliacion laboral",
+    previewHeading: "HOJA DE ENCARGO - REPRESENTACION EN CONCILIACION",
     price: "150,00 EUR IVA incluido",
     priceHtml: "150,00 € IVA incluido",
     priceShort: "150",
@@ -85,14 +94,14 @@ const SERVICES = {
     buttonText: "Contratar revision y SMAC por 150 €",
     priceDescription: "No pagas provision inicial: el pago se realiza por transferencia o Bizum una vez prestado el servicio.",
     filenameSlug: "smac",
-    serviceZone: "Comunidad de Madrid. Solo asuntos tramitables ante el SMAC de la Comunidad de Madrid.",
-    previewZone: "Comunidad de Madrid. Solo asuntos tramitables ante el SMAC de la Comunidad de Madrid.",
-    matterService: "S-01 papeleta de conciliacion, presentacion y representacion voluntaria en asunto tramitable ante el SMAC de la Comunidad de Madrid",
-    objectClause(employer) {
-      return `El Cliente encarga al Profesional la redaccion, presentacion de la papeleta de conciliacion laboral y la representacion voluntaria en el acto de conciliacion administrativa ante el SMAC contra la empresa ${employer}. El servicio esta limitado a asuntos tramitables ante el SMAC de la Comunidad de Madrid. A tal efecto, el Cliente facilitara al Profesional la representacion necesaria, ya sea compareciendo presencialmente para otorgar dicha representacion o mediante el correspondiente poder notarial, con anterioridad a la fecha del acto de conciliacion.`;
+    serviceZone: REPRESENTATION_REGIONS.madrid.serviceZone,
+    previewZone: REPRESENTATION_REGIONS.madrid.previewZone,
+    matterService: "S-01 papeleta de conciliacion, presentacion y representacion voluntaria en asunto tramitable ante el organo de conciliacion disponible",
+    objectClause(employer, region = REPRESENTATION_REGIONS.madrid) {
+      return `El Cliente encarga al Profesional la redaccion, presentacion de la papeleta de conciliacion laboral y la representacion voluntaria en el acto de conciliacion administrativa ante ${region.organ} contra la empresa ${employer}. El servicio esta limitado a asuntos tramitables en la comunidad autonoma seleccionada: ${region.label}. A tal efecto, el Cliente facilitara al Profesional la representacion necesaria, ya sea compareciendo presencialmente para otorgar dicha representacion o mediante el correspondiente poder notarial, con anterioridad a la fecha del acto de conciliacion.`;
     },
-    previewObject(employer) {
-      return `El Cliente encarga al profesional la redaccion, presentacion de la papeleta de conciliacion laboral y la representacion voluntaria en el acto de conciliacion administrativa ante el SMAC contra la empresa ${employer}. El servicio se limita a asuntos tramitables ante el SMAC de la Comunidad de Madrid.`;
+    previewObject(employer, region = REPRESENTATION_REGIONS.madrid) {
+      return `El Cliente encarga al profesional la redaccion, presentacion de la papeleta de conciliacion laboral y la representacion voluntaria en el acto de conciliacion administrativa ante ${region.organ} contra la empresa ${employer}. El servicio se limita a la comunidad autonoma seleccionada: ${region.label}.`;
     },
   },
   inspeccion: {
@@ -148,6 +157,27 @@ function selectedServiceFromData(data) {
 function selectedServiceFromForm() {
   const selected = form.querySelector("input[name='servicio']:checked");
   return serviceFromKey(selected ? selected.value : "papeleta");
+}
+
+function representationRegionFromValue(value) {
+  return REPRESENTATION_REGIONS[value] || REPRESENTATION_REGIONS.madrid;
+}
+
+function representationRegionFromData(data) {
+  return representationRegionFromValue(valueOf(data, "representacionComunidad") || "madrid");
+}
+
+function selectedRepresentationRegionFromForm() {
+  const selected = form.querySelector("select[name='representacionComunidad']");
+  return representationRegionFromValue(selected ? selected.value : "madrid");
+}
+
+function zoneForService(service, region = REPRESENTATION_REGIONS.madrid) {
+  return service.code === "S-01" ? region.serviceZone : service.serviceZone;
+}
+
+function previewZoneForService(service, region = REPRESENTATION_REGIONS.madrid) {
+  return service.code === "S-01" ? region.previewZone : service.previewZone;
 }
 
 function submissionReference() {
@@ -363,6 +393,11 @@ async function encryptSubmission(payload) {
 
 function buildSummary(data, paymentInfo = null) {
   const service = selectedServiceFromData(data);
+  const representationRegion = representationRegionFromData(data);
+  const serviceZone = zoneForService(service, representationRegion);
+  const representationRegionLine = service.code === "S-01"
+    ? [`Comunidad autonoma seleccionada para representacion: ${representationRegion.label}`, ""]
+    : [];
   const generatedAt = new Intl.DateTimeFormat("es-ES", {
     dateStyle: "short",
     timeStyle: "short",
@@ -398,6 +433,7 @@ function buildSummary(data, paymentInfo = null) {
   return [
     "CONTRATO DE PRESTACION DE SERVICIOS - HOJA DE ENCARGO",
     `Servicio contratado: ${service.code} - ${service.title}`,
+    ...representationRegionLine,
     "",
     `Fecha del contrato: ${generatedAt}`,
     "Lugar de celebracion: Madrid",
@@ -413,7 +449,7 @@ function buildSummary(data, paymentInfo = null) {
     "ESTIPULACIONES:",
     "",
     "1. OBJETO DEL ENCARGO",
-    service.objectClause(valueOf(data, "empresa")),
+    service.objectClause(valueOf(data, "empresa"), representationRegion),
     "",
     "2. PRECIO, PAGO Y FACTURACION",
     pagoTexto,
@@ -422,7 +458,7 @@ function buildSummary(data, paymentInfo = null) {
     `El Cliente tiene derecho a desistir del presente contrato en un plazo de 14 dias naturales sin necesidad de justificacion. ${inicioInmediatoTexto}`,
     "",
     "4. LUGAR, FECHA, ZONA DE PRESTACION Y FUERO",
-    `El presente contrato se celebra en Madrid en la fecha y hora indicadas. La zona geografica de prestacion del servicio es: ${service.serviceZone} Este contrato se rige por la legislacion espanola. Para clientes que tengan la consideracion de consumidores, seran competentes los juzgados y tribunales que correspondan segun la normativa aplicable. En caso de que la competencia territorial sea legalmente disponible, ambas partes se someten expresamente a los juzgados y tribunales de la ciudad de Madrid.`,
+    `El presente contrato se celebra en Madrid en la fecha y hora indicadas. La zona geografica de prestacion del servicio es: ${serviceZone} Este contrato se rige por la legislacion espanola. Para clientes que tengan la consideracion de consumidores, seran competentes los juzgados y tribunales que correspondan segun la normativa aplicable. En caso de que la competencia territorial sea legalmente disponible, ambas partes se someten expresamente a los juzgados y tribunales de la ciudad de Madrid.`,
     "",
     "5. FIRMA Y ACEPTACION ELECTRONICA",
     "La contratacion queda formalizada y perfeccionada mediante la cumplimentacion y envio de la solicitud web cifrada y el marcado electronico de la casilla obligatoria de aceptacion de condiciones, politica de privacidad y precio.",
@@ -438,6 +474,8 @@ function buildSummary(data, paymentInfo = null) {
 
 async function buildPayload(data, summary, contractPdf) {
   const service = selectedServiceFromData(data);
+  const representationRegion = representationRegionFromData(data);
+  const serviceZone = zoneForService(service, representationRegion);
   const submittedAt = new Date().toISOString();
   const reference = submissionReference();
   const summarySha256 = await sha256Hex(summary);
@@ -465,7 +503,8 @@ async function buildPayload(data, summary, contractPdf) {
       serviceCode: service.code,
       serviceTitle: service.title,
       contractPlace: "Madrid",
-      serviceZone: service.serviceZone,
+      serviceZone,
+      representationRegion: service.code === "S-01" ? representationRegion.label : null,
       governingLawAndForum: "Ley espanola. Para clientes consumidores, juzgados y tribunales legalmente competentes. Cuando la competencia territorial sea legalmente disponible, fuero de Madrid.",
       acceptedConditionsText: `Acepto las condiciones del servicio, la politica de privacidad, el precio cerrado de ${service.price}, sin provision de fondos inicial y con pago una vez prestado el servicio.`,
       immediateStartText: data.get("inicioInmediato")
@@ -494,6 +533,7 @@ async function buildPayload(data, summary, contractPdf) {
       employer: valueOf(data, "empresa"),
       serviceCode: service.code,
       service: service.matterService,
+      representationRegion: service.code === "S-01" ? representationRegion.label : null,
       price: service.price,
       payment: "sin provision de fondos inicial; transferencia o Bizum una vez prestado el servicio",
     },
@@ -960,7 +1000,7 @@ function buildPdfDocument(summary) {
   return doc;
 }
 
-async function createContractPdfAttachment(summary, service = SERVICES.smac) {
+async function createContractPdfAttachment(summary, service = SERVICES.papeleta) {
   if (!window.jspdf || !window.jspdf.jsPDF) {
     throw new Error("No se pudo cargar el generador de PDF del contrato.");
   }
@@ -1016,6 +1056,7 @@ const inputLocalidad = form.querySelector("input[name='localidad']");
 const inputProvincia = form.querySelector("input[name='provincia']");
 const inputEmpresa = form.querySelector("input[name='empresa']");
 const serviceInputs = Array.from(form.querySelectorAll("input[name='servicio']"));
+const representationRegionSelect = form.querySelector("select[name='representacionComunidad']");
 
 const previewNombre = document.getElementById("preview-nombre");
 const previewDni = document.getElementById("preview-dni");
@@ -1036,8 +1077,9 @@ const submitButtonPreview = form.querySelector("button[type='submit']");
 
 function updatePreview() {
   const service = selectedServiceFromForm();
+  const representationRegion = selectedRepresentationRegionFromForm();
   const employer = inputEmpresa.value.trim() || "____________________";
-  const serviceKey = serviceInputs.find((input) => input.checked)?.value || "smac";
+  const serviceKey = serviceInputs.find((input) => input.checked)?.value || "papeleta";
 
   serviceTabs.forEach((tab) => {
     const active = tab.dataset.serviceTab === serviceKey;
@@ -1057,7 +1099,7 @@ function updatePreview() {
   }
 
   if (previewObject) {
-    previewObject.textContent = service.previewObject(employer);
+    previewObject.textContent = service.previewObject(employer, representationRegion);
   }
 
   if (previewPrice) {
@@ -1073,7 +1115,7 @@ function updatePreview() {
   }
 
   if (previewZone) {
-    previewZone.textContent = service.previewZone;
+    previewZone.textContent = previewZoneForService(service, representationRegion);
   }
 
   if (priceBoxTitle) {
@@ -1140,6 +1182,10 @@ function updatePreview() {
 serviceInputs.forEach((input) => {
   input.addEventListener("change", updatePreview);
 });
+
+if (representationRegionSelect) {
+  representationRegionSelect.addEventListener("change", updatePreview);
+}
 
 paymentInputs.forEach((input) => {
   input.addEventListener("change", () => {
