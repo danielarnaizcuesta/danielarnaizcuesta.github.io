@@ -530,7 +530,7 @@ textarea:focus {
 
 .service-tabs {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 0;
   border: 1.5px solid var(--line);
   border-radius: var(--radius-sm);

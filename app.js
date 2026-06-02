@@ -126,6 +126,28 @@ const SERVICES = {
       return `El Cliente encarga al profesional la preparacion documental y, cuando proceda, la presentacion telematica de una denuncia ante la Inspeccion de Trabajo y Seguridad Social frente a la empresa ${employer}. El servicio incluye ordenar hechos, documentos y redactar la denuncia; no garantiza resultado ni actuacion inspectora.`;
     },
   },
+  bancario: {
+    code: "S-04",
+    title: "Gestion extrajudicial bancaria sobre prestamos o creditos abusivos",
+    titleHtml: "Gestion extrajudicial bancaria",
+    previewHeading: "HOJA DE ENCARGO - GESTION EXTRAJUDICIAL BANCARIA",
+    price: "150,00 EUR IVA incluido",
+    priceHtml: "150,00 € IVA incluido",
+    priceShort: "150",
+    paypalAmount: "150.00",
+    buttonText: "Contratar gestion bancaria por 150 €",
+    priceDescription: "No pagas provision inicial: el pago se realiza por transferencia o Bizum una vez preparada la reclamacion o propuesta extrajudicial.",
+    filenameSlug: "gestion-extrajudicial-bancaria",
+    serviceZone: "Espana. Servicio documental y de gestion extrajudicial para consumidores sobre prestamos, creditos o tarjetas con posibles intereses o condiciones abusivas.",
+    previewZone: "Espana. Gestion extrajudicial bancaria para consumidores. No incluye defensa judicial, mediacion oficial ni asesoramiento financiero.",
+    matterService: "S-04 gestion extrajudicial bancaria para consumidores sobre prestamos, creditos o tarjetas con posibles condiciones abusivas",
+    objectClause(employer) {
+      return `El Cliente encarga al Profesional la preparacion documental y gestion extrajudicial frente a la entidad ${employer} en relacion con un prestamo, credito, tarjeta u otro producto de financiacion con posibles intereses, comisiones o condiciones abusivas. El servicio puede incluir revision documental inicial, ordenacion de importes y hechos, redaccion de reclamacion extrajudicial, propuesta de acuerdo y comunicaciones orientadas a alcanzar una solucion negociada. Podra intervenir un colaborador externo de apoyo documental o negociacion bajo coordinacion del Profesional. No incluye mediacion oficial regulada, asesoramiento financiero o de inversion, defensa judicial, representacion procesal, garantia de acuerdo, garantia de devolucion de cantidades ni valoracion definitiva de nulidad, usura o abusividad, que corresponde a los tribunales cuando exista controversia.`;
+    },
+    previewObject(employer) {
+      return `El Cliente encarga al profesional la preparacion documental y gestion extrajudicial frente a la entidad ${employer} por un prestamo, credito o tarjeta con posibles condiciones abusivas. El servicio busca una solucion negociada y no incluye defensa judicial, mediacion oficial, asesoramiento financiero ni garantia de acuerdo o recuperacion de cantidades.`;
+    },
+  },
 };
 
 const form = document.querySelector("#hire-form");
