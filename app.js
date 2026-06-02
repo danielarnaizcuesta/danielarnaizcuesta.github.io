@@ -31,12 +31,14 @@ const SERVICES = {
     code: "S-01",
     title: "Papeleta, preparacion y representacion voluntaria ante el SMAC",
     titleHtml: "SMAC: papeleta, preparacion y representacion",
+    previewHeading: "HOJA DE ENCARGO - SMAC MADRID",
     price: "150,00 EUR IVA incluido",
     priceHtml: "150,00 € IVA incluido",
     buttonText: "Contratar revision y SMAC por 150 €",
     priceDescription: "No pagas provision inicial: el pago se realiza por transferencia o Bizum una vez prestado el servicio.",
     filenameSlug: "smac",
     serviceZone: "Comunidad de Madrid. Solo asuntos tramitables ante el SMAC de la Comunidad de Madrid.",
+    previewZone: "Comunidad de Madrid. Solo asuntos tramitables ante el SMAC de la Comunidad de Madrid.",
     matterService: "S-01 papeleta de conciliacion, presentacion y representacion voluntaria en asunto tramitable ante el SMAC de la Comunidad de Madrid",
     objectClause(employer) {
       return `El Cliente encarga al Profesional la redaccion, presentacion de la papeleta de conciliacion laboral y la representacion voluntaria en el acto de conciliacion administrativa ante el SMAC contra la empresa ${employer}. El servicio esta limitado a asuntos tramitables ante el SMAC de la Comunidad de Madrid. A tal efecto, el Cliente facilitara al Profesional la representacion necesaria, ya sea compareciendo presencialmente para otorgar dicha representacion o mediante el correspondiente poder notarial, con anterioridad a la fecha del acto de conciliacion.`;
@@ -49,12 +51,14 @@ const SERVICES = {
     code: "S-02",
     title: "Denuncia ante Inspeccion de Trabajo y Seguridad Social",
     titleHtml: "Denuncia ante Inspeccion de Trabajo",
+    previewHeading: "HOJA DE ENCARGO - DENUNCIA A INSPECCION DE TRABAJO",
     price: "50,00 EUR IVA incluido",
     priceHtml: "50,00 € IVA incluido",
     buttonText: "Contratar denuncia a Inspeccion por 50 €",
     priceDescription: "No pagas provision inicial: el pago se realiza por transferencia o Bizum una vez preparada o presentada la denuncia.",
     filenameSlug: "denuncia-inspeccion-trabajo",
     serviceZone: "Espana. Servicio documental de preparacion y, cuando proceda, presentacion telematica de denuncia ante la Inspeccion de Trabajo y Seguridad Social.",
+    previewZone: "Servicio documental de preparacion y, cuando proceda, presentacion administrativa ante la Inspeccion de Trabajo y Seguridad Social.",
     matterService: "S-02 preparacion documental y, cuando proceda, presentacion de denuncia ante la Inspeccion de Trabajo y Seguridad Social",
     objectClause(employer) {
       return `El Cliente encarga al Profesional la preparacion documental y, cuando proceda, la presentacion telematica de una denuncia ante la Inspeccion de Trabajo y Seguridad Social en relacion con hechos laborales imputables a la empresa ${employer}. El servicio se limita al analisis documental inicial, ordenacion de hechos, redaccion de la denuncia y orientacion sobre la documentacion necesaria. No incluye defensa judicial, representacion procesal, garantia de actuacion inspectora, seguimiento indefinido del expediente ni intervencion en actuaciones inspectoras posteriores salvo acuerdo expreso adicional.`;
@@ -334,6 +338,7 @@ function buildSummary(data) {
 
   return [
     "CONTRATO DE PRESTACION DE SERVICIOS - HOJA DE ENCARGO",
+    `Servicio contratado: ${service.code} - ${service.title}`,
     "",
     `Fecha del contrato: ${generatedAt}`,
     "Lugar de celebracion: Madrid",
@@ -748,20 +753,38 @@ const previewDni = document.getElementById("preview-dni");
 const previewDomicilio = document.getElementById("preview-domicilio");
 const previewEmpresa = document.getElementById("preview-empresa");
 const previewServiceTitle = document.getElementById("preview-service-title");
+const previewContractHeading = document.getElementById("preview-contract-heading");
 const previewObject = document.getElementById("preview-object");
 const previewPrice = document.getElementById("preview-price");
 const previewPriceContract = document.getElementById("preview-price-contract");
 const previewPriceConditions = document.getElementById("preview-price-conditions");
+const previewZone = document.getElementById("preview-zone");
 const priceBoxTitle = document.getElementById("price-box-title");
 const priceBoxDescription = document.getElementById("price-box-description");
+const serviceTabs = Array.from(document.querySelectorAll("[data-service-tab]"));
+const servicePanels = Array.from(document.querySelectorAll("[data-service-panel]"));
 const submitButtonPreview = form.querySelector("button[type='submit']");
 
 function updatePreview() {
   const service = selectedServiceFromForm();
   const employer = inputEmpresa.value.trim() || "____________________";
+  const serviceKey = serviceInputs.find((input) => input.checked)?.value || "smac";
+
+  serviceTabs.forEach((tab) => {
+    const active = tab.dataset.serviceTab === serviceKey;
+    tab.setAttribute("aria-selected", active ? "true" : "false");
+  });
+
+  servicePanels.forEach((panel) => {
+    panel.hidden = panel.dataset.servicePanel !== serviceKey;
+  });
 
   if (previewServiceTitle) {
     previewServiceTitle.textContent = service.titleHtml;
+  }
+
+  if (previewContractHeading) {
+    previewContractHeading.textContent = service.previewHeading;
   }
 
   if (previewObject) {
@@ -778,6 +801,10 @@ function updatePreview() {
 
   if (previewPriceConditions) {
     previewPriceConditions.textContent = service.priceHtml;
+  }
+
+  if (previewZone) {
+    previewZone.textContent = service.previewZone;
   }
 
   if (priceBoxTitle) {

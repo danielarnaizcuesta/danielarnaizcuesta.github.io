@@ -198,21 +198,25 @@
 
           <fieldset>
             <legend>Servicio que quieres contratar</legend>
-            <div class="service-options" role="radiogroup" aria-label="Servicio contratado">
-              <label class="service-option">
+            <div class="service-tabs" role="tablist" aria-label="Servicio contratado">
+              <label class="service-tab" role="tab" aria-selected="true" data-service-tab="smac">
                 <input type="radio" name="servicio" value="smac" checked />
-                <span>
-                  <strong>SMAC: papeleta, preparación y representación</strong>
-                  <small>150,00 € IVA incluido. Para despido, cantidades, finiquito o papeleta ya presentada.</small>
-                </span>
+                <span>SMAC</span>
               </label>
-              <label class="service-option">
+              <label class="service-tab" role="tab" aria-selected="false" data-service-tab="inspeccion">
                 <input type="radio" name="servicio" value="inspeccion" />
-                <span>
-                  <strong>Denuncia ante Inspección de Trabajo</strong>
-                  <small>50,00 € IVA incluido. Preparación documental y, cuando proceda, presentación telemática.</small>
-                </span>
+                <span>Inspección</span>
               </label>
+            </div>
+            <div class="service-tab-panels">
+              <section class="service-pane" data-service-panel="smac">
+                <h3>SMAC: papeleta, preparación y representación</h3>
+                <p>150,00 € IVA incluido. Para despido, cantidades, finiquito o papeleta ya presentada. Incluye preparación de la conciliación y representación voluntaria presencial cuando proceda.</p>
+              </section>
+              <section class="service-pane" data-service-panel="inspeccion" hidden>
+                <h3>Denuncia ante Inspección de Trabajo</h3>
+                <p>50,00 € IVA incluido. Preparación documental, orden de hechos y redacción de denuncia ante Inspección de Trabajo y Seguridad Social. Presentación telemática cuando sea viable con la documentación disponible.</p>
+              </section>
             </div>
           </fieldset>
 
@@ -277,8 +281,8 @@
               Revisa la Hoja de Encargo formal de prestación de servicios que se incorporará a tu solicitud. Los datos se actualizan en tiempo real mientras escribes.
             </p>
             <div class="contract-scroll-box" id="contract-preview" style="max-height: 180px; overflow-y: scroll; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 16px; background: var(--bg-hover); font-size: 0.85rem; line-height: 1.5; color: var(--ink-light);">
-              <div style="text-align: center; margin-bottom: 12px; font-weight: bold; color: var(--primary);">
-                CONTRATO DE PRESTACIÓN DE SERVICIOS - HOJA DE ENCARGO
+              <div id="preview-contract-heading" style="text-align: center; margin-bottom: 12px; font-weight: bold; color: var(--primary);">
+                HOJA DE ENCARGO - SMAC MADRID
               </div>
               <p><strong>REUNIDOS:</strong></p>
               <p>De una parte, como prestador del servicio, <strong>Daniel Arnaiz Cuesta</strong>, con NIF 72828826Q, domicilio profesional en C/ Arroyo de la Media Legua 4, bajo derecha, 28030 Madrid, y correo de contacto danielarnaizcuesta@gmail.com.</p>
@@ -294,7 +298,7 @@
               
               <p><strong>4. FIRMA Y VALIDEZ:</strong> La contratación queda realizada mediante el envío de la solicitud cifrada y el marcado de la casilla obligatoria de aceptación de condiciones, privacidad y precio por parte del Cliente.</p>
               
-              <p><strong>5. LUGAR, FECHA, ZONA Y FUERO:</strong> El contrato se celebra en Madrid en la fecha y hora de envío de la solicitud cifrada. La zona de prestación del servicio es la Comunidad de Madrid. El contrato se rige por la ley española. Para clientes consumidores, serán competentes los juzgados y tribunales que correspondan conforme a la normativa aplicable; cuando la competencia territorial sea legalmente disponible, el fuero será Madrid.</p>
+              <p><strong>5. LUGAR, FECHA, ZONA Y FUERO:</strong> El contrato se celebra en Madrid en la fecha y hora de envío de la solicitud cifrada. La zona de prestación del servicio es: <span id="preview-zone">Comunidad de Madrid. Solo asuntos tramitables ante el SMAC de la Comunidad de Madrid.</span> El contrato se rige por la ley española. Para clientes consumidores, serán competentes los juzgados y tribunales que correspondan conforme a la normativa aplicable; cuando la competencia territorial sea legalmente disponible, el fuero será Madrid.</p>
             </div>
           </div>
 

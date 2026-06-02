@@ -522,48 +522,73 @@ textarea:focus {
   gap: 16px;
 }
 
-.service-options {
+.service-tabs {
   display: grid;
-  gap: 12px;
-}
-
-.service-option {
-  display: grid;
-  grid-template-columns: 24px minmax(0, 1fr);
-  gap: 12px;
-  align-items: start;
-  padding: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
   border: 1.5px solid var(--line);
   border-radius: var(--radius-sm);
+  overflow: hidden;
   background: var(--surface);
-  cursor: pointer;
 }
 
-.service-option:hover {
-  border-color: var(--primary-light);
+.service-tab {
+  position: relative;
+  min-height: 48px;
+  display: grid;
+  place-items: center;
+  padding: 12px 14px;
+  color: var(--muted);
+  font-weight: 800;
+  text-align: center;
+  cursor: pointer;
+  border-right: 1px solid var(--line);
+}
+
+.service-tab:last-child {
+  border-right: 0;
+}
+
+.service-tab[aria-selected="true"] {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.service-tab:hover {
+  background: var(--wash);
+  color: var(--primary-dark);
+}
+
+.service-tab[aria-selected="true"]:hover {
+  background: var(--primary-dark);
+  color: #ffffff;
+}
+
+.service-tab input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.service-pane {
+  margin-top: 12px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
   background: var(--wash);
 }
 
-.service-option input {
-  width: 18px;
-  min-height: 18px;
-  height: 18px;
-  margin-top: 2px;
-  accent-color: var(--primary-light);
+.service-pane h3 {
+  margin: 0 0 6px;
+  color: var(--primary-dark);
+  font-size: 1rem;
 }
 
-.service-option strong {
-  display: block;
-  margin-bottom: 4px;
-  color: var(--ink);
-  font-size: 0.96rem;
-}
-
-.service-option small {
-  display: block;
+.service-pane p {
+  margin: 0;
   color: var(--muted);
-  font-size: 0.84rem;
-  line-height: 1.4;
+  font-size: 0.9rem;
+  line-height: 1.45;
 }
 
 /* PRICE BOX BANNER */
