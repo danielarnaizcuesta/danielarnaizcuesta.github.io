@@ -1243,41 +1243,58 @@ button,
   max-width: 980px;
 }
 
-.models-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-  gap: 28px;
-  align-items: start;
+.model-download-section {
   padding-top: 20px;
 }
 
-.models-panel,
-.models-output {
-  padding: 28px;
+.model-download-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.model-download-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 250px;
+  padding: 24px;
   border: 1px solid var(--line);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   background: var(--surface);
   box-shadow: var(--shadow-sm);
 }
 
-.models-panel {
-  display: grid;
-  gap: 20px;
+.model-download-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary-light);
+  box-shadow: var(--shadow-md);
 }
 
-.model-note,
-.model-status {
+.model-download-meta {
   color: var(--muted);
-  font-size: 0.88rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
-#model-output {
-  min-height: 680px;
-  margin-top: 16px;
-  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-  font-size: 0.88rem;
-  line-height: 1.5;
-  white-space: pre-wrap;
+.model-download-card h3 {
+  margin: 0;
+  color: var(--primary-dark);
+  font-size: 1.18rem;
+}
+
+.model-download-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.model-download-card .primary {
+  width: 100%;
+  margin-top: auto;
 }
 
 .official-links-section {
@@ -1469,7 +1486,6 @@ button,
   .compact-section,
   .calculator-hero,
   .calculator-layout,
-  .models-layout,
   .calculator-link-panel {
     grid-template-columns: 1fr;
     gap: 32px;
@@ -1556,14 +1572,9 @@ button,
   .final-cta,
   .calculator-card,
   .calculator-sources,
-  .models-panel,
-  .models-output,
+  .model-download-card,
   .calculator-link-panel {
     padding: 22px;
-  }
-
-  #model-output {
-    min-height: 520px;
   }
 
   .result-main strong {
