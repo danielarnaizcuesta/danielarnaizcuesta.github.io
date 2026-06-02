@@ -522,6 +522,50 @@ textarea:focus {
   gap: 16px;
 }
 
+.service-options {
+  display: grid;
+  gap: 12px;
+}
+
+.service-option {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  padding: 16px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  cursor: pointer;
+}
+
+.service-option:hover {
+  border-color: var(--primary-light);
+  background: var(--wash);
+}
+
+.service-option input {
+  width: 18px;
+  min-height: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--primary-light);
+}
+
+.service-option strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--ink);
+  font-size: 0.96rem;
+}
+
+.service-option small {
+  display: block;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+
 /* PRICE BOX BANNER */
 .price-box {
   border-left: 4px solid var(--amber);

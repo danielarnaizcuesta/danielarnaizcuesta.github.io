@@ -26,6 +26,45 @@ F45WvXRbliUcAMO0nuWuUycCAwEAAQ==
 
 let lastGeneratedPdf = null;
 
+const SERVICES = {
+  smac: {
+    code: "S-01",
+    title: "Papeleta, preparacion y representacion voluntaria ante el SMAC",
+    titleHtml: "SMAC: papeleta, preparacion y representacion",
+    price: "150,00 EUR IVA incluido",
+    priceHtml: "150,00 € IVA incluido",
+    buttonText: "Contratar revision y SMAC por 150 €",
+    priceDescription: "No pagas provision inicial: el pago se realiza por transferencia o Bizum una vez prestado el servicio.",
+    filenameSlug: "smac",
+    serviceZone: "Comunidad de Madrid. Solo asuntos tramitables ante el SMAC de la Comunidad de Madrid.",
+    matterService: "S-01 papeleta de conciliacion, presentacion y representacion voluntaria en asunto tramitable ante el SMAC de la Comunidad de Madrid",
+    objectClause(employer) {
+      return `El Cliente encarga al Profesional la redaccion, presentacion de la papeleta de conciliacion laboral y la representacion voluntaria en el acto de conciliacion administrativa ante el SMAC contra la empresa ${employer}. El servicio esta limitado a asuntos tramitables ante el SMAC de la Comunidad de Madrid. A tal efecto, el Cliente facilitara al Profesional la representacion necesaria, ya sea compareciendo presencialmente para otorgar dicha representacion o mediante el correspondiente poder notarial, con anterioridad a la fecha del acto de conciliacion.`;
+    },
+    previewObject(employer) {
+      return `El Cliente encarga al profesional la redaccion, presentacion de la papeleta de conciliacion laboral y la representacion voluntaria en el acto de conciliacion administrativa ante el SMAC contra la empresa ${employer}. El servicio se limita a asuntos tramitables ante el SMAC de la Comunidad de Madrid.`;
+    },
+  },
+  inspeccion: {
+    code: "S-02",
+    title: "Denuncia ante Inspeccion de Trabajo y Seguridad Social",
+    titleHtml: "Denuncia ante Inspeccion de Trabajo",
+    price: "50,00 EUR IVA incluido",
+    priceHtml: "50,00 € IVA incluido",
+    buttonText: "Contratar denuncia a Inspeccion por 50 €",
+    priceDescription: "No pagas provision inicial: el pago se realiza por transferencia o Bizum una vez preparada o presentada la denuncia.",
+    filenameSlug: "denuncia-inspeccion-trabajo",
+    serviceZone: "Espana. Servicio documental de preparacion y, cuando proceda, presentacion telematica de denuncia ante la Inspeccion de Trabajo y Seguridad Social.",
+    matterService: "S-02 preparacion documental y, cuando proceda, presentacion de denuncia ante la Inspeccion de Trabajo y Seguridad Social",
+    objectClause(employer) {
+      return `El Cliente encarga al Profesional la preparacion documental y, cuando proceda, la presentacion telematica de una denuncia ante la Inspeccion de Trabajo y Seguridad Social en relacion con hechos laborales imputables a la empresa ${employer}. El servicio se limita al analisis documental inicial, ordenacion de hechos, redaccion de la denuncia y orientacion sobre la documentacion necesaria. No incluye defensa judicial, representacion procesal, garantia de actuacion inspectora, seguimiento indefinido del expediente ni intervencion en actuaciones inspectoras posteriores salvo acuerdo expreso adicional.`;
+    },
+    previewObject(employer) {
+      return `El Cliente encarga al profesional la preparacion documental y, cuando proceda, la presentacion telematica de una denuncia ante la Inspeccion de Trabajo y Seguridad Social frente a la empresa ${employer}. El servicio incluye ordenar hechos, documentos y redactar la denuncia; no garantiza resultado ni actuacion inspectora.`;
+    },
+  },
+};
+
 const form = document.querySelector("#hire-form");
 const resultSection = document.querySelector("#resultado");
 const whatsappLink = document.querySelector("#whatsapp-link");
@@ -42,6 +81,19 @@ function valueOf(data, name) {
 
 function yesNo(data, name) {
   return data.get(name) ? "SI" : "NO";
+}
+
+function serviceFromKey(key) {
+  return SERVICES[key] || SERVICES.smac;
+}
+
+function selectedServiceFromData(data) {
+  return serviceFromKey(valueOf(data, "servicio") || "smac");
+}
+
+function selectedServiceFromForm() {
+  const selected = form.querySelector("input[name='servicio']:checked");
+  return serviceFromKey(selected ? selected.value : "smac");
 }
 
 function submissionReference() {
@@ -256,6 +308,7 @@ async function encryptSubmission(payload) {
 }
 
 function buildSummary(data) {
+  const service = selectedServiceFromData(data);
   const generatedAt = new Intl.DateTimeFormat("es-ES", {
     dateStyle: "short",
     timeStyle: "short",
@@ -296,28 +349,30 @@ function buildSummary(data) {
     "ESTIPULACIONES:",
     "",
     "1. OBJETO DEL ENCARGO",
-    `El Cliente encarga al Profesional la redaccion, presentacion de la papeleta de conciliacion laboral y la representacion voluntaria en el acto de conciliacion administrativa ante el SMAC contra la empresa ${valueOf(data, "empresa")}. El servicio esta limitado a asuntos tramitables ante el SMAC de la Comunidad de Madrid. A tal efecto, el Cliente facilitara al Profesional la representacion necesaria, ya sea compareciendo presencialmente para otorgar dicha representacion o mediante el correspondiente poder notarial, con anterioridad a la fecha del acto de conciliacion.`,
+    service.objectClause(valueOf(data, "empresa")),
     "",
     "2. PRECIO, PAGO Y FACTURACION",
-    "El precio cerrado por la prestacion de este servicio es de 150,00 EUR con IVA incluido. No se exige provision de fondos inicial. La aportacion de los datos solicitados por el Cliente es obligatoria para la correcta ejecucion del encargo y su facturacion. El pago se realizara mediante transferencia bancaria o Bizum una vez que el servicio haya sido prestado. El Profesional emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.",
+    `El precio cerrado por la prestacion de este servicio es de ${service.price}. No se exige provision de fondos inicial. La aportacion de los datos solicitados por el Cliente es obligatoria para la correcta ejecucion del encargo y su facturacion. El pago se realizara mediante transferencia bancaria o Bizum una vez que el servicio haya sido prestado. El Profesional emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.`,
     "",
     "3. DERECHO DE DESISTIMIENTO E INICIO DEL SERVICIO",
     `El Cliente tiene derecho a desistir del presente contrato en un plazo de 14 dias naturales sin necesidad de justificacion. ${inicioInmediatoTexto}`,
     "",
     "4. LUGAR, FECHA, ZONA DE PRESTACION Y FUERO",
-    "El presente contrato se celebra en Madrid en la fecha y hora indicadas. La zona geografica de prestacion del servicio es exclusivamente la Comunidad de Madrid. Este contrato se rige por la legislacion espanola. Para clientes que tengan la consideracion de consumidores, seran competentes los juzgados y tribunales que correspondan segun la normativa aplicable. En caso de que la competencia territorial sea legalmente disponible, ambas partes se someten expresamente a los juzgados y tribunales de la ciudad de Madrid.",
+    `El presente contrato se celebra en Madrid en la fecha y hora indicadas. La zona geografica de prestacion del servicio es: ${service.serviceZone} Este contrato se rige por la legislacion espanola. Para clientes que tengan la consideracion de consumidores, seran competentes los juzgados y tribunales que correspondan segun la normativa aplicable. En caso de que la competencia territorial sea legalmente disponible, ambas partes se someten expresamente a los juzgados y tribunales de la ciudad de Madrid.`,
     "",
     "5. FIRMA Y ACEPTACION ELECTRONICA",
     "La contratacion queda formalizada y perfeccionada mediante la cumplimentacion y envio de la solicitud web cifrada y el marcado electronico de la casilla obligatoria de aceptacion de condiciones, politica de privacidad y precio.",
     "",
     "ACEPTACION ELECTRONICA:",
     `Firmado electronicamente por el Cliente: ${valueOf(data, "nombre")}`,
-    `Acepta condiciones de servicio, privacidad y precio cerrado de 150,00 EUR: ${yesNo(data, "aceptaCondiciones")}`,
+    `Servicio contratado: ${service.code} - ${service.title}`,
+    `Acepta condiciones de servicio, privacidad y precio cerrado de ${service.price}: ${yesNo(data, "aceptaCondiciones")}`,
     `Solicita inicio inmediato del servicio: ${yesNo(data, "inicioInmediato")}`,
   ].join("\n");
 }
 
 async function buildPayload(data, summary, contractPdf) {
+  const service = selectedServiceFromData(data);
   const submittedAt = new Date().toISOString();
   const reference = submissionReference();
   const summarySha256 = await sha256Hex(summary);
@@ -342,10 +397,12 @@ async function buildPayload(data, summary, contractPdf) {
       pageOrigin: window.location.origin,
       summarySha256,
       contractPdfSha256: contractPdf.sha256,
+      serviceCode: service.code,
+      serviceTitle: service.title,
       contractPlace: "Madrid",
-      serviceZone: "Comunidad de Madrid. Solo asuntos tramitables ante el SMAC de la Comunidad de Madrid.",
+      serviceZone: service.serviceZone,
       governingLawAndForum: "Ley espanola. Para clientes consumidores, juzgados y tribunales legalmente competentes. Cuando la competencia territorial sea legalmente disponible, fuero de Madrid.",
-      acceptedConditionsText: "Acepto las condiciones del servicio, la politica de privacidad, el precio cerrado de 150,00 EUR IVA incluido, sin provision de fondos inicial y con pago una vez prestado el servicio.",
+      acceptedConditionsText: `Acepto las condiciones del servicio, la politica de privacidad, el precio cerrado de ${service.price}, sin provision de fondos inicial y con pago una vez prestado el servicio.`,
       immediateStartText: data.get("inicioInmediato")
         ? "Solicito el inicio inmediato de las gestiones sin esperar al plazo legal de desistimiento."
         : null,
@@ -370,8 +427,9 @@ async function buildPayload(data, summary, contractPdf) {
     },
     matter: {
       employer: valueOf(data, "empresa"),
-      service: "S-01 papeleta de conciliacion, presentacion y representacion voluntaria en asunto tramitable ante el SMAC de la Comunidad de Madrid",
-      price: "150,00 EUR IVA incluido",
+      serviceCode: service.code,
+      service: service.matterService,
+      price: service.price,
       payment: "sin provision de fondos inicial; transferencia o Bizum una vez prestado el servicio",
     },
     acceptances: {
@@ -384,8 +442,9 @@ async function buildPayload(data, summary, contractPdf) {
 function evidenceSubject(evidence) {
   const ref = evidence.reference.slice(0, 8).toUpperCase();
   const pdfHash = evidence.contractPdfSha256.slice(0, 16).toUpperCase();
+  const serviceCode = evidence.serviceCode || "S-01";
 
-  return `S-01 REF ${ref} PDF ${pdfHash}`;
+  return `${serviceCode} REF ${ref} PDF ${pdfHash}`;
 }
 
 async function sendEncryptedSubmission(encryptedSubmission, evidence) {
@@ -437,9 +496,11 @@ async function sendEncryptedSubmission(encryptedSubmission, evidence) {
 }
 
 function setLinks(summary, data, evidence = null) {
+  const service = selectedServiceFromData(data);
   const waMessage =
     "*Contrato Formalizado*\n\n" +
     `Hola Daniel, acabo de formalizar el contrato desde la web.\n\n` +
+    `Servicio: ${service.code} - ${service.title}\n` +
     (evidence ? `Referencia: ${evidence.reference}\n` : "") +
     "Quedo a la espera de que contactes conmigo. ¡Un saludo!";
 
@@ -469,6 +530,7 @@ form.addEventListener("submit", async (event) => {
     form.reportValidity();
     
     const fieldNames = {
+      servicio: "Servicio contratado",
       nombre: "Nombre y apellidos",
       dni: "DNI/NIE/Pasaporte",
       email: "Correo electronico",
@@ -498,6 +560,7 @@ form.addEventListener("submit", async (event) => {
   }
 
   const data = new FormData(form);
+  const service = selectedServiceFromData(data);
   const summary = buildSummary(data);
   const submitButton = form.querySelector("button[type='submit']");
   const originalText = submitButton.textContent;
@@ -506,7 +569,7 @@ form.addEventListener("submit", async (event) => {
   submitButton.textContent = "Firmando y enviando contrato...";
 
   try {
-    const contractPdf = await createContractPdfAttachment(summary);
+    const contractPdf = await createContractPdfAttachment(summary, service);
     lastGeneratedPdf = contractPdf;
     const payload = await buildPayload(data, summary, contractPdf);
     const encryptedSubmission = await encryptSubmission(payload);
@@ -531,7 +594,7 @@ form.addEventListener("submit", async (event) => {
       const summarySha256 = await sha256Hex(summary);
       let pdfSha256 = "ERROR_DE_GENERACION_DE_PDF";
       if (!lastGeneratedPdf) {
-        lastGeneratedPdf = await createContractPdfAttachment(summary);
+        lastGeneratedPdf = await createContractPdfAttachment(summary, service);
       }
       if (lastGeneratedPdf) {
         pdfSha256 = lastGeneratedPdf.sha256;
@@ -540,6 +603,7 @@ form.addEventListener("submit", async (event) => {
         reference: submissionReference(),
         contractPdfSha256: pdfSha256,
         summarySha256: summarySha256,
+        serviceCode: service.code,
       };
     } catch (innerError) {
       console.error("Inner error during fallback evidence generation:", innerError);
@@ -554,9 +618,9 @@ form.addEventListener("submit", async (event) => {
 
 
 
-function pdfFilename() {
+function pdfFilename(service = SERVICES.smac) {
   const date = new Date().toISOString().slice(0, 10);
-  return `contrato-prestacion-servicios-daniel-arnaiz-${date}.pdf`;
+  return `contrato-${service.filenameSlug}-daniel-arnaiz-${date}.pdf`;
 }
 
 function buildPdfDocument(summary) {
@@ -622,7 +686,7 @@ function buildPdfDocument(summary) {
   return doc;
 }
 
-async function createContractPdfAttachment(summary) {
+async function createContractPdfAttachment(summary, service = SERVICES.smac) {
   if (!window.jspdf || !window.jspdf.jsPDF) {
     throw new Error("No se pudo cargar el generador de PDF del contrato.");
   }
@@ -631,7 +695,7 @@ async function createContractPdfAttachment(summary) {
   const arrayBuffer = doc.output("arraybuffer");
 
   return {
-    filename: pdfFilename(),
+    filename: pdfFilename(service),
     mimeType: "application/pdf",
     size: arrayBuffer.byteLength,
     sha256: await sha256Hex(arrayBuffer),
@@ -677,13 +741,57 @@ const inputCp = form.querySelector("input[name='cp']");
 const inputLocalidad = form.querySelector("input[name='localidad']");
 const inputProvincia = form.querySelector("input[name='provincia']");
 const inputEmpresa = form.querySelector("input[name='empresa']");
+const serviceInputs = Array.from(form.querySelectorAll("input[name='servicio']"));
 
 const previewNombre = document.getElementById("preview-nombre");
 const previewDni = document.getElementById("preview-dni");
 const previewDomicilio = document.getElementById("preview-domicilio");
 const previewEmpresa = document.getElementById("preview-empresa");
+const previewServiceTitle = document.getElementById("preview-service-title");
+const previewObject = document.getElementById("preview-object");
+const previewPrice = document.getElementById("preview-price");
+const previewPriceContract = document.getElementById("preview-price-contract");
+const previewPriceConditions = document.getElementById("preview-price-conditions");
+const priceBoxTitle = document.getElementById("price-box-title");
+const priceBoxDescription = document.getElementById("price-box-description");
+const submitButtonPreview = form.querySelector("button[type='submit']");
 
 function updatePreview() {
+  const service = selectedServiceFromForm();
+  const employer = inputEmpresa.value.trim() || "____________________";
+
+  if (previewServiceTitle) {
+    previewServiceTitle.textContent = service.titleHtml;
+  }
+
+  if (previewObject) {
+    previewObject.textContent = service.previewObject(employer);
+  }
+
+  if (previewPrice) {
+    previewPrice.textContent = service.priceHtml;
+  }
+
+  if (previewPriceContract) {
+    previewPriceContract.textContent = service.priceHtml;
+  }
+
+  if (previewPriceConditions) {
+    previewPriceConditions.textContent = service.priceHtml;
+  }
+
+  if (priceBoxTitle) {
+    priceBoxTitle.textContent = `Precio cerrado: ${service.priceHtml}`;
+  }
+
+  if (priceBoxDescription) {
+    priceBoxDescription.textContent = service.priceDescription;
+  }
+
+  if (submitButtonPreview) {
+    submitButtonPreview.textContent = service.buttonText;
+  }
+
   if (previewNombre) {
     previewNombre.textContent = inputNombre.value.trim() || "____________________";
   }
@@ -693,7 +801,7 @@ function updatePreview() {
   }
 
   if (previewEmpresa) {
-    previewEmpresa.textContent = inputEmpresa.value.trim() || "____________________";
+    previewEmpresa.textContent = employer;
   }
 
   if (previewDomicilio) {
@@ -723,3 +831,9 @@ function updatePreview() {
     input.addEventListener("input", updatePreview);
   }
 });
+
+serviceInputs.forEach((input) => {
+  input.addEventListener("change", updatePreview);
+});
+
+updatePreview();
