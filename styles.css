@@ -530,7 +530,7 @@ textarea:focus {
 
 .service-tabs {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0;
   border: 1.5px solid var(--line);
   border-radius: var(--radius-sm);
@@ -1427,6 +1427,11 @@ button,
   .site-nav a {
     padding: 6px 10px;
     font-size: 0.9rem;
+  }
+
+  .service-tab {
+    padding: 10px 8px;
+    font-size: 0.88rem;
   }
 
   .field-grid,

@@ -51,13 +51,37 @@ function loadPayPalSDK(clientId, callback) {
 let lastGeneratedPdf = null;
 
 const SERVICES = {
+  papeleta: {
+    code: "S-03",
+    title: "Redaccion de papeleta de conciliacion laboral",
+    titleHtml: "Papeleta de conciliacion laboral",
+    previewHeading: "HOJA DE ENCARGO - REDACCION DE PAPELETA",
+    price: "90,00 EUR IVA incluido",
+    priceHtml: "90,00 € IVA incluido",
+    priceShort: "90",
+    paypalAmount: "90.00",
+    buttonText: "Contratar redaccion de papeleta por 90 €",
+    priceDescription: "No pagas provision inicial: el pago se realiza por transferencia o Bizum una vez redactada la papeleta.",
+    filenameSlug: "papeleta-conciliacion",
+    serviceZone: "Espana. Servicio documental de redaccion de papeleta de conciliacion laboral para que el Cliente la presente ante el organo administrativo competente.",
+    previewZone: "Espana. Redaccion documental de papeleta de conciliacion laboral. No incluye representacion ni asistencia presencial.",
+    matterService: "S-03 redaccion de papeleta de conciliacion laboral para su presentacion por el Cliente ante el organo administrativo competente",
+    objectClause(employer) {
+      return `El Cliente encarga al Profesional la redaccion de una papeleta de conciliacion laboral frente a la empresa ${employer}, con base en la informacion y documentacion facilitada por el Cliente. El servicio se limita al analisis documental inicial, ordenacion de hechos, cuantificacion orientativa cuando proceda y redaccion del escrito para su presentacion por el Cliente ante el organo administrativo de conciliacion competente. No incluye presentacion administrativa, representacion presencial, asistencia al acto de conciliacion, defensa judicial, representacion procesal ni garantia de resultado, salvo acuerdo expreso adicional.`;
+    },
+    previewObject(employer) {
+      return `El Cliente encarga al profesional la redaccion de una papeleta de conciliacion laboral frente a la empresa ${employer}. El servicio es documental, valido para asuntos de trabajadores en Espana, y no incluye presentacion, representacion presencial ni asistencia al acto de conciliacion.`;
+    },
+  },
   smac: {
     code: "S-01",
-    title: "Papeleta, preparacion y representacion voluntaria ante el SMAC",
-    titleHtml: "SMAC: papeleta, preparacion y representacion",
+    title: "Papeleta, preparacion y representacion voluntaria ante el SMAC de Madrid",
+    titleHtml: "SMAC Madrid: papeleta, preparacion y representacion",
     previewHeading: "HOJA DE ENCARGO - SMAC MADRID",
     price: "150,00 EUR IVA incluido",
     priceHtml: "150,00 € IVA incluido",
+    priceShort: "150",
+    paypalAmount: "150.00",
     buttonText: "Contratar revision y SMAC por 150 €",
     priceDescription: "No pagas provision inicial: el pago se realiza por transferencia o Bizum una vez prestado el servicio.",
     filenameSlug: "smac",
@@ -78,6 +102,8 @@ const SERVICES = {
     previewHeading: "HOJA DE ENCARGO - DENUNCIA A INSPECCION DE TRABAJO",
     price: "50,00 EUR IVA incluido",
     priceHtml: "50,00 € IVA incluido",
+    priceShort: "50",
+    paypalAmount: "50.00",
     buttonText: "Contratar denuncia a Inspeccion por 50 €",
     priceDescription: "No pagas provision inicial: el pago se realiza por transferencia o Bizum una vez preparada o presentada la denuncia.",
     filenameSlug: "denuncia-inspeccion-trabajo",
@@ -112,16 +138,16 @@ function yesNo(data, name) {
 }
 
 function serviceFromKey(key) {
-  return SERVICES[key] || SERVICES.smac;
+  return SERVICES[key] || SERVICES.papeleta;
 }
 
 function selectedServiceFromData(data) {
-  return serviceFromKey(valueOf(data, "servicio") || "smac");
+  return serviceFromKey(valueOf(data, "servicio") || "papeleta");
 }
 
 function selectedServiceFromForm() {
   const selected = form.querySelector("input[name='servicio']:checked");
-  return serviceFromKey(selected ? selected.value : "smac");
+  return serviceFromKey(selected ? selected.value : "papeleta");
 }
 
 function submissionReference() {
@@ -481,7 +507,7 @@ async function buildPayload(data, summary, contractPdf) {
 function evidenceSubject(evidence) {
   const ref = evidence.reference.slice(0, 8).toUpperCase();
   const pdfHash = evidence.contractPdfSha256.slice(0, 16).toUpperCase();
-  const serviceCode = evidence.serviceCode || "S-01";
+  const serviceCode = evidence.serviceCode || "S-03";
 
   return `${serviceCode} REF ${ref} PDF ${pdfHash}`;
 }
@@ -836,7 +862,7 @@ function initPayPalButtons() {
     },
     createOrder: function(data, actions) {
       const service = selectedServiceFromForm();
-      const amountValue = service.code === "S-02" ? "50.00" : "150.00";
+      const amountValue = service.paypalAmount;
       return actions.order.create({
         purchase_units: [{
           amount: {
@@ -866,7 +892,7 @@ function initPayPalButtons() {
 
 
 
-function pdfFilename(service = SERVICES.smac) {
+function pdfFilename(service = SERVICES.papeleta) {
   const date = new Date().toISOString().slice(0, 10);
   return `contrato-${service.filenameSlug}-daniel-arnaiz-${date}.pdf`;
 }
@@ -1068,7 +1094,7 @@ function updatePreview() {
     bizumAmountText.textContent = service.priceHtml;
   }
   if (bizumSubmitButton) {
-    bizumSubmitButton.textContent = `Confirmar Bizum y Enviar por ${service.code === "S-02" ? "50" : "150"} €`;
+    bizumSubmitButton.textContent = `Confirmar Bizum y Enviar por ${service.priceShort} €`;
   }
 
   if (previewNombre) {
