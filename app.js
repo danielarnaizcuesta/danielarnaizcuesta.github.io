@@ -553,7 +553,11 @@ function showResult(summary, data, evidence = null) {
   const resultDesc = document.getElementById("result-desc");
   
   if (resultTitle && resultDesc) {
-resultSection.hidden = false;
+    resultTitle.textContent = "Contrato Formalizado con Exito";
+    resultDesc.innerHTML = "El contrato se ha firmado electronicamente de forma segura y se ha transmitido al profesional para iniciar las gestiones de inmediato.<br><br>Por favor, <strong>descarga tu copia en PDF</strong> a continuacion para conservarla en tus archivos personales. Daniel contactara contigo a la mayor brevedad.";
+  }
+
+  resultSection.hidden = false;
   resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
