@@ -363,26 +363,6 @@ h3 {
   background: var(--amber);
 }
 
-.hero-proof {
-  margin: 12px 0 28px;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background: var(--surface);
-  box-shadow: var(--shadow-md);
-}
-
-.hero-proof img {
-  width: 100%;
-}
-
-.hero-proof figcaption {
-  padding: 12px 16px;
-  color: var(--muted);
-  font-size: 0.9rem;
-  font-weight: 650;
-}
-
 .service-facts {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1076,32 +1056,15 @@ button,
   align-items: center;
 }
 
+.calculator-hero-plain {
+  display: block;
+  max-width: 980px;
+}
+
 .calculator-hero > *,
 .calculator-layout > *,
 .calculator-link-panel > * {
   min-width: 0;
-}
-
-.calculator-visual {
-  min-width: 0;
-  max-width: 100%;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background: var(--surface);
-  box-shadow: var(--shadow-md);
-}
-
-.calculator-visual img {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-}
-
-.calculator-visual figcaption {
-  padding: 12px 16px;
-  color: var(--muted);
-  font-size: 0.9rem;
 }
 
 .calculator-layout {
@@ -1272,6 +1235,47 @@ button,
   padding-left: 20px;
 }
 
+.models-hero {
+  max-width: 980px;
+}
+
+.models-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: 28px;
+  align-items: start;
+  padding-top: 20px;
+}
+
+.models-panel,
+.models-output {
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.models-panel {
+  display: grid;
+  gap: 20px;
+}
+
+.model-note,
+.model-status {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+#model-output {
+  min-height: 680px;
+  margin-top: 16px;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
 .calculator-link-panel {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -1411,6 +1415,7 @@ button,
   .compact-section,
   .calculator-hero,
   .calculator-layout,
+  .models-layout,
   .calculator-link-panel {
     grid-template-columns: 1fr;
     gap: 32px;
@@ -1497,8 +1502,14 @@ button,
   .final-cta,
   .calculator-card,
   .calculator-sources,
+  .models-panel,
+  .models-output,
   .calculator-link-panel {
     padding: 22px;
+  }
+
+  #model-output {
+    min-height: 520px;
   }
 
   .result-main strong {

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Modelos gratuitos de papeleta laboral | Daniel Arnaiz Cuesta</title>
+    <meta
+      name="description"
+      content="Modelos gratuitos de papeleta o escrito laboral para sanciones, modificación sustancial, órdenes ilegales y categoría profesional."
+    />
+    <meta name="theme-color" content="#2f6653" />
+    <link rel="canonical" href="https://danielarnaizcuesta.github.io/modelos.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://danielarnaizcuesta.github.io/modelos.html" />
+    <meta property="og:title" content="Modelos gratuitos de papeleta laboral" />
+    <meta
+      property="og:description"
+      content="Genera un modelo gratuito para sanción, modificación sustancial, orden ilegal o categoría profesional."
+    />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Daniel Arnaiz Cuesta">
+        <span class="brand-mark">DA</span>
+        <span>
+          <strong>Daniel Arnaiz Cuesta</strong>
+          <small>Servicio documental laboral</small>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Navegación principal">
+        <a href="index.html#servicio">Servicios</a>
+        <a href="modelos.html" aria-current="page">Modelos gratis</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a class="nav-cta" href="index.html#hire-form">Contratar</a>
+        <a href="privacidad.html">Privacidad</a>
+        <a href="aviso-legal.html">Aviso legal</a>
+      </nav>
+    </header>
+
+    <main class="models-page">
+      <section class="section-inner models-hero" aria-labelledby="models-title">
+        <p class="overline">Modelos gratuitos</p>
+        <h1 id="models-title">Papeletas y escritos laborales básicos</h1>
+        <p class="lead">
+          Genera un texto base para asuntos donde muchas veces compensa empezar con un modelo gratuito:
+          sanciones, amonestaciones, modificación sustancial, órdenes empresariales ilegales y categoría profesional.
+        </p>
+        <div class="hero-actions">
+          <a class="primary" href="#generador-modelos">Generar modelo</a>
+          <a class="secondary" href="index.html#hire-form">Contratar redacción completa</a>
+        </div>
+      </section>
+
+      <section class="section-inner models-layout" id="generador-modelos" aria-label="Generador de modelos gratuitos">
+        <form class="models-panel" id="model-form" novalidate>
+          <fieldset>
+            <legend>Modelo gratuito</legend>
+            <label>
+              Tipo de escrito
+              <select name="tipoModelo" id="tipo-modelo">
+                <option value="sancion">Sanción o amonestación</option>
+                <option value="msct">Modificación sustancial</option>
+                <option value="orden">Orden empresarial ilegal</option>
+                <option value="categoria">Categoría profesional</option>
+              </select>
+            </label>
+            <p class="model-note" id="model-note"></p>
+          </fieldset>
+
+          <fieldset>
+            <legend>Datos del trabajador</legend>
+            <div class="field-grid">
+              <label>Nombre y apellidos <input name="trabajador" placeholder="Nombre completo" /></label>
+              <label>DNI/NIE <input name="dni" placeholder="DNI o NIE" /></label>
+              <label>Domicilio <input name="domicilioTrabajador" placeholder="Calle, número, localidad" /></label>
+              <label>Email o teléfono <input name="contacto" placeholder="Contacto" /></label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Empresa</legend>
+            <div class="field-grid">
+              <label>Empresa <input name="empresa" placeholder="Nombre de la empresa" /></label>
+              <label>CIF opcional <input name="cif" placeholder="CIF si lo tienes" /></label>
+              <label>Domicilio de la empresa <input name="domicilioEmpresa" placeholder="Dirección de la empresa" /></label>
+              <label>Centro de trabajo <input name="centro" placeholder="Centro de trabajo" /></label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Datos del asunto</legend>
+            <div class="field-grid">
+              <label>Fecha clave <input name="fechaClave" type="date" /></label>
+              <label>Puesto o categoría actual <input name="puesto" placeholder="Ej. Administrativo, camarero, técnico..." /></label>
+            </div>
+            <label>
+              Hechos principales
+              <textarea name="hechos" placeholder="Cuenta qué pasó, cuándo, quién lo comunicó y qué documentos tienes."></textarea>
+            </label>
+            <label>
+              Qué pides
+              <textarea name="peticion" placeholder="Ej. que se deje sin efecto la sanción, que se repongan condiciones, que se reconozca categoría..."></textarea>
+            </label>
+          </fieldset>
+
+          <div class="form-actions">
+            <button class="primary" type="submit">Generar texto</button>
+            <button class="secondary" type="reset">Limpiar</button>
+          </div>
+        </form>
+
+        <section class="models-output" aria-labelledby="output-title">
+          <p class="overline">Texto generado</p>
+          <h2 id="output-title">Modelo listo para revisar</h2>
+          <textarea id="model-output" spellcheck="false" readonly></textarea>
+          <div class="form-actions">
+            <button class="primary" type="button" id="copy-model">Copiar</button>
+            <button class="secondary" type="button" id="download-model">Descargar TXT</button>
+          </div>
+          <p class="model-status" id="model-status" role="status" aria-live="polite"></p>
+        </section>
+      </section>
+
+      <section class="section-band" aria-labelledby="free-models-title">
+        <div class="section-inner">
+          <p class="overline">Cuándo usarlo</p>
+          <h2 id="free-models-title">Modelos gratuitos, servicio profesional aparte</h2>
+          <div class="scope-grid">
+            <article>
+              <h3>Gratis</h3>
+              <ul>
+                <li>Sanciones y amonestaciones sencillas.</li>
+                <li>Órdenes empresariales claramente problemáticas.</li>
+                <li>Cambios de jornada, horario, funciones o salario que quieras dejar reclamados.</li>
+                <li>Categoría profesional cuando tienes funciones claras y comparables.</li>
+              </ul>
+            </article>
+            <article>
+              <h3>Mejor contratar</h3>
+              <ul>
+                <li>Despido, finiquito, cantidades relevantes o plazo urgente.</li>
+                <li>Varios conceptos mezclados o documentación contradictoria.</li>
+                <li>Acoso, represalias, baja médica, embarazo, reducción de jornada o tutela de derechos.</li>
+                <li>Si necesitas que alguien revise estrategia, cuantía y prueba.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>© 2026 Daniel Arnaiz Cuesta</span>
+      <a href="index.html">Inicio</a>
+      <a href="modelos.html">Modelos gratis</a>
+      <a href="calculadoras.html">Calculadoras</a>
+      <a href="aviso-legal.html">Aviso legal</a>
+      <a href="privacidad.html">Privacidad</a>
+    </footer>
+
+    <script src="modelos.js" defer></script>
+  </body>
+</html>
