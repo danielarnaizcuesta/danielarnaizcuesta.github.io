@@ -61,7 +61,6 @@ const REPRESENTATION_REGIONS = {
 
 const SERVICES = {
   papeleta: {
-    code: "S-03",
     title: "Redaccion de papeleta de conciliacion laboral",
     titleHtml: "Papeleta de conciliacion laboral",
     previewHeading: "HOJA DE ENCARGO - REDACCION DE PAPELETA",
@@ -74,7 +73,7 @@ const SERVICES = {
     filenameSlug: "papeleta-conciliacion",
     serviceZone: "Espana. Servicio documental de redaccion de papeleta de conciliacion laboral para que el Cliente la presente ante el organo administrativo competente.",
     previewZone: "Espana. Redaccion documental de papeleta de conciliacion laboral. No incluye representacion ni asistencia presencial.",
-    matterService: "S-03 redaccion de papeleta de conciliacion laboral para su presentacion por el Cliente ante el organo administrativo competente",
+    matterService: "Redaccion de papeleta de conciliacion laboral para su presentacion por el Cliente ante el organo administrativo competente",
     objectClause(employer) {
       return `El Cliente encarga al Profesional la redaccion de una papeleta de conciliacion laboral frente a la empresa ${employer}, con base en la informacion y documentacion facilitada por el Cliente. El servicio se limita al analisis documental inicial, ordenacion de hechos, cuantificacion orientativa cuando proceda y redaccion del escrito para su presentacion por el Cliente ante el organo administrativo de conciliacion competente. No incluye presentacion administrativa, representacion presencial, asistencia al acto de conciliacion, defensa judicial, representacion procesal ni garantia de resultado, salvo acuerdo expreso adicional.`;
     },
@@ -83,7 +82,6 @@ const SERVICES = {
     },
   },
   smac: {
-    code: "S-01",
     title: "Papeleta, preparacion y representacion voluntaria en conciliacion laboral",
     titleHtml: "Representacion en conciliacion laboral",
     previewHeading: "HOJA DE ENCARGO - REPRESENTACION EN CONCILIACION",
@@ -94,9 +92,10 @@ const SERVICES = {
     buttonText: "Contratar revision y SMAC por 150 €",
     priceDescription: "No pagas provision inicial: el pago se realiza por transferencia o Bizum una vez prestado el servicio.",
     filenameSlug: "smac",
+    requiresRepresentationRegion: true,
     serviceZone: REPRESENTATION_REGIONS.madrid.serviceZone,
     previewZone: REPRESENTATION_REGIONS.madrid.previewZone,
-    matterService: "S-01 papeleta de conciliacion, presentacion y representacion voluntaria en asunto tramitable ante el organo de conciliacion disponible",
+    matterService: "Papeleta de conciliacion, presentacion y representacion voluntaria en asunto tramitable ante el organo de conciliacion disponible",
     objectClause(employer, region = REPRESENTATION_REGIONS.madrid) {
       return `El Cliente encarga al Profesional la redaccion, presentacion de la papeleta de conciliacion laboral y la representacion voluntaria en el acto de conciliacion administrativa ante ${region.organ} contra la empresa ${employer}. El servicio esta limitado a asuntos tramitables en la comunidad autonoma seleccionada: ${region.label}. A tal efecto, el Cliente facilitara al Profesional la representacion necesaria, ya sea compareciendo presencialmente para otorgar dicha representacion o mediante el correspondiente poder notarial, con anterioridad a la fecha del acto de conciliacion.`;
     },
@@ -105,7 +104,6 @@ const SERVICES = {
     },
   },
   inspeccion: {
-    code: "S-02",
     title: "Denuncia ante Inspeccion de Trabajo y Seguridad Social",
     titleHtml: "Denuncia ante Inspeccion de Trabajo",
     previewHeading: "HOJA DE ENCARGO - DENUNCIA A INSPECCION DE TRABAJO",
@@ -118,7 +116,7 @@ const SERVICES = {
     filenameSlug: "denuncia-inspeccion-trabajo",
     serviceZone: "Espana. Servicio documental de preparacion y, cuando proceda, presentacion telematica de denuncia ante la Inspeccion de Trabajo y Seguridad Social.",
     previewZone: "Servicio documental de preparacion y, cuando proceda, presentacion administrativa ante la Inspeccion de Trabajo y Seguridad Social.",
-    matterService: "S-02 preparacion documental y, cuando proceda, presentacion de denuncia ante la Inspeccion de Trabajo y Seguridad Social",
+    matterService: "Preparacion documental y, cuando proceda, presentacion de denuncia ante la Inspeccion de Trabajo y Seguridad Social",
     objectClause(employer) {
       return `El Cliente encarga al Profesional la preparacion documental y, cuando proceda, la presentacion telematica de una denuncia ante la Inspeccion de Trabajo y Seguridad Social en relacion con hechos laborales imputables a la empresa ${employer}. El servicio se limita al analisis documental inicial, ordenacion de hechos, redaccion de la denuncia y orientacion sobre la documentacion necesaria. No incluye defensa judicial, representacion procesal, garantia de actuacion inspectora, seguimiento indefinido del expediente ni intervencion en actuaciones inspectoras posteriores salvo acuerdo expreso adicional.`;
     },
@@ -127,7 +125,6 @@ const SERVICES = {
     },
   },
   bancario: {
-    code: "S-04",
     title: "Gestion extrajudicial bancaria sobre prestamos o creditos abusivos",
     titleHtml: "Gestion extrajudicial bancaria",
     previewHeading: "HOJA DE ENCARGO - GESTION EXTRAJUDICIAL BANCARIA",
@@ -140,7 +137,7 @@ const SERVICES = {
     filenameSlug: "gestion-extrajudicial-bancaria",
     serviceZone: "Espana. Servicio documental y de gestion extrajudicial para consumidores sobre prestamos, creditos o tarjetas con posibles intereses o condiciones abusivas.",
     previewZone: "Espana. Gestion extrajudicial bancaria para consumidores. No incluye defensa judicial, mediacion oficial ni asesoramiento financiero.",
-    matterService: "S-04 gestion extrajudicial bancaria para consumidores sobre prestamos, creditos o tarjetas con posibles condiciones abusivas",
+    matterService: "Gestion extrajudicial bancaria para consumidores sobre prestamos, creditos o tarjetas con posibles condiciones abusivas",
     objectClause(employer) {
       return `El Cliente encarga al Profesional la preparacion documental y gestion extrajudicial frente a la entidad ${employer} en relacion con un prestamo, credito, tarjeta u otro producto de financiacion con posibles intereses, comisiones o condiciones abusivas. El servicio puede incluir revision documental inicial, ordenacion de importes y hechos, redaccion de reclamacion extrajudicial, propuesta de acuerdo y comunicaciones orientadas a alcanzar una solucion negociada. Podra intervenir un colaborador externo de apoyo documental o negociacion bajo coordinacion del Profesional. No incluye mediacion oficial regulada, asesoramiento financiero o de inversion, defensa judicial, representacion procesal, garantia de acuerdo, garantia de devolucion de cantidades ni valoracion definitiva de nulidad, usura o abusividad, que corresponde a los tribunales cuando exista controversia.`;
     },
@@ -194,12 +191,16 @@ function selectedRepresentationRegionFromForm() {
   return representationRegionFromValue(selected ? selected.value : "madrid");
 }
 
+function serviceRequiresRepresentationRegion(service) {
+  return Boolean(service.requiresRepresentationRegion);
+}
+
 function zoneForService(service, region = REPRESENTATION_REGIONS.madrid) {
-  return service.code === "S-01" ? region.serviceZone : service.serviceZone;
+  return serviceRequiresRepresentationRegion(service) ? region.serviceZone : service.serviceZone;
 }
 
 function previewZoneForService(service, region = REPRESENTATION_REGIONS.madrid) {
-  return service.code === "S-01" ? region.previewZone : service.previewZone;
+  return serviceRequiresRepresentationRegion(service) ? region.previewZone : service.previewZone;
 }
 
 function submissionReference() {
@@ -417,7 +418,7 @@ function buildSummary(data, paymentInfo = null) {
   const service = selectedServiceFromData(data);
   const representationRegion = representationRegionFromData(data);
   const serviceZone = zoneForService(service, representationRegion);
-  const representationRegionLine = service.code === "S-01"
+  const representationRegionLine = serviceRequiresRepresentationRegion(service)
     ? [`Comunidad autonoma seleccionada para representacion: ${representationRegion.label}`, ""]
     : [];
   const generatedAt = new Intl.DateTimeFormat("es-ES", {
@@ -454,7 +455,7 @@ function buildSummary(data, paymentInfo = null) {
 
   return [
     "CONTRATO DE PRESTACION DE SERVICIOS - HOJA DE ENCARGO",
-    `Servicio contratado: ${service.code} - ${service.title}`,
+    `Servicio contratado: ${service.title}`,
     ...representationRegionLine,
     "",
     `Fecha del contrato: ${generatedAt}`,
@@ -487,7 +488,7 @@ function buildSummary(data, paymentInfo = null) {
     "",
     "ACEPTACION ELECTRONICA:",
     `Firmado electronicamente por el Cliente: ${valueOf(data, "nombre")}`,
-    `Servicio contratado: ${service.code} - ${service.title}`,
+    `Servicio contratado: ${service.title}`,
     `Acepta condiciones de servicio, privacidad y precio cerrado de ${service.price}: ${yesNo(data, "aceptaCondiciones")}`,
     `Solicita inicio inmediato del servicio: ${yesNo(data, "inicioInmediato")}`,
     paymentInfo ? `Metodo de Pago: Pagado mediante ${paymentInfo.method.toUpperCase()} (${paymentInfo.method === "paypal" ? "ID de Transaccion: " + paymentInfo.transactionId : "Telefono emisor: " + paymentInfo.telefono + ", Concepto: " + paymentInfo.concepto})` : "Metodo de Pago: Pago posterior (Bizum / Transferencia tras el servicio)"
@@ -522,11 +523,10 @@ async function buildPayload(data, summary, contractPdf) {
       pageOrigin: window.location.origin,
       summarySha256,
       contractPdfSha256: contractPdf.sha256,
-      serviceCode: service.code,
       serviceTitle: service.title,
       contractPlace: "Madrid",
       serviceZone,
-      representationRegion: service.code === "S-01" ? representationRegion.label : null,
+      representationRegion: serviceRequiresRepresentationRegion(service) ? representationRegion.label : null,
       governingLawAndForum: "Ley espanola. Para clientes consumidores, juzgados y tribunales legalmente competentes. Cuando la competencia territorial sea legalmente disponible, fuero de Madrid.",
       acceptedConditionsText: `Acepto las condiciones del servicio, la politica de privacidad, el precio cerrado de ${service.price}, sin provision de fondos inicial y con pago una vez prestado el servicio.`,
       immediateStartText: data.get("inicioInmediato")
@@ -553,9 +553,8 @@ async function buildPayload(data, summary, contractPdf) {
     },
     matter: {
       employer: valueOf(data, "empresa"),
-      serviceCode: service.code,
       service: service.matterService,
-      representationRegion: service.code === "S-01" ? representationRegion.label : null,
+      representationRegion: serviceRequiresRepresentationRegion(service) ? representationRegion.label : null,
       price: service.price,
       payment: "sin provision de fondos inicial; transferencia o Bizum una vez prestado el servicio",
     },
@@ -569,9 +568,8 @@ async function buildPayload(data, summary, contractPdf) {
 function evidenceSubject(evidence) {
   const ref = evidence.reference.slice(0, 8).toUpperCase();
   const pdfHash = evidence.contractPdfSha256.slice(0, 16).toUpperCase();
-  const serviceCode = evidence.serviceCode || "S-03";
 
-  return `${serviceCode} REF ${ref} PDF ${pdfHash}`;
+  return `REF ${ref} PDF ${pdfHash}`;
 }
 
 async function sendEncryptedSubmission(encryptedSubmission, evidence) {
@@ -627,7 +625,7 @@ function setLinks(summary, data, evidence = null) {
   const waMessage =
     "*Contrato Formalizado*\n\n" +
     `Hola Daniel, acabo de formalizar el contrato desde la web.\n\n` +
-    `Servicio: ${service.code} - ${service.title}\n` +
+    `Servicio: ${service.title}\n` +
     (evidence ? `Referencia: ${evidence.reference}\n` : "") +
     "Quedo a la espera de que contactes conmigo. ¡Un saludo!";
 
@@ -735,7 +733,6 @@ async function processContractSubmission(paymentInfo = null) {
         reference: submissionReference(),
         contractPdfSha256: pdfSha256,
         summarySha256: summarySha256,
-        serviceCode: service.code,
       };
       if (paymentInfo) {
         fakeEvidence.paymentInfo = paymentInfo;
