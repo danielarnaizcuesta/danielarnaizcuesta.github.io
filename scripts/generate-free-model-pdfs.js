@@ -29,31 +29,6 @@ const models = [
     note: 'Pensado para trámites documentales ante FOGASA. Si hay despido, cantidades discutidas o resolución contradictoria, conviene revisar el caso antes.'
   },
   {
-    file: 'modelo-solicitud-certificado-empresa.pdf',
-    title: 'Modelo gratuito - certificado de empresa',
-    subtitle: 'Solicitud de certificado de empresa y documentación para prestaciones',
-    body: [
-      'A LA EMPRESA [NOMBRE_EMPRESA]',
-      '',
-      '[NOMBRE Y APELLIDOS], con DNI/NIE [DNI_NIE], que ha prestado servicios en la empresa con fecha de inicio [FECHA_INICIO] y fecha de fin o situación actual [FECHA_FIN_O_SITUACION], EXPONE:',
-      '',
-      'Que necesita disponer del certificado de empresa y de la documentación laboral necesaria para tramitar o comprobar prestaciones, cotizaciones y situación laboral.',
-      '',
-      'Por ello, SOLICITA:',
-      '',
-      '1. Que se comunique el certificado de empresa al SEPE, si todavía no se ha realizado.',
-      '2. Que se facilite copia del certificado o justificante de comunicación, si existe.',
-      '3. Que se entregue o remita la documentación laboral pendiente: [DOCUMENTACION_SOLICITADA].',
-      '',
-      'La documentación puede remitirse a [EMAIL] o entregarse por el medio habitual de comunicación entre las partes.',
-      '',
-      'En [LOCALIDAD], a [FECHA].',
-      '',
-      'Firma: [NOMBRE Y APELLIDOS]'
-    ],
-    note: 'Útil para pedir documentación necesaria para desempleo, subsidios o comprobaciones básicas.'
-  },
-  {
     file: 'modelo-solicitud-documentacion-laboral.pdf',
     title: 'Modelo gratuito - documentación laboral',
     subtitle: 'Solicitud de contrato, nóminas, finiquito, cuadrantes o registro horario',
@@ -209,30 +184,33 @@ const models = [
     note: 'Sirve para ordenar prueba documental de jornada y turnos sin formular todavía una reclamación concreta.'
   },
   {
-    file: 'modelo-solicitud-certificado-funciones-antiguedad.pdf',
-    title: 'Modelo gratuito - funciones y antigüedad',
-    subtitle: 'Solicitud de certificado de puesto, funciones, jornada o antigüedad',
+    file: 'modelo-solicitud-informe-funciones-comite.pdf',
+    title: 'Modelo gratuito - funciones y puesto',
+    subtitle: 'Solicitud de informe o constancia al comité de empresa',
     body: [
-      'A LA EMPRESA [NOMBRE_EMPRESA]',
+      'AL COMITÉ DE EMPRESA / REPRESENTACIÓN LEGAL DE LAS PERSONAS TRABAJADORAS DE [EMPRESA]',
       '',
       '[NOMBRE Y APELLIDOS], con DNI/NIE [DNI_NIE], trabajador/a o extrabajador/a de la empresa, EXPONE:',
       '',
-      'Que necesita disponer de un certificado laboral para acreditar datos básicos de su relación laboral.',
+      'Que necesita dejar constancia documental de las funciones y puesto efectivamente desempeñados en [CENTRO_DE_TRABAJO] durante el periodo [PERIODO].',
       '',
-      'SOLICITA que se le emita certificado que indique, según conste en la empresa, los siguientes extremos:',
+      'Que solicita la colaboración de la representación legal de las personas trabajadoras, en el ámbito de sus funciones de información, consulta y vigilancia de las condiciones de trabajo.',
       '',
-      '- Fecha de inicio y, en su caso, fecha de finalización: [SI/NO].',
-      '- Puesto, categoría, grupo profesional o funciones realizadas: [SI/NO].',
-      '- Jornada, horario o centro de trabajo: [SI/NO].',
-      '- Otros datos a acreditar: [OTROS_DATOS].',
+      'SOLICITA que, si el comité tiene conocimiento o puede contrastarlo, emita informe o constancia sobre los siguientes extremos:',
       '',
-      'La documentación puede remitirse a [EMAIL] o entregarse por escrito.',
+      '- Puesto o área de trabajo efectiva: [PUESTO_O_AREA].',
+      '- Funciones realizadas habitualmente: [FUNCIONES].',
+      '- Jornada, turnos o centro de trabajo relacionados con esas funciones: [DETALLE].',
+      '- Periodo aproximado en que se han venido realizando: [PERIODO].',
+      '- Observaciones del comité o representación legal: [OBSERVACIONES].',
+      '',
+      'Esta solicitud no pide certificar antigüedad ni sustituir documentación empresarial, sino obtener informe o constancia representativa sobre funciones y puesto.',
       '',
       'En [LOCALIDAD], a [FECHA].',
       '',
       'Firma: [NOMBRE Y APELLIDOS]'
     ],
-    note: 'Modelo de acreditación documental. Si el certificado se va a usar para reclamar categoría o diferencias, conviene revisar estrategia.'
+    note: 'El comité no sustituye un certificado empresarial ni certifica antigüedad. Este modelo pide informe o constancia sobre funciones y puesto desde sus competencias de representación.'
   },
   {
     file: 'modelo-solicitud-copia-informes-mutua.pdf',
