@@ -64,18 +64,18 @@ const SERVICES = {
     title: "Redaccion de papeleta de conciliacion laboral",
     titleHtml: "Papeleta de conciliacion laboral",
     previewHeading: "HOJA DE ENCARGO - REDACCION DE PAPELETA",
-    price: "90,00 EUR IVA incluido",
-    priceHtml: "90,00 € IVA incluido",
-    priceShort: "90",
-    paypalAmount: "90.00",
-    buttonText: "Contratar redaccion de papeleta por 90 €",
+    price: "120,00 EUR IVA incluido",
+    priceHtml: "120,00 € IVA incluido",
+    priceShort: "120",
+    paypalAmount: "120.00",
+    buttonText: "Contratar redaccion de papeleta por 120 €",
     priceDescription: "Pago posterior por transferencia o Bizum una vez redactada la papeleta.",
     filenameSlug: "papeleta-conciliacion",
     serviceZone: "Espana. Servicio documental de redaccion de papeleta de conciliacion laboral para que el Cliente la presente ante el organo administrativo competente.",
     previewZone: "Espana. Redaccion documental de papeleta de conciliacion laboral. Representacion y asistencia presencial se contratan aparte.",
     matterService: "Redaccion de papeleta de conciliacion laboral para su presentacion por el Cliente ante el organo administrativo competente",
     objectClause(employer) {
-      return `El Cliente encarga al Profesional la redaccion de una papeleta de conciliacion laboral frente a la empresa ${employer}, con base en la informacion y documentacion facilitada por el Cliente. El alcance comprende analisis documental inicial, ordenacion de hechos, cuantificacion orientativa cuando proceda y redaccion del escrito para su presentacion por el Cliente ante el organo administrativo de conciliacion competente. Presentacion administrativa, representacion presencial, asistencia al acto de conciliacion, defensa judicial y representacion procesal se contratan mediante acuerdo expreso adicional.`;
+      return `El Cliente encarga al Profesional la redaccion de una papeleta de conciliacion laboral frente a la empresa ${employer}, con base en la informacion y documentacion facilitada por el Cliente. El alcance comprende analisis documental inicial, ordenacion de hechos, cuantificacion orientativa cuando proceda y redaccion del escrito para su presentacion por el Cliente ante el organo administrativo de conciliacion competente. Presentacion administrativa, representacion presencial y asistencia al acto de conciliacion se contratan mediante acuerdo expreso adicional. La intervencion judicial posterior corresponde al profesional elegido o designado.`;
     },
     previewObject(employer) {
       return `El Cliente encarga al profesional la redaccion de una papeleta de conciliacion laboral frente a la empresa ${employer}. El servicio es documental, valido para asuntos de trabajadores en Espana. Presentacion, representacion presencial y asistencia al acto de conciliacion se contratan aparte.`;
@@ -85,11 +85,11 @@ const SERVICES = {
     title: "Papeleta, preparacion y representacion voluntaria en conciliacion laboral",
     titleHtml: "Representacion en conciliacion laboral",
     previewHeading: "HOJA DE ENCARGO - REPRESENTACION EN CONCILIACION",
-    price: "150,00 EUR IVA incluido",
-    priceHtml: "150,00 € IVA incluido",
-    priceShort: "150",
-    paypalAmount: "150.00",
-    buttonText: "Contratar revision y SMAC por 150 €",
+    price: "200,00 EUR IVA incluido",
+    priceHtml: "200,00 € IVA incluido",
+    priceShort: "200",
+    paypalAmount: "200.00",
+    buttonText: "Contratar revision y SMAC por 200 €",
     priceDescription: "Pago posterior por transferencia o Bizum una vez prestado el servicio.",
     filenameSlug: "smac",
     requiresRepresentationRegion: true,
@@ -107,18 +107,18 @@ const SERVICES = {
     title: "Denuncia ante Inspeccion de Trabajo y Seguridad Social",
     titleHtml: "Denuncia ante Inspeccion de Trabajo",
     previewHeading: "HOJA DE ENCARGO - DENUNCIA A INSPECCION DE TRABAJO",
-    price: "50,00 EUR IVA incluido",
-    priceHtml: "50,00 € IVA incluido",
-    priceShort: "50",
-    paypalAmount: "50.00",
-    buttonText: "Contratar denuncia a Inspeccion por 50 €",
+    price: "80,00 EUR IVA incluido",
+    priceHtml: "80,00 € IVA incluido",
+    priceShort: "80",
+    paypalAmount: "80.00",
+    buttonText: "Contratar denuncia a Inspeccion por 80 €",
     priceDescription: "Pago posterior por transferencia o Bizum una vez preparada o presentada la denuncia.",
     filenameSlug: "denuncia-inspeccion-trabajo",
     serviceZone: "Espana. Servicio documental de preparacion y, cuando proceda, presentacion telematica de denuncia ante la Inspeccion de Trabajo y Seguridad Social.",
     previewZone: "Servicio documental de preparacion y, cuando proceda, presentacion administrativa ante la Inspeccion de Trabajo y Seguridad Social.",
     matterService: "Preparacion documental y, cuando proceda, presentacion de denuncia ante la Inspeccion de Trabajo y Seguridad Social",
     objectClause(employer) {
-      return `El Cliente encarga al Profesional la preparacion documental y, cuando proceda, la presentacion telematica de una denuncia ante la Inspeccion de Trabajo y Seguridad Social en relacion con hechos laborales imputables a la empresa ${employer}. El alcance comprende analisis documental inicial, ordenacion de hechos, redaccion de la denuncia y orientacion sobre la documentacion necesaria. Defensa judicial, representacion procesal, seguimiento posterior del expediente e intervencion en actuaciones inspectoras posteriores se contratan mediante acuerdo expreso adicional. La actuacion posterior corresponde a la Inspeccion de Trabajo y Seguridad Social.`;
+      return `El Cliente encarga al Profesional la preparacion documental y, cuando proceda, la presentacion telematica de una denuncia ante la Inspeccion de Trabajo y Seguridad Social en relacion con hechos laborales imputables a la empresa ${employer}. El alcance comprende analisis documental inicial, ordenacion de hechos, redaccion de la denuncia y orientacion sobre la documentacion necesaria. Seguimiento posterior del expediente e intervencion en actuaciones inspectoras posteriores podran requerir un encargo expreso. La actuacion posterior corresponde a la Inspeccion de Trabajo y Seguridad Social y, si el asunto pasa a via judicial, al profesional elegido o designado.`;
     },
     previewObject(employer) {
       return `El Cliente encarga al profesional la preparacion documental y, cuando proceda, la presentacion telematica de una denuncia ante la Inspeccion de Trabajo y Seguridad Social frente a la empresa ${employer}. El servicio incluye ordenar hechos, documentos y redactar la denuncia. La actuacion posterior corresponde a la Inspeccion de Trabajo y Seguridad Social.`;
@@ -128,21 +128,42 @@ const SERVICES = {
     title: "Gestion extrajudicial bancaria sobre prestamos o creditos abusivos",
     titleHtml: "Gestion extrajudicial bancaria",
     previewHeading: "HOJA DE ENCARGO - GESTION EXTRAJUDICIAL BANCARIA",
-    price: "150,00 EUR IVA incluido",
-    priceHtml: "150,00 € IVA incluido",
-    priceShort: "150",
-    paypalAmount: "150.00",
-    buttonText: "Contratar gestion bancaria por 150 €",
+    price: "180,00 EUR IVA incluido",
+    priceHtml: "180,00 € IVA incluido",
+    priceShort: "180",
+    paypalAmount: "180.00",
+    buttonText: "Contratar gestion bancaria por 180 €",
     priceDescription: "Pago posterior por transferencia o Bizum una vez preparada la reclamacion o propuesta extrajudicial.",
     filenameSlug: "gestion-extrajudicial-bancaria",
     serviceZone: "Espana. Servicio documental y de gestion extrajudicial para consumidores sobre prestamos, creditos o tarjetas con posibles intereses o condiciones abusivas.",
-    previewZone: "Espana. Gestion extrajudicial bancaria para consumidores. Defensa judicial, mediacion oficial y asesoramiento financiero se tratan como encargos distintos.",
+    previewZone: "Espana. Gestion extrajudicial bancaria para consumidores centrada en reclamacion y propuesta de acuerdo.",
     matterService: "Gestion extrajudicial bancaria para consumidores sobre prestamos, creditos o tarjetas con posibles condiciones abusivas",
     objectClause(employer) {
-      return `El Cliente encarga al Profesional la preparacion documental y gestion extrajudicial frente a la entidad ${employer} en relacion con un prestamo, credito, tarjeta u otro producto de financiacion con posibles intereses, comisiones o condiciones abusivas. El servicio puede incluir revision documental inicial, ordenacion de importes y hechos, redaccion de reclamacion extrajudicial, propuesta de acuerdo y comunicaciones orientadas a alcanzar una solucion negociada. Podra intervenir un colaborador externo de apoyo documental o negociacion bajo coordinacion del Profesional. Mediacion oficial regulada, asesoramiento financiero o de inversion, defensa judicial, representacion procesal y valoracion definitiva de nulidad, usura o abusividad se tratan como encargos distintos o, en caso de controversia, corresponden a los tribunales.`;
+      return `El Cliente encarga al Profesional la preparacion documental y gestion extrajudicial frente a la entidad ${employer} en relacion con un prestamo, credito, tarjeta u otro producto de financiacion con posibles intereses, comisiones o condiciones abusivas. El servicio puede incluir revision documental inicial, ordenacion de importes y hechos, redaccion de reclamacion extrajudicial, propuesta de acuerdo y comunicaciones orientadas a alcanzar una solucion negociada. Podra intervenir un colaborador externo de apoyo documental o negociacion bajo coordinacion del Profesional. Mediacion oficial regulada, asesoramiento financiero o de inversion y valoracion definitiva de nulidad, usura o abusividad corresponden a los cauces o profesionales competentes; si el asunto pasa a via judicial, la intervencion posterior corresponde al profesional elegido o designado y a los tribunales.`;
     },
     previewObject(employer) {
-      return `El Cliente encarga al profesional la preparacion documental y gestion extrajudicial frente a la entidad ${employer} por un prestamo, credito o tarjeta con posibles condiciones abusivas. El servicio trabaja una solucion negociada. Defensa judicial, mediacion oficial y asesoramiento financiero se tratan como encargos distintos.`;
+      return `El Cliente encarga al profesional la preparacion documental y gestion extrajudicial frente a la entidad ${employer} por un prestamo, credito o tarjeta con posibles condiciones abusivas. El servicio trabaja una solucion negociada. Si el asunto pasa a via judicial, la intervencion posterior corresponde al profesional elegido o designado.`;
+    },
+  },
+  demanda: {
+    title: "Redaccion de demanda laboral y solicitud de justicia gratuita",
+    titleHtml: "Demanda y justicia gratuita",
+    previewHeading: "HOJA DE ENCARGO - DEMANDA Y JUSTICIA GRATUITA",
+    price: "220,00 EUR IVA incluido",
+    priceHtml: "220,00 € IVA incluido",
+    priceShort: "220",
+    paypalAmount: "220.00",
+    buttonText: "Contratar demanda y justicia gratuita por 220 €",
+    priceDescription: "Pago posterior por transferencia o Bizum una vez preparada la demanda y la solicitud.",
+    filenameSlug: "demanda-justicia-gratuita",
+    serviceZone: "Espana. Servicio documental de redaccion de demanda laboral y preparacion de solicitud de asistencia juridica gratuita o abogado de oficio.",
+    previewZone: "Espana. Redaccion documental de demanda laboral y solicitud de justicia gratuita. La intervencion judicial posterior corresponde al profesional designado o elegido.",
+    matterService: "Redaccion documental de demanda laboral y solicitud de asistencia juridica gratuita o abogado de oficio",
+    objectClause(employer) {
+      return `El Cliente encarga al Profesional la redaccion documental de una demanda laboral frente a la empresa ${employer} y la preparacion de la solicitud de asistencia juridica gratuita o abogado de oficio cuando proceda. El alcance comprende revision de papeleta y acta de conciliacion, ordenacion de hechos y documentos, cuantificacion orientativa cuando proceda, redaccion de demanda y preparacion del escrito o formulario de solicitud de justicia gratuita. La intervencion judicial posterior correspondera al abogado, graduado social o profesional que resulte designado o elegido por el Cliente.`;
+    },
+    previewObject(employer) {
+      return `El Cliente encarga al profesional la redaccion documental de una demanda laboral frente a la empresa ${employer} y la preparacion de la solicitud de asistencia juridica gratuita o abogado de oficio cuando proceda. La intervencion judicial posterior corresponde al profesional designado o elegido.`;
     },
   },
 };
