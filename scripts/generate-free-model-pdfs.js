@@ -83,7 +83,7 @@ const models = [
   {
     file: 'modelo-solicitud-copia-expediente.pdf',
     title: 'Modelo gratuito - copia de expediente',
-    subtitle: 'Solicitud de copia de expediente ante administracion u organismo',
+    subtitle: 'Solicitud de copia de expediente ante administración u organismo',
     body: [
       'AL ORGANISMO [SEPE/INSS/FOGASA/OTRO]',
       '',
@@ -121,6 +121,210 @@ const models = [
       'Firma: [NOMBRE Y APELLIDOS]'
     ],
     note: 'Documento simple para pedir información fiscal propia al pagador.'
+  },
+  {
+    file: 'modelo-solicitud-estado-expediente.pdf',
+    title: 'Modelo gratuito - estado de expediente',
+    subtitle: 'Solicitud de información sobre estado de tramitación',
+    body: [
+      'AL ORGANISMO [SEPE/INSS/FOGASA/OTRO]',
+      '',
+      '[NOMBRE Y APELLIDOS], con DNI/NIE [DNI_NIE], domicilio a efectos de notificaciones en [DOMICILIO], teléfono [TELEFONO] y correo electrónico [EMAIL], comparece y EXPONE:',
+      '',
+      'Que consta interesado/a en el expediente [NUMERO_EXPEDIENTE], relativo a [MATERIA_DEL_EXPEDIENTE].',
+      '',
+      'Que desea conocer el estado actual de tramitación del expediente, si existe documentación pendiente, si se ha dictado resolución o si se encuentra pendiente de algún trámite concreto.',
+      '',
+      'SOLICITA que se informe del estado actualizado del expediente indicado y, en su caso, de los documentos o actuaciones pendientes para continuar su tramitación.',
+      '',
+      'En [LOCALIDAD], a [FECHA].',
+      '',
+      'Firma: [NOMBRE Y APELLIDOS]'
+    ],
+    note: 'Modelo para pedir información de estado. No sustituye alegaciones, recurso ni reclamación frente a una resolución.'
+  },
+  {
+    file: 'modelo-aportacion-documentacion-expediente.pdf',
+    title: 'Modelo gratuito - aportación documental',
+    subtitle: 'Aportación de documentos a un expediente ya abierto',
+    body: [
+      'AL ORGANISMO [SEPE/INSS/FOGASA/OTRO]',
+      '',
+      '[NOMBRE Y APELLIDOS], con DNI/NIE [DNI_NIE], domicilio a efectos de notificaciones en [DOMICILIO], teléfono [TELEFONO] y correo electrónico [EMAIL], comparece y EXPONE:',
+      '',
+      'Que tiene interés en el expediente [NUMERO_EXPEDIENTE], relativo a [MATERIA_DEL_EXPEDIENTE].',
+      '',
+      'Que mediante este escrito aporta la siguiente documentación para su incorporación al expediente:',
+      '',
+      '[LISTA_DE_DOCUMENTOS_APORTADOS]',
+      '',
+      'SOLICITA que se tenga por presentada la documentación indicada, se incorpore al expediente y se continúe la tramitación que proceda.',
+      '',
+      'En [LOCALIDAD], a [FECHA].',
+      '',
+      'Firma: [NOMBRE Y APELLIDOS]'
+    ],
+    note: 'Para aportar documentos sin entrar en argumentos de fondo. Si hay plazo de recurso o resolución desfavorable, conviene revisar antes.'
+  },
+  {
+    file: 'modelo-solicitud-registro-horario.pdf',
+    title: 'Modelo gratuito - registro horario',
+    subtitle: 'Solicitud de copia del registro horario propio',
+    body: [
+      'A LA EMPRESA [NOMBRE_EMPRESA]',
+      '',
+      '[NOMBRE Y APELLIDOS], con DNI/NIE [DNI_NIE], trabajador/a o extrabajador/a de la empresa, EXPONE:',
+      '',
+      'Que necesita disponer de copia del registro horario correspondiente a su prestación de servicios durante el periodo [PERIODO_SOLICITADO].',
+      '',
+      'SOLICITA que se le facilite copia del registro diario de jornada correspondiente al periodo indicado, así como cualquier sistema equivalente de fichajes, partes de trabajo o control horario que conste respecto de su persona.',
+      '',
+      'La documentación puede remitirse a [EMAIL] o entregarse por escrito.',
+      '',
+      'En [LOCALIDAD], a [FECHA].',
+      '',
+      'Firma: [NOMBRE Y APELLIDOS]'
+    ],
+    note: 'Modelo para pedir copia de datos horarios propios. No reclama horas ni cantidades: solo solicita documentación.'
+  },
+  {
+    file: 'modelo-solicitud-cuadrantes-calendario-turnos.pdf',
+    title: 'Modelo gratuito - cuadrantes y turnos',
+    subtitle: 'Solicitud de calendario laboral, cuadrantes o turnos propios',
+    body: [
+      'A LA EMPRESA [NOMBRE_EMPRESA]',
+      '',
+      '[NOMBRE Y APELLIDOS], con DNI/NIE [DNI_NIE], trabajador/a o extrabajador/a de la empresa, EXPONE:',
+      '',
+      'Que necesita copia de la organización de jornada que le ha sido aplicada o comunicada durante el periodo [PERIODO_SOLICITADO].',
+      '',
+      'SOLICITA que se le facilite copia de los cuadrantes, calendario laboral, turnos, cambios de turno o comunicaciones equivalentes referidas a su puesto o centro de trabajo durante el periodo indicado.',
+      '',
+      'La documentación puede remitirse a [EMAIL] o entregarse por escrito.',
+      '',
+      'En [LOCALIDAD], a [FECHA].',
+      '',
+      'Firma: [NOMBRE Y APELLIDOS]'
+    ],
+    note: 'Sirve para ordenar prueba documental de jornada y turnos sin formular todavía una reclamación concreta.'
+  },
+  {
+    file: 'modelo-solicitud-certificado-funciones-antiguedad.pdf',
+    title: 'Modelo gratuito - funciones y antigüedad',
+    subtitle: 'Solicitud de certificado de puesto, funciones, jornada o antigüedad',
+    body: [
+      'A LA EMPRESA [NOMBRE_EMPRESA]',
+      '',
+      '[NOMBRE Y APELLIDOS], con DNI/NIE [DNI_NIE], trabajador/a o extrabajador/a de la empresa, EXPONE:',
+      '',
+      'Que necesita disponer de un certificado laboral para acreditar datos básicos de su relación laboral.',
+      '',
+      'SOLICITA que se le emita certificado que indique, según conste en la empresa, los siguientes extremos:',
+      '',
+      '- Fecha de inicio y, en su caso, fecha de finalización: [SI/NO].',
+      '- Puesto, categoría, grupo profesional o funciones realizadas: [SI/NO].',
+      '- Jornada, horario o centro de trabajo: [SI/NO].',
+      '- Otros datos a acreditar: [OTROS_DATOS].',
+      '',
+      'La documentación puede remitirse a [EMAIL] o entregarse por escrito.',
+      '',
+      'En [LOCALIDAD], a [FECHA].',
+      '',
+      'Firma: [NOMBRE Y APELLIDOS]'
+    ],
+    note: 'Modelo de acreditación documental. Si el certificado se va a usar para reclamar categoría o diferencias, conviene revisar estrategia.'
+  },
+  {
+    file: 'modelo-solicitud-copia-informes-mutua.pdf',
+    title: 'Modelo gratuito - informes de mutua',
+    subtitle: 'Solicitud de copia de informes, pruebas o justificantes',
+    body: [
+      'A LA MUTUA [NOMBRE_MUTUA]',
+      '',
+      '[NOMBRE Y APELLIDOS], con DNI/NIE [DNI_NIE], número de afiliación [NUMERO_AFILIACION] y datos de contacto [TELEFONO_EMAIL], EXPONE:',
+      '',
+      'Que ha sido atendido/a por la mutua en relación con [CONTINGENCIA_O_PROCESO], con fechas aproximadas de asistencia [FECHAS].',
+      '',
+      'SOLICITA que se le facilite copia de la documentación que conste relativa a su asistencia o seguimiento, incluyendo informes médicos, justificantes de asistencia, resultados de pruebas, partes, citaciones y comunicaciones emitidas.',
+      '',
+      'La documentación puede remitirse a [EMAIL] o facilitarse por el canal que corresponda.',
+      '',
+      'En [LOCALIDAD], a [FECHA].',
+      '',
+      'Firma: [NOMBRE Y APELLIDOS]'
+    ],
+    note: 'Modelo para pedir copia documental a la mutua. No impugna alta, contingencia ni asistencia sanitaria.'
+  },
+  {
+    file: 'modelo-comunicacion-cambio-datos-expediente.pdf',
+    title: 'Modelo gratuito - cambio de datos',
+    subtitle: 'Comunicación de domicilio, email, teléfono o cuenta bancaria',
+    body: [
+      'AL ORGANISMO [SEPE/INSS/FOGASA/OTRO]',
+      '',
+      '[NOMBRE Y APELLIDOS], con DNI/NIE [DNI_NIE], comparece y EXPONE:',
+      '',
+      'Que consta como interesado/a en el expediente, prestación o solicitud [NUMERO_EXPEDIENTE_O_REFERENCIA].',
+      '',
+      'Que a efectos de notificaciones, contacto o pago comunica los siguientes datos actualizados:',
+      '',
+      '- Domicilio: [NUEVO_DOMICILIO].',
+      '- Correo electrónico: [NUEVO_EMAIL].',
+      '- Teléfono: [NUEVO_TELEFONO].',
+      '- Cuenta bancaria IBAN: [NUEVO_IBAN].',
+      '- Otros datos: [OTROS_DATOS].',
+      '',
+      'SOLICITA que se tengan por comunicados los datos indicados y se actualicen en el expediente o prestación correspondiente.',
+      '',
+      'En [LOCALIDAD], a [FECHA].',
+      '',
+      'Firma: [NOMBRE Y APELLIDOS]'
+    ],
+    note: 'Modelo administrativo simple para actualizar datos. Si se cambia una cuenta bancaria, conviene adjuntar justificante de titularidad.'
+  },
+  {
+    file: 'modelo-solicitud-desglose-finiquito.pdf',
+    title: 'Modelo gratuito - desglose de finiquito',
+    subtitle: 'Solicitud de detalle documental de liquidación o finiquito',
+    body: [
+      'A LA EMPRESA [NOMBRE_EMPRESA]',
+      '',
+      '[NOMBRE Y APELLIDOS], con DNI/NIE [DNI_NIE], trabajador/a o extrabajador/a de la empresa, EXPONE:',
+      '',
+      'Que ha recibido o tiene pendiente de recibir liquidación, finiquito o documento de cierre de la relación laboral.',
+      '',
+      'SOLICITA que se le facilite desglose documental de los conceptos incluidos en dicha liquidación, indicando separadamente salario pendiente, vacaciones, pagas extraordinarias, indemnización si procede, descuentos, retenciones y cualquier otro concepto aplicado.',
+      '',
+      'Esta solicitud se realiza a efectos de información y comprobación documental.',
+      '',
+      'La documentación puede remitirse a [EMAIL] o entregarse por escrito.',
+      '',
+      'En [LOCALIDAD], a [FECHA].',
+      '',
+      'Firma: [NOMBRE Y APELLIDOS]'
+    ],
+    note: 'Pide detalle del finiquito sin formular conformidad ni reclamación de cantidad. Si hay desacuerdo real, conviene revisar antes.'
+  },
+  {
+    file: 'modelo-derecho-acceso-datos-laborales.pdf',
+    title: 'Modelo gratuito - acceso a datos laborales',
+    subtitle: 'Ejercicio del derecho de acceso a datos personales en contexto laboral',
+    body: [
+      'A LA EMPRESA O RESPONSABLE DEL TRATAMIENTO [NOMBRE_EMPRESA]',
+      '',
+      '[NOMBRE Y APELLIDOS], con DNI/NIE [DNI_NIE], domicilio a efectos de notificaciones en [DOMICILIO] y correo electrónico [EMAIL], EXPONE:',
+      '',
+      'Que ejercita su derecho de acceso a los datos personales que puedan estar siendo tratados por la empresa o responsable en relación con su vinculación laboral, profesional o de selección.',
+      '',
+      'SOLICITA que se le informe sobre si se están tratando datos personales suyos y, en caso afirmativo, se le facilite acceso y copia de los datos personales, categorías de datos, fines del tratamiento, destinatarios, plazo de conservación y demás información legalmente exigible.',
+      '',
+      'La respuesta puede remitirse a [EMAIL] o al domicilio indicado.',
+      '',
+      'En [LOCALIDAD], a [FECHA].',
+      '',
+      'Firma: [NOMBRE Y APELLIDOS]'
+    ],
+    note: 'Modelo de acceso a datos personales. La AEPD publica modelos oficiales para el ejercicio de derechos de protección de datos.'
   }
 ];
 
