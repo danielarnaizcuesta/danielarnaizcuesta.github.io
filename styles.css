@@ -1243,18 +1243,18 @@ button,
   max-width: 980px;
 }
 
-.model-download-section {
+.model-request-section {
   padding-top: 20px;
 }
 
-.model-download-grid {
+.model-request-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 18px;
   margin-top: 28px;
 }
 
-.model-download-card {
+.model-request-card {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -1266,33 +1266,33 @@ button,
   box-shadow: var(--shadow-sm);
 }
 
-.model-download-card:hover {
+.model-request-card:hover {
   transform: translateY(-4px);
   border-color: var(--primary-light);
   box-shadow: var(--shadow-md);
 }
 
-.model-download-meta {
+.model-request-meta {
   color: var(--muted);
   font-size: 0.78rem;
   font-weight: 800;
   text-transform: uppercase;
 }
 
-.model-download-card h3 {
+.model-request-card h3 {
   margin: 0;
   color: var(--primary-dark);
   font-size: 1.18rem;
 }
 
-.model-download-card p {
+.model-request-card p {
   margin: 0;
   color: var(--muted);
   font-size: 0.95rem;
   line-height: 1.45;
 }
 
-.model-download-card .primary {
+.model-request-card .primary {
   width: 100%;
   margin-top: auto;
 }
@@ -1572,7 +1572,7 @@ button,
   .final-cta,
   .calculator-card,
   .calculator-sources,
-  .model-download-card,
+  .model-request-card,
   .calculator-link-panel {
     padding: 22px;
   }
