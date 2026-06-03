@@ -1,3 +1,5 @@
 screenshots/
+dist/
+node_modules/
 *.pem
 solicitudes_descifradas/
