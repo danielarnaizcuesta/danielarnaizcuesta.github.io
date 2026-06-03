@@ -69,16 +69,16 @@ const SERVICES = {
     priceShort: "90",
     paypalAmount: "90.00",
     buttonText: "Contratar redaccion de papeleta por 90 €",
-    priceDescription: "No pagas provision inicial: el pago se realiza por transferencia o Bizum una vez redactada la papeleta.",
+    priceDescription: "Pago posterior por transferencia o Bizum una vez redactada la papeleta.",
     filenameSlug: "papeleta-conciliacion",
     serviceZone: "Espana. Servicio documental de redaccion de papeleta de conciliacion laboral para que el Cliente la presente ante el organo administrativo competente.",
-    previewZone: "Espana. Redaccion documental de papeleta de conciliacion laboral. No incluye representacion ni asistencia presencial.",
+    previewZone: "Espana. Redaccion documental de papeleta de conciliacion laboral. Representacion y asistencia presencial se contratan aparte.",
     matterService: "Redaccion de papeleta de conciliacion laboral para su presentacion por el Cliente ante el organo administrativo competente",
     objectClause(employer) {
-      return `El Cliente encarga al Profesional la redaccion de una papeleta de conciliacion laboral frente a la empresa ${employer}, con base en la informacion y documentacion facilitada por el Cliente. El servicio se limita al analisis documental inicial, ordenacion de hechos, cuantificacion orientativa cuando proceda y redaccion del escrito para su presentacion por el Cliente ante el organo administrativo de conciliacion competente. No incluye presentacion administrativa, representacion presencial, asistencia al acto de conciliacion, defensa judicial, representacion procesal ni garantia de resultado, salvo acuerdo expreso adicional.`;
+      return `El Cliente encarga al Profesional la redaccion de una papeleta de conciliacion laboral frente a la empresa ${employer}, con base en la informacion y documentacion facilitada por el Cliente. El alcance comprende analisis documental inicial, ordenacion de hechos, cuantificacion orientativa cuando proceda y redaccion del escrito para su presentacion por el Cliente ante el organo administrativo de conciliacion competente. Presentacion administrativa, representacion presencial, asistencia al acto de conciliacion, defensa judicial y representacion procesal se contratan mediante acuerdo expreso adicional.`;
     },
     previewObject(employer) {
-      return `El Cliente encarga al profesional la redaccion de una papeleta de conciliacion laboral frente a la empresa ${employer}. El servicio es documental, valido para asuntos de trabajadores en Espana, y no incluye presentacion, representacion presencial ni asistencia al acto de conciliacion.`;
+      return `El Cliente encarga al profesional la redaccion de una papeleta de conciliacion laboral frente a la empresa ${employer}. El servicio es documental, valido para asuntos de trabajadores en Espana. Presentacion, representacion presencial y asistencia al acto de conciliacion se contratan aparte.`;
     },
   },
   smac: {
@@ -90,17 +90,17 @@ const SERVICES = {
     priceShort: "150",
     paypalAmount: "150.00",
     buttonText: "Contratar revision y SMAC por 150 €",
-    priceDescription: "No pagas provision inicial: el pago se realiza por transferencia o Bizum una vez prestado el servicio.",
+    priceDescription: "Pago posterior por transferencia o Bizum una vez prestado el servicio.",
     filenameSlug: "smac",
     requiresRepresentationRegion: true,
     serviceZone: REPRESENTATION_REGIONS.madrid.serviceZone,
     previewZone: REPRESENTATION_REGIONS.madrid.previewZone,
     matterService: "Papeleta de conciliacion, presentacion y representacion voluntaria en asunto tramitable ante el organo de conciliacion disponible",
     objectClause(employer, region = REPRESENTATION_REGIONS.madrid) {
-      return `El Cliente encarga al Profesional la redaccion, presentacion de la papeleta de conciliacion laboral y la representacion voluntaria en el acto de conciliacion administrativa ante ${region.organ} contra la empresa ${employer}. El servicio esta limitado a asuntos tramitables en la comunidad autonoma seleccionada: ${region.label}. A tal efecto, el Cliente facilitara al Profesional la representacion necesaria, ya sea compareciendo presencialmente para otorgar dicha representacion o mediante el correspondiente poder notarial, con anterioridad a la fecha del acto de conciliacion.`;
+      return `El Cliente encarga al Profesional la redaccion, presentacion de la papeleta de conciliacion laboral y la representacion voluntaria en el acto de conciliacion administrativa ante ${region.organ} contra la empresa ${employer}. El servicio se presta para asuntos tramitables en la comunidad autonoma seleccionada: ${region.label}. A tal efecto, el Cliente facilitara al Profesional la representacion necesaria, ya sea compareciendo presencialmente para otorgar dicha representacion o mediante el correspondiente poder notarial, con anterioridad a la fecha del acto de conciliacion.`;
     },
     previewObject(employer, region = REPRESENTATION_REGIONS.madrid) {
-      return `El Cliente encarga al profesional la redaccion, presentacion de la papeleta de conciliacion laboral y la representacion voluntaria en el acto de conciliacion administrativa ante ${region.organ} contra la empresa ${employer}. El servicio se limita a la comunidad autonoma seleccionada: ${region.label}.`;
+      return `El Cliente encarga al profesional la redaccion, presentacion de la papeleta de conciliacion laboral y la representacion voluntaria en el acto de conciliacion administrativa ante ${region.organ} contra la empresa ${employer}. El servicio se presta en la comunidad autonoma seleccionada: ${region.label}.`;
     },
   },
   inspeccion: {
@@ -112,16 +112,16 @@ const SERVICES = {
     priceShort: "50",
     paypalAmount: "50.00",
     buttonText: "Contratar denuncia a Inspeccion por 50 €",
-    priceDescription: "No pagas provision inicial: el pago se realiza por transferencia o Bizum una vez preparada o presentada la denuncia.",
+    priceDescription: "Pago posterior por transferencia o Bizum una vez preparada o presentada la denuncia.",
     filenameSlug: "denuncia-inspeccion-trabajo",
     serviceZone: "Espana. Servicio documental de preparacion y, cuando proceda, presentacion telematica de denuncia ante la Inspeccion de Trabajo y Seguridad Social.",
     previewZone: "Servicio documental de preparacion y, cuando proceda, presentacion administrativa ante la Inspeccion de Trabajo y Seguridad Social.",
     matterService: "Preparacion documental y, cuando proceda, presentacion de denuncia ante la Inspeccion de Trabajo y Seguridad Social",
     objectClause(employer) {
-      return `El Cliente encarga al Profesional la preparacion documental y, cuando proceda, la presentacion telematica de una denuncia ante la Inspeccion de Trabajo y Seguridad Social en relacion con hechos laborales imputables a la empresa ${employer}. El servicio se limita al analisis documental inicial, ordenacion de hechos, redaccion de la denuncia y orientacion sobre la documentacion necesaria. No incluye defensa judicial, representacion procesal, garantia de actuacion inspectora, seguimiento indefinido del expediente ni intervencion en actuaciones inspectoras posteriores salvo acuerdo expreso adicional.`;
+      return `El Cliente encarga al Profesional la preparacion documental y, cuando proceda, la presentacion telematica de una denuncia ante la Inspeccion de Trabajo y Seguridad Social en relacion con hechos laborales imputables a la empresa ${employer}. El alcance comprende analisis documental inicial, ordenacion de hechos, redaccion de la denuncia y orientacion sobre la documentacion necesaria. Defensa judicial, representacion procesal, seguimiento posterior del expediente e intervencion en actuaciones inspectoras posteriores se contratan mediante acuerdo expreso adicional. La actuacion posterior corresponde a la Inspeccion de Trabajo y Seguridad Social.`;
     },
     previewObject(employer) {
-      return `El Cliente encarga al profesional la preparacion documental y, cuando proceda, la presentacion telematica de una denuncia ante la Inspeccion de Trabajo y Seguridad Social frente a la empresa ${employer}. El servicio incluye ordenar hechos, documentos y redactar la denuncia; no garantiza resultado ni actuacion inspectora.`;
+      return `El Cliente encarga al profesional la preparacion documental y, cuando proceda, la presentacion telematica de una denuncia ante la Inspeccion de Trabajo y Seguridad Social frente a la empresa ${employer}. El servicio incluye ordenar hechos, documentos y redactar la denuncia. La actuacion posterior corresponde a la Inspeccion de Trabajo y Seguridad Social.`;
     },
   },
   bancario: {
@@ -133,16 +133,16 @@ const SERVICES = {
     priceShort: "150",
     paypalAmount: "150.00",
     buttonText: "Contratar gestion bancaria por 150 €",
-    priceDescription: "No pagas provision inicial: el pago se realiza por transferencia o Bizum una vez preparada la reclamacion o propuesta extrajudicial.",
+    priceDescription: "Pago posterior por transferencia o Bizum una vez preparada la reclamacion o propuesta extrajudicial.",
     filenameSlug: "gestion-extrajudicial-bancaria",
     serviceZone: "Espana. Servicio documental y de gestion extrajudicial para consumidores sobre prestamos, creditos o tarjetas con posibles intereses o condiciones abusivas.",
-    previewZone: "Espana. Gestion extrajudicial bancaria para consumidores. No incluye defensa judicial, mediacion oficial ni asesoramiento financiero.",
+    previewZone: "Espana. Gestion extrajudicial bancaria para consumidores. Defensa judicial, mediacion oficial y asesoramiento financiero se tratan como encargos distintos.",
     matterService: "Gestion extrajudicial bancaria para consumidores sobre prestamos, creditos o tarjetas con posibles condiciones abusivas",
     objectClause(employer) {
-      return `El Cliente encarga al Profesional la preparacion documental y gestion extrajudicial frente a la entidad ${employer} en relacion con un prestamo, credito, tarjeta u otro producto de financiacion con posibles intereses, comisiones o condiciones abusivas. El servicio puede incluir revision documental inicial, ordenacion de importes y hechos, redaccion de reclamacion extrajudicial, propuesta de acuerdo y comunicaciones orientadas a alcanzar una solucion negociada. Podra intervenir un colaborador externo de apoyo documental o negociacion bajo coordinacion del Profesional. No incluye mediacion oficial regulada, asesoramiento financiero o de inversion, defensa judicial, representacion procesal, garantia de acuerdo, garantia de devolucion de cantidades ni valoracion definitiva de nulidad, usura o abusividad, que corresponde a los tribunales cuando exista controversia.`;
+      return `El Cliente encarga al Profesional la preparacion documental y gestion extrajudicial frente a la entidad ${employer} en relacion con un prestamo, credito, tarjeta u otro producto de financiacion con posibles intereses, comisiones o condiciones abusivas. El servicio puede incluir revision documental inicial, ordenacion de importes y hechos, redaccion de reclamacion extrajudicial, propuesta de acuerdo y comunicaciones orientadas a alcanzar una solucion negociada. Podra intervenir un colaborador externo de apoyo documental o negociacion bajo coordinacion del Profesional. Mediacion oficial regulada, asesoramiento financiero o de inversion, defensa judicial, representacion procesal y valoracion definitiva de nulidad, usura o abusividad se tratan como encargos distintos o, en caso de controversia, corresponden a los tribunales.`;
     },
     previewObject(employer) {
-      return `El Cliente encarga al profesional la preparacion documental y gestion extrajudicial frente a la entidad ${employer} por un prestamo, credito o tarjeta con posibles condiciones abusivas. El servicio busca una solucion negociada y no incluye defensa judicial, mediacion oficial, asesoramiento financiero ni garantia de acuerdo o recuperacion de cantidades.`;
+      return `El Cliente encarga al profesional la preparacion documental y gestion extrajudicial frente a la entidad ${employer} por un prestamo, credito o tarjeta con posibles condiciones abusivas. El servicio trabaja una solucion negociada. Defensa judicial, mediacion oficial y asesoramiento financiero se tratan como encargos distintos.`;
     },
   },
 };
@@ -450,7 +450,7 @@ function buildSummary(data, paymentInfo = null) {
   } else if (paymentInfo && paymentInfo.method === "bizum") {
     pagoTexto = `El precio cerrado por la prestacion de este servicio es de ${service.price}, el cual ha sido abonado en este acto mediante Bizum inmediato desde el telefono ${paymentInfo.telefono} con el concepto "${paymentInfo.concepto}". El Profesional emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.`;
   } else {
-    pagoTexto = `El precio cerrado por la prestacion de este servicio es de ${service.price}. No se exige provision de fondos inicial. La aportacion de los datos solicitados por el Cliente es obligatoria para la correcta ejecucion del encargo y su facturacion. El pago se realizara mediante transferencia bancaria o Bizum una vez que el servicio haya sido prestado. El Profesional emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.`;
+    pagoTexto = `El precio cerrado por la prestacion de este servicio es de ${service.price}. La aportacion de los datos solicitados por el Cliente es obligatoria para la correcta ejecucion del encargo y su facturacion. El pago se realizara mediante transferencia bancaria o Bizum una vez que el servicio haya sido prestado. El Profesional emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.`;
   }
 
   return [
@@ -528,7 +528,7 @@ async function buildPayload(data, summary, contractPdf) {
       serviceZone,
       representationRegion: serviceRequiresRepresentationRegion(service) ? representationRegion.label : null,
       governingLawAndForum: "Ley espanola. Para clientes consumidores, juzgados y tribunales legalmente competentes. Cuando la competencia territorial sea legalmente disponible, fuero de Madrid.",
-      acceptedConditionsText: `Acepto las condiciones del servicio, la politica de privacidad, el precio cerrado de ${service.price}, sin provision de fondos inicial y con pago una vez prestado el servicio.`,
+      acceptedConditionsText: `Acepto las condiciones del servicio, la politica de privacidad, el precio cerrado de ${service.price} y el pago posterior una vez prestado el servicio.`,
       immediateStartText: data.get("inicioInmediato")
         ? "Solicito el inicio inmediato de las gestiones sin esperar al plazo legal de desistimiento."
         : null,
@@ -556,7 +556,7 @@ async function buildPayload(data, summary, contractPdf) {
       service: service.matterService,
       representationRegion: serviceRequiresRepresentationRegion(service) ? representationRegion.label : null,
       price: service.price,
-      payment: "sin provision de fondos inicial; transferencia o Bizum una vez prestado el servicio",
+      payment: "pago posterior por transferencia o Bizum una vez prestado el servicio",
     },
     acceptances: {
       conditionsAndPrivacy: Boolean(data.get("aceptaCondiciones")),
@@ -866,7 +866,7 @@ function updatePaymentMethod() {
     bizumSubmitActions.style.display = "none";
     if (bizumPaymentPanel) bizumPaymentPanel.style.display = "none";
     if (paymentMethodNote) {
-      paymentMethodNote.textContent = "Pagas después del servicio por Bizum o transferencia bancaria. No pagas nada ahora.";
+      paymentMethodNote.textContent = "Pago posterior al servicio por Bizum o transferencia bancaria.";
     }
   }
 }

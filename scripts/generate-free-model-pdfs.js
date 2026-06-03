@@ -53,7 +53,7 @@ const models = [
       '',
       'Firma: [NOMBRE Y APELLIDOS]'
     ],
-    note: 'Modelo documental. No reclama cantidades ni impugna decisiones; solo pide copia de información laboral propia.'
+    note: 'Modelo documental para solicitar copia de información laboral propia y ordenar la documentación disponible.'
   },
   {
     file: 'modelo-solicitud-copia-expediente.pdf',
@@ -116,7 +116,7 @@ const models = [
       '',
       'Firma: [NOMBRE Y APELLIDOS]'
     ],
-    note: 'Modelo para pedir información de estado. No sustituye alegaciones, recurso ni reclamación frente a una resolución.'
+    note: 'Modelo para conocer el estado del expediente antes de preparar, si procede, alegaciones, recurso o reclamación.'
   },
   {
     file: 'modelo-aportacion-documentacion-expediente.pdf',
@@ -139,7 +139,7 @@ const models = [
       '',
       'Firma: [NOMBRE Y APELLIDOS]'
     ],
-    note: 'Para aportar documentos sin entrar en argumentos de fondo. Si hay plazo de recurso o resolución desfavorable, conviene revisar antes.'
+    note: 'Para aportar documentos al expediente. Si existe plazo de recurso o resolución desfavorable, conviene revisar el siguiente paso.'
   },
   {
     file: 'modelo-solicitud-registro-horario.pdf',
@@ -160,7 +160,7 @@ const models = [
       '',
       'Firma: [NOMBRE Y APELLIDOS]'
     ],
-    note: 'Modelo para pedir copia de datos horarios propios. No reclama horas ni cantidades: solo solicita documentación.'
+    note: 'Modelo para pedir copia de datos horarios propios y reunir documentación antes de valorar horas o cantidades.'
   },
   {
     file: 'modelo-solicitud-cuadrantes-calendario-turnos.pdf',
@@ -181,7 +181,7 @@ const models = [
       '',
       'Firma: [NOMBRE Y APELLIDOS]'
     ],
-    note: 'Sirve para ordenar prueba documental de jornada y turnos sin formular todavía una reclamación concreta.'
+    note: 'Sirve para ordenar prueba documental de jornada y turnos antes de decidir el siguiente paso.'
   },
   {
     file: 'modelo-solicitud-informe-funciones-comite.pdf',
@@ -204,13 +204,13 @@ const models = [
       '- Periodo aproximado en que se han venido realizando: [PERIODO].',
       '- Observaciones del comité o representación legal: [OBSERVACIONES].',
       '',
-      'Esta solicitud no pide certificar antigüedad ni sustituir documentación empresarial, sino obtener informe o constancia representativa sobre funciones y puesto.',
+      'Esta solicitud se orienta a obtener informe o constancia representativa sobre funciones y puesto, desde el conocimiento del comité o representación legal.',
       '',
       'En [LOCALIDAD], a [FECHA].',
       '',
       'Firma: [NOMBRE Y APELLIDOS]'
     ],
-    note: 'El comité no sustituye un certificado empresarial ni certifica antigüedad. Este modelo pide informe o constancia sobre funciones y puesto desde sus competencias de representación.'
+    note: 'Este modelo pide informe o constancia sobre funciones y puesto desde las competencias de representación del comité o delegados.'
   },
   {
     file: 'modelo-solicitud-copia-informes-mutua.pdf',
@@ -231,7 +231,7 @@ const models = [
       '',
       'Firma: [NOMBRE Y APELLIDOS]'
     ],
-    note: 'Modelo para pedir copia documental a la mutua. No impugna alta, contingencia ni asistencia sanitaria.'
+    note: 'Modelo para reunir copia documental de la mutua antes de valorar el siguiente paso.'
   },
   {
     file: 'modelo-comunicacion-cambio-datos-expediente.pdf',
@@ -281,7 +281,7 @@ const models = [
       '',
       'Firma: [NOMBRE Y APELLIDOS]'
     ],
-    note: 'Pide detalle del finiquito sin formular conformidad ni reclamación de cantidad. Si hay desacuerdo real, conviene revisar antes.'
+    note: 'Pide detalle del finiquito para comprobar conceptos, descuentos y retenciones antes de valorar una reclamación de cantidad.'
   },
   {
     file: 'modelo-derecho-acceso-datos-laborales.pdf',
