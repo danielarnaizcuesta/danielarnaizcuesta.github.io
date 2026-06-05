@@ -18,7 +18,11 @@
       content="Servicios para trabajadores y consumidores: papeleta laboral por 120 euros, representación en conciliación por 200 euros, demanda y justicia gratuita por 220 euros, Inspección por 80 euros y gestión bancaria por 180 euros."
     />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js"></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -93,329 +97,300 @@
         </span>
       </a>
       <nav class="site-nav" aria-label="Navegación principal">
-        <a href="#urgente">Urgente</a>
-        <a href="#papeleta-presentada">Ya presenté papeleta</a>
-        <a href="#servicio">Servicio</a>
-        <a href="#inspeccion">Inspección</a>
+        <a href="#inicio">Inicio</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#alta-online">Alta Online</a>
         <a href="modelos.html">Modelos gratis</a>
         <a href="calculadoras.html">Calculadoras</a>
         <a href="#faq">FAQ</a>
-        <a class="nav-cta" href="https://wa.me/34615860227" target="_blank" rel="noreferrer">Cuentame tu caso</a>
-        <a href="privacidad.html">Privacidad</a>
-        <a href="aviso-legal.html">Aviso legal</a>
+        <a class="nav-cta" href="https://wa.me/34615860227" target="_blank" rel="noreferrer">Cuéntame tu caso</a>
       </nav>
     </header>
 
     <main>
-      <section class="workbench" id="contratar" aria-labelledby="page-title">
+      <!-- HERO WORKBENCH -->
+      <section class="workbench" id="inicio" aria-labelledby="page-title">
         <div class="workbench-copy">
-          <p class="overline">Para trabajadores: despidos, impagos, conciliacion e Inspeccion</p>
-          <h1 id="page-title">Despido, impagos o acto de conciliacion: preparalo con criterio y precio cerrado</h1>
+          <p class="overline">Para trabajadores y consumidores</p>
+          <h1 id="page-title">Despido, impagos o conciliación con criterio y precio cerrado</h1>
           <p class="lead">
-            Si tienes carta de despido, nominas pendientes, fin de contrato o una fecha de conciliacion cercana,
-            reviso documentos, ordeno cantidades y preparo la papeleta, la estrategia o la denuncia para que actues sin improvisar.
+            Si tienes carta de despido, nóminas pendientes, fin de contrato o una fecha de conciliación inminente,
+            analizo tus documentos, calculo las cantidades reales y preparo la estrategia para que actúes con seguridad.
           </p>
-          <p class="audience-note">Trabajo para trabajadores y consumidores. No asesoro a empresas.</p>
-          <div class="hero-actions" aria-label="Contacto rapido">
-            <a class="primary" href="https://wa.me/34615860227" target="_blank" rel="noreferrer">Contarte mi caso por WhatsApp</a>
-            <a class="secondary" href="#hire-form">Empezar online</a>
-            <a class="text-link" href="tel:+34615860227">Llamar ahora</a>
+          <p class="audience-note">Servicio documental privado para toda España. No asesoro a empresas.</p>
+          <div class="hero-actions" aria-label="Contacto rápido">
+            <a class="primary" href="https://wa.me/34615860227" target="_blank" rel="noreferrer">Contar mi caso por WhatsApp</a>
+            <a class="secondary" href="#alta-online">Iniciar alta online</a>
           </div>
-          <div class="service-facts" aria-label="Prueba comercial">
+          <div class="service-facts" aria-label="Garantías del servicio">
             <div>
-              <span>Respuesta inicial</span>
-              <strong>24 h si hay plazo</strong>
-            </div>
-            <div>
-              <span>Precio cerrado</span>
-              <strong>Desde 80 EUR IVA incluido</strong>
+              <span>Respuesta</span>
+              <strong>Menos de 24h</strong>
             </div>
             <div>
-              <span>Presencial</span>
-              <strong>Madrid para conciliacion</strong>
+              <span>Tarifas</span>
+              <strong>Precio cerrado</strong>
             </div>
             <div>
-              <span>Servicio documental</span>
-              <strong>Toda Espana</strong>
+              <span>SMAC</span>
+              <strong>Presencial en Madrid</strong>
+            </div>
+            <div>
+              <span>Trámites</span>
+              <strong>Soporte nacional</strong>
             </div>
           </div>
-          <div class="conversion-points" id="urgente" aria-label="Motivos principales para contactar">
-            <article>
-              <span>1</span>
-              <h2>Despido o fin de contrato</h2>
-              <p>Reviso carta, fechas, indemnizacion, finiquito y si conviene papeleta, conciliacion o demanda.</p>
-            </article>
-            <article>
-              <span>2</span>
-              <h2>Nominas, finiquito u horas</h2>
-              <p>Ordeno cantidades, vacaciones, extras, pluses y prueba para reclamar con una posicion clara.</p>
-            </article>
-            <article>
-              <span>3</span>
-              <h2>Acto de conciliacion ya fijado</h2>
-              <p>Si la papeleta ya esta presentada, preparo documentos, estrategia y limites antes de entrar al acto.</p>
-            </article>
-          </div>
-          <p class="hero-supporting-links">Si primero quieres orientarte, aqui tienes <a href="calculadoras.html">calculadoras laborales</a> y <a href="modelos.html">modelos utiles</a>.</p>
-          <div class="urgency-panel">
-            <p class="overline">Preparar el acto importa</p>
-            <h2>La conciliación puede condicionar lo que pase después</h2>
-            <p>
-              En despidos y reclamaciones de cantidad, el acto del SMAC puede dejar huella sobre la
-              futura demanda: conceptos reclamados, importes, reconocimiento de hechos, reservas y cierre del acta.
-              Conviene entrar con una posición clara, no decidir bajo presión en la puerta.
-            </p>
-            <ul>
-              <li>Reviso si la papeleta cubre bien despido, salarios, finiquito, vacaciones, horas o indemnización.</li>
-              <li>Preparo qué documentos llevar y qué propuesta aceptar, rechazar o reservar.</li>
-              <li>Te acompaño presencialmente en Madrid cuando el asunto sea tramitable ante el SMAC de Madrid.</li>
-            </ul>
-          </div>
-
-          <div class="urgency-panel urgency-panel-secondary">
-            <p class="overline">Los plazos también cuentan</p>
-            <h2>En despidos y cantidades, esperar puede salir caro</h2>
-            <p>
-              El despido tiene plazos muy cortos y las reclamaciones de cantidad también pueden ir prescribiendo.
-              Si hay fecha de despido, fin de contrato, nóminas impagadas o acto de conciliación señalado,
-              conviene revisar el caso cuanto antes.
-            </p>
-            <ul>
-              <li>Despido disciplinario, objetivo, fin de contrato o baja forzada.</li>
-              <li>Salarios, vacaciones, horas extra, pluses, finiquito o indemnización pendiente.</li>
-              <li>Papeleta ya presentada y necesidad de preparar el acto de conciliación.</li>
-            </ul>
-          </div>
-
-          <div class="contact-card-hero">
-            <p class="overline">Contacto directo</p>
-            <div class="contact-grid">
-              <a href="mailto:danielarnaizcuesta@gmail.com"><span>Email</span> danielarnaizcuesta@gmail.com</a>
-              <a href="tel:+34615860227"><span>Teléfono</span> 615 860 227</a>
-              <span><span>Madrid</span> C/ Arroyo de la Media Legua 4, bajo derecha, 28030 Madrid</span>
-            </div>
-          </div>
-
         </div>
-
-        <form class="hire-panel" id="hire-form" novalidate>
-          <div class="panel-heading">
-            <p class="overline">Alta online</p>
-            <h2>Formaliza aqui cuando ya tengas claro el servicio</h2>
-            <p>
-              Si prefieres confirmar antes el encaje o hay un plazo corriendo, escribe por WhatsApp. Si ya lo tienes claro,
-              elige servicio, deja tus datos y confirma la provision al final del alta.
-            </p>
-            <div class="hire-steps" aria-label="Como funciona el alta">
-              <div><span>1</span>Eliges servicio</div>
-              <div><span>2</span>Dejas datos</div>
-              <div><span>3</span>Revisas y confirmas</div>
-            </div>
-          </div>
-          <fieldset>
-            <legend>Servicio que quieres contratar</legend>
-            <div class="service-tabs" role="tablist" aria-label="Servicio contratado">
-              <label class="service-tab" role="tab" aria-selected="true" data-service-tab="papeleta">
-                <input type="radio" name="servicio" value="papeleta" checked />
-                <span>Papeleta</span>
-              </label>
-              <label class="service-tab" role="tab" aria-selected="false" data-service-tab="smac">
-                <input type="radio" name="servicio" value="smac" />
-                <span>Conciliacion Madrid</span>
-              </label>
-              <label class="service-tab" role="tab" aria-selected="false" data-service-tab="inspeccion">
-                <input type="radio" name="servicio" value="inspeccion" />
-                <span>Inspección</span>
-              </label>
-              <label class="service-tab" role="tab" aria-selected="false" data-service-tab="bancario">
-                <input type="radio" name="servicio" value="bancario" />
-                <span>Reclamacion bancaria</span>
-              </label>
-              <label class="service-tab" role="tab" aria-selected="false" data-service-tab="demanda">
-                <input type="radio" name="servicio" value="demanda" />
-                <span>Demanda</span>
-              </label>
-            </div>
-            <div class="service-tab-panels">
-              <section class="service-pane" data-service-panel="papeleta">
-                <h3>Papeleta de conciliación laboral</h3>
-                <p>120,00 € IVA incluido. Redacción de papeleta para trabajadores en toda España. La presentación administrativa, la asistencia al acto y la representación presencial se contratan aparte.</p>
-              </section>
-              <section class="service-pane" data-service-panel="smac" hidden>
-                <h3>Representación en conciliación laboral</h3>
-                <p>200,00 € IVA incluido. Incluye preparación de la conciliación y representación voluntaria presencial cuando proceda.</p>
-                <label class="service-region-field">
-                  Comunidad autónoma disponible
-                  <select name="representacionComunidad" id="representacion-comunidad">
-                    <option value="madrid">Comunidad de Madrid</option>
-                  </select>
-                  <span class="input-hint">Por ahora solo hay representación presencial en la Comunidad de Madrid.</span>
-                </label>
-              </section>
-              <section class="service-pane" data-service-panel="inspeccion" hidden>
-                <h3>Denuncia ante Inspección de Trabajo</h3>
-                <p>80,00 € IVA incluido. Preparación documental, orden de hechos y redacción de denuncia ante Inspección de Trabajo y Seguridad Social. Presentación telemática cuando sea viable con la documentación disponible.</p>
-              </section>
-              <section class="service-pane" data-service-panel="bancario" hidden>
-                <h3>Gestión extrajudicial bancaria</h3>
-                <p>180,00 € IVA incluido. Para consumidores con préstamos, créditos o tarjetas con posibles intereses o condiciones abusivas. Preparación de reclamación y propuesta de acuerdo extrajudicial, con posible intervención de colaborador externo. Si el asunto pasa a vía judicial, la intervención posterior corresponde al profesional elegido o designado.</p>
-              </section>
-              <section class="service-pane" data-service-panel="demanda" hidden>
-                <h3>Demanda laboral y justicia gratuita</h3>
-                <p>220,00 € IVA incluido. Redacción documental de demanda laboral y preparación de solicitud de asistencia jurídica gratuita o abogado de oficio. La intervención judicial posterior corresponde al profesional elegido o designado.</p>
-              </section>
-            </div>
-          </fieldset>
-
-          <fieldset>
-            <legend>Tus datos</legend>
-            <div class="field-grid">
-              <label>
-                Nombre y apellidos
-                <input autocomplete="name" name="nombre" required placeholder="Nombre completo" />
-              </label>
-              <label>
-                DNI/NIE/Pasaporte
-                <input autocomplete="off" name="dni" required placeholder="DNI, NIE o pasaporte" />
-              </label>
-              <label>
-                Correo electrónico
-                <input autocomplete="email" inputmode="email" name="email" required type="email" placeholder="Tu correo electrónico" />
-              </label>
-              <label>
-                Teléfono
-                <input autocomplete="tel" inputmode="tel" name="telefono" placeholder="Teléfono opcional" />
-              </label>
-              <label>
-                Dirección: calle y número
-                <input autocomplete="address-line1" name="direccion" required placeholder="Tu calle y número" />
-              </label>
-              <label>
-                Piso, puerta, bloque o no procede
-                <input autocomplete="address-line2" name="piso" required placeholder="Ej. 2º B, bajo derecha o no procede" />
-              </label>
-              <label>
-                Código Postal
-                <input autocomplete="postal-code" inputmode="numeric" name="cp" required placeholder="C.P." />
-              </label>
-              <label>
-                Localidad o Ciudad
-                <input autocomplete="address-level2" name="localidad" required placeholder="Tu ciudad" />
-              </label>
-              <label>
-                Provincia
-                <input autocomplete="address-level1" name="provincia" required placeholder="Tu provincia" />
-              </label>
-              <label>
-                Empresa a reclamar
-                <input name="empresa" required placeholder="Nombre de la empresa" />
-              </label>
-            </div>
-          </fieldset>
-
-          <section class="price-box">
-            <h3 id="price-box-title">Precio cerrado: 120,00 € IVA incluido</h3>
-            <p>
-              <strong id="preview-price">120,00 € IVA incluido</strong>. <span id="price-box-description">Provision de fondos previa por Bizum o PayPal/tarjeta antes de iniciar la redaccion.</span>
-            </p>
-          </section>
-
-          <div class="contract-container" style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
-            <p class="overline">Revisión de tu contrato</p>
-            <h3>Hoja de Encargo y Condiciones Precontractuales</h3>
-            <p class="form-note" style="margin-bottom: 0.8rem;">
-              Revisa la Hoja de Encargo formal de prestación de servicios que se incorporará a tu solicitud. Los datos se actualizan en tiempo real mientras escribes.
-            </p>
-            <div class="contract-scroll-box" id="contract-preview" style="max-height: 180px; overflow-y: scroll; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 16px; background: var(--bg-hover); font-size: 0.85rem; line-height: 1.5; color: var(--ink-light);">
-              <div id="preview-contract-heading" style="text-align: center; margin-bottom: 12px; font-weight: bold; color: var(--primary);">
-                HOJA DE ENCARGO - REDACCIÓN DE PAPELETA
-              </div>
-              <p><strong>REUNIDOS:</strong></p>
-              <p>De una parte, como prestador del servicio, <strong>Daniel Arnaiz Cuesta</strong>, con NIF 72828826Q, domicilio profesional en C/ Arroyo de la Media Legua 4, bajo derecha, 28030 Madrid, y correo de contacto danielarnaizcuesta@gmail.com.</p>
-              <p>Y de otra parte, como cliente, <strong id="preview-nombre">____________________</strong>, con DNI/NIE/Pasaporte <strong id="preview-dni">____________________</strong> y domicilio en <strong id="preview-domicilio">________________________________________</strong>; en adelante, el Cliente.</p>
-              
-              <p><strong>ESTIPULACIONES:</strong></p>
-              <p><strong>Servicio contratado:</strong> <span id="preview-service-title">Papeleta de conciliación laboral</span> contra la empresa <strong id="preview-empresa">____________________</strong>.</p>
-              <p><strong>1. OBJETO DEL ENCARGO:</strong> <span id="preview-object">El Cliente encarga al profesional la redacción de una papeleta de conciliación laboral frente a la empresa ____________________. El servicio es documental y válido para asuntos de trabajadores en España. Presentación, representación presencial y asistencia al acto de conciliación se contratan aparte.</span></p>
-              
-              <p><strong>2. PRECIO, PAGO Y FACTURACIÓN:</strong> El precio cerrado del servicio es de <span id="preview-price-contract">120,00 € IVA incluido</span>. La aportación de los datos solicitados es obligatoria para la ejecución del encargo y su facturación. La provision de fondos previa se abona por Bizum o PayPal/tarjeta para iniciar el encargo. La factura correspondiente se emitirá de conformidad con la normativa de facturación vigente.</p>
-              
-              <p><strong>3. DESISTIMIENTO E INICIO DEL SERVICIO:</strong> El Cliente tiene derecho a desistir del presente contrato en un plazo de 14 días naturales sin necesidad de justificación. Si marca voluntariamente la casilla opcional de inicio inmediato, solicita y autoriza expresamente el inicio de las gestiones antes de que expire dicho plazo. En tal caso, si desiste posteriormente, deberá abonar la parte proporcional de las gestiones efectivamente realizadas hasta la comunicación del desistimiento, extinguiéndose dicho derecho si el servicio ha sido completamente ejecutado por el profesional.</p>
-              
-              <p><strong>4. FIRMA Y VALIDEZ:</strong> La contratación queda realizada mediante el envío de la solicitud cifrada y el marcado de la casilla obligatoria de aceptación de condiciones, privacidad y precio por parte del Cliente.</p>
-              
-              <p><strong>5. LUGAR, FECHA, ZONA Y FUERO:</strong> El contrato se celebra en Madrid en la fecha y hora de envío de la solicitud cifrada. La zona de prestación del servicio es: <span id="preview-zone">España. Redacción documental de papeleta de conciliación laboral. Representación y asistencia presencial se contratan aparte.</span> El contrato se rige por la ley española. Para clientes consumidores, serán competentes los juzgados y tribunales que correspondan conforme a la normativa aplicable; cuando la competencia territorial sea legalmente disponible, el fuero será Madrid.</p>
-            </div>
-          </div>
-
-          <fieldset id="payment-method-fieldset" style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
-            <legend>Provisión de fondos</legend>
-            <div class="service-tabs" role="tablist" aria-label="Método de pago" style="grid-template-columns: repeat(2, minmax(0, 1fr));">
-              <label class="service-tab" role="tab" aria-selected="true" data-payment-tab="bizum">
-                <input type="radio" name="metodoPago" value="bizum" checked />
-                <span>Bizum</span>
-              </label>
-              <label class="service-tab" role="tab" aria-selected="false" data-payment-tab="paypal">
-                <input type="radio" name="metodoPago" value="paypal" />
-                <span>PayPal / Tarjeta</span>
-              </label>
-            </div>
-            <p class="form-note" id="payment-method-note" style="margin-top: 0.8rem; text-align: left; color: var(--muted); font-size: 0.85rem;">
-              La provisión de fondos previa es obligatoria para iniciar el servicio.
-            </p>
-            
-            <div id="bizum-payment-panel" style="display: none; margin-top: 1rem; padding: 16px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--wash); gap: 16px; flex-direction: column;">
-              <div style="border-left: 4px solid var(--primary); padding-left: 12px; font-size: 0.9rem; color: var(--ink);">
-                <p style="margin-bottom: 6px;"><strong>Instrucciones de pago por Bizum:</strong></p>
-                <p>Realiza un Bizum de <strong id="bizum-amount-text">120,00 € IVA incluido</strong> al número de Daniel: <strong>615 860 227</strong> como provisión de fondos e indicando tu nombre completo en el concepto.</p>
-              </div>
-              <div class="field-grid" style="grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 8px;">
-                <label style="font-size: 0.85rem;">
-                  Móvil desde el que envías
-                  <input name="bizumTelefono" type="tel" placeholder="Ej. 600000000" style="min-height: 40px; padding: 8px 12px;" />
-                </label>
-                <label style="font-size: 0.85rem;">
-                  Concepto del Bizum
-                  <input name="bizumConcepto" type="text" placeholder="Ej. Juan Pérez" style="min-height: 40px; padding: 8px 12px;" />
-                </label>
-              </div>
-            </div>
-          </fieldset>
-
-          <fieldset>
-            <legend>Condiciones del servicio</legend>
-            <label class="check-row">
-              <input name="aceptaCondiciones" required type="checkbox" />
-              <span>
-                Acepto las <a href="aviso-legal.html" target="_blank" rel="noreferrer">condiciones del servicio</a>, la <a href="privacidad.html" target="_blank" rel="noreferrer">política de privacidad</a>, el precio cerrado de <span id="preview-price-conditions">120,00 € IVA incluido</span> y la provision de fondos previa para iniciar el servicio.
-              </span>
-            </label>
-            <label class="check-row">
-              <input name="inicioInmediato" type="checkbox" />
-              <span>
-                Solicito el inicio inmediato de las gestiones sin esperar al plazo legal de desistimiento.
-              </span>
-            </label>
-          </fieldset>
-
-
-          <div class="form-actions" id="bizum-submit-actions" style="display: none; flex-direction: column; width: 100%; gap: 12px; margin-top: 8px;">
-            <button class="primary" type="submit" id="bizum-submit-button">Confirmar Bizum y formalizar por 120 €</button>
-          </div>
-
-          <div class="form-actions" id="paypal-submit-actions" style="display: none; flex-direction: column; width: 100%; gap: 12px; margin-top: 8px;">
-            <div id="paypal-button-container" style="width: 100%; min-height: 150px;"></div>
-          </div>
-
-        </form>
+        <div class="workbench-visual">
+          <spline-viewer url="https://prod.spline.design/kZi5i7rjTf5gth1n/scene.splinecode"></spline-viewer>
+        </div>
       </section>
 
+      <!-- SECCIÓN DE ALTA ONLINE Y FORMULARIO -->
+      <section class="section-band alta-section" id="alta-online">
+        <div class="section-inner alta-grid">
+          <div class="alta-intro">
+            <p class="overline">Alta online directa</p>
+            <h2>Contrata tu servicio al instante</h2>
+            <p class="lead-sm">
+              Si ya conoces el trámite que necesitas, rellena tus datos para generar la Hoja de Encargo formal con validez legal. 
+              Si tienes dudas o un plazo de despido inminente, escríbeme directamente por WhatsApp.
+            </p>
+            
+            <div class="steps-list">
+              <div class="step-item">
+                <span class="step-num">1</span>
+                <div>
+                  <h4>Selecciona tu trámite</h4>
+                  <p>Elige entre papeleta de conciliación, representación en SMAC, demanda, Inspección o gestión bancaria.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <span class="step-num">2</span>
+                <div>
+                  <h4>Completa tus datos</h4>
+                  <p>Rellena la información básica necesaria para la redacción documental del expediente y facturación.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <span class="step-num">3</span>
+                <div>
+                  <h4>Firma digital y pago</h4>
+                  <p>Revisa la Hoja de Encargo autogenerada, confirma la provisión por Bizum o PayPal y descarga tu copia certificada en PDF.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <form class="hire-panel" id="hire-form" novalidate>
+            <div class="panel-heading">
+              <p class="overline">Paso 1 de 3</p>
+              <h2>Detalles del encargo</h2>
+            </div>
+            <fieldset>
+              <legend>Servicio que quieres contratar</legend>
+              <div class="service-tabs" role="tablist" aria-label="Servicio contratado">
+                <label class="service-tab" role="tab" aria-selected="true" data-service-tab="papeleta">
+                  <input type="radio" name="servicio" value="papeleta" checked />
+                  <span>Papeleta</span>
+                </label>
+                <label class="service-tab" role="tab" aria-selected="false" data-service-tab="smac">
+                  <input type="radio" name="servicio" value="smac" />
+                  <span>Conciliación Madrid</span>
+                </label>
+                <label class="service-tab" role="tab" aria-selected="false" data-service-tab="inspeccion">
+                  <input type="radio" name="servicio" value="inspeccion" />
+                  <span>Inspección</span>
+                </label>
+                <label class="service-tab" role="tab" aria-selected="false" data-service-tab="bancario">
+                  <input type="radio" name="servicio" value="bancario" />
+                  <span>Reclamación bancaria</span>
+                </label>
+                <label class="service-tab" role="tab" aria-selected="false" data-service-tab="demanda">
+                  <input type="radio" name="servicio" value="demanda" />
+                  <span>Demanda</span>
+                </label>
+              </div>
+              <div class="service-tab-panels">
+                <section class="service-pane" data-service-panel="papeleta">
+                  <h3>Papeleta de conciliación laboral</h3>
+                  <p>120,00 € IVA incluido. Redacción de papeleta para trabajadores en toda España. La presentación administrativa, la asistencia al acto y la representación presencial se contratan aparte.</p>
+                </section>
+                <section class="service-pane" data-service-panel="smac" hidden>
+                  <h3>Representación en conciliación laboral</h3>
+                  <p>200,00 € IVA incluido. Incluye preparación de la conciliación y representación voluntaria presencial en el SMAC de Madrid.</p>
+                  <label class="service-region-field">
+                    Comunidad autónoma disponible
+                    <select name="representacionComunidad" id="representacion-comunidad">
+                      <option value="madrid">Comunidad de Madrid</option>
+                    </select>
+                    <span class="input-hint">Por ahora solo hay representación presencial en la Comunidad de Madrid.</span>
+                  </label>
+                </section>
+                <section class="service-pane" data-service-panel="inspeccion" hidden>
+                  <h3>Denuncia ante Inspección de Trabajo</h3>
+                  <p>80,00 € IVA incluido. Preparación documental, orden de hechos y redacción de denuncia ante la Inspección de Trabajo y Seguridad Social.</p>
+                </section>
+                <section class="service-pane" data-service-panel="bancario" hidden>
+                  <h3>Gestión extrajudicial bancaria</h3>
+                  <p>180,00 € IVA incluido. Preparación de reclamación extrajudicial por contratos de préstamos, créditos o tarjetas con intereses usurarios o cláusulas abusivas.</p>
+                </section>
+                <section class="service-pane" data-service-panel="demanda" hidden>
+                  <h3>Demanda laboral y justicia gratuita</h3>
+                  <p>220,00 € IVA incluido. Redacción documental de demanda laboral y preparación de solicitud de asistencia jurídica gratuita ante el juzgado.</p>
+                </section>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Tus datos</legend>
+              <div class="field-grid">
+                <label>
+                  Nombre y apellidos
+                  <input autocomplete="name" name="nombre" required placeholder="Nombre completo" />
+                </label>
+                <label>
+                  DNI/NIE/Pasaporte
+                  <input autocomplete="off" name="dni" required placeholder="DNI, NIE o pasaporte" />
+                </label>
+                <label class="field-span-2">
+                  Correo electrónico
+                  <input autocomplete="email" inputmode="email" name="email" required type="email" placeholder="Tu correo electrónico" />
+                </label>
+                <label>
+                  Teléfono
+                  <input autocomplete="tel" inputmode="tel" name="telefono" placeholder="Teléfono opcional" />
+                </label>
+                <label>
+                  Dirección: calle y número
+                  <input autocomplete="address-line1" name="direccion" required placeholder="Tu calle y número" />
+                </label>
+                <label>
+                  Piso, puerta, bloque o no procede
+                  <input autocomplete="address-line2" name="piso" required placeholder="Ej. 2º B, bajo derecha o no procede" />
+                </label>
+                <label>
+                  Código Postal
+                  <input autocomplete="postal-code" inputmode="numeric" name="cp" required placeholder="C.P." />
+                </label>
+                <label>
+                  Localidad o Ciudad
+                  <input autocomplete="address-level2" name="localidad" required placeholder="Tu ciudad" />
+                </label>
+                <label>
+                  Provincia
+                  <input autocomplete="address-level1" name="provincia" required placeholder="Tu provincia" />
+                </label>
+                <label class="field-span-2">
+                  Empresa a reclamar
+                  <input name="empresa" required placeholder="Nombre de la empresa a reclamar" />
+                </label>
+              </div>
+            </fieldset>
+
+            <section class="price-box">
+              <h3 id="price-box-title">Precio cerrado: 120,00 € IVA incluido</h3>
+              <p>
+                <strong id="preview-price">120,00 € IVA incluido</strong>. <span id="price-box-description">Provisión de fondos previa por Bizum o PayPal/tarjeta antes de iniciar la redacción.</span>
+              </p>
+            </section>
+
+            <div class="contract-container" style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
+              <p class="overline">Revisión de tu contrato</p>
+              <h3>Hoja de Encargo y Condiciones</h3>
+              <p class="form-note" style="margin-bottom: 0.8rem; text-align: left;">
+                Revisa las condiciones legales de prestación del servicio. Los datos del contrato se actualizan automáticamente mientras los escribes.
+              </p>
+              <div class="contract-scroll-box" id="contract-preview" style="max-height: 160px; overflow-y: scroll; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 16px; background: var(--wash); font-size: 0.85rem; line-height: 1.5; color: var(--ink-light);">
+                <div id="preview-contract-heading" style="text-align: center; margin-bottom: 12px; font-weight: bold; color: var(--primary);">
+                  HOJA DE ENCARGO - REDACCIÓN DE PAPELETA
+                </div>
+                <p><strong>REUNIDOS:</strong></p>
+                <p>De una parte, como prestador del servicio, <strong>Daniel Arnaiz Cuesta</strong>, con NIF 72828826Q, domicilio profesional en C/ Arroyo de la Media Legua 4, bajo derecha, 28030 Madrid, y correo danielarnaizcuesta@gmail.com.</p>
+                <p>Y de otra parte, como cliente, <strong id="preview-nombre">____________________</strong>, con DNI/NIE/Pasaporte <strong id="preview-dni">____________________</strong> y domicilio en <strong id="preview-domicilio">________________________________________</strong>; en adelante, el Cliente.</p>
+                
+                <p><strong>ESTIPULACIONES:</strong></p>
+                <p><strong>Servicio contratado:</strong> <span id="preview-service-title">Papeleta de conciliación laboral</span> contra la empresa <strong id="preview-empresa">____________________</strong>.</p>
+                <p><strong>1. OBJETO DEL ENCARGO:</strong> <span id="preview-object">El Cliente encarga al profesional la redacción de una papeleta de conciliación laboral frente a la empresa ____________________. El servicio es documental y válido para asuntos de trabajadores en España. Presentación, representación presencial y asistencia al acto de conciliación se contratan aparte.</span></p>
+                
+                <p><strong>2. PRECIO, PAGO Y FACTURACIÓN:</strong> El precio cerrado del servicio es de <span id="preview-price-contract">120,00 € IVA incluido</span>. La aportación de los datos solicitados es obligatoria para la ejecución del encargo y su facturación. La provisión de fondos previa se abona por Bizum o PayPal/tarjeta para iniciar el encargo. La factura correspondiente se emitirá de conformidad con la normativa de facturación vigente.</p>
+                
+                <p><strong>3. DESISTIMIENTO E INICIO DEL SERVICIO:</strong> El Cliente tiene derecho a desistir del presente contrato en un plazo de 14 días naturales sin necesidad de justificación. Si marca voluntariamente la casilla opcional de inicio inmediato, solicita y autoriza expresamente el inicio de las gestiones antes de que expire dicho plazo. En tal caso, si desiste posteriormente, deberá abonar la parte proporcional de las gestiones efectivamente realizadas hasta la comunicación del desistimiento, extinguiéndose dicho derecho si el servicio ha sido completamente ejecutado por el profesional.</p>
+                
+                <p><strong>4. FIRMA Y VALIDEZ:</strong> La contratación queda realizada mediante el envío de la solicitud cifrada y el marcado de la casilla obligatoria de aceptación de condiciones, privacidad y precio por parte del Cliente.</p>
+                
+                <p><strong>5. LUGAR, FECHA, ZONA Y FUERO:</strong> El contrato se celebra en Madrid en la fecha y hora de envío de la solicitud cifrada. La zona de prestación del servicio es: <span id="preview-zone">España. Redacción documental de papeleta de conciliación laboral. Representación y asistencia presencial se contratan aparte.</span> El contrato se rige por la ley española. Para clientes consumidores, serán competentes los juzgados y tribunales que correspondan conforme a la normativa aplicable; cuando la competencia territorial sea legalmente disponible, el fuero será Madrid.</p>
+              </div>
+            </div>
+
+            <fieldset id="payment-method-fieldset" style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
+              <legend>Provisión de fondos</legend>
+              <div class="service-tabs" role="tablist" aria-label="Método de pago" style="grid-template-columns: repeat(2, minmax(0, 1fr));">
+                <label class="service-tab" role="tab" aria-selected="true" data-payment-tab="bizum">
+                  <input type="radio" name="metodoPago" value="bizum" checked />
+                  <span>Bizum</span>
+                </label>
+                <label class="service-tab" role="tab" aria-selected="false" data-payment-tab="paypal">
+                  <input type="radio" name="metodoPago" value="paypal" />
+                  <span>PayPal / Tarjeta</span>
+                </label>
+              </div>
+              <p class="form-note" id="payment-method-note" style="margin-top: 0.8rem; text-align: left; color: var(--muted); font-size: 0.85rem;">
+                La provisión de fondos previa es obligatoria para iniciar el servicio.
+              </p>
+              
+              <div id="bizum-payment-panel" style="display: none; margin-top: 1rem; padding: 16px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--wash); gap: 16px; flex-direction: column;">
+                <div style="border-left: 4px solid var(--primary); padding-left: 12px; font-size: 0.9rem; color: var(--ink);">
+                  <p style="margin-bottom: 6px;"><strong>Instrucciones de pago por Bizum:</strong></p>
+                  <p>Realiza un Bizum de <strong id="bizum-amount-text">120,00 € IVA incluido</strong> al número de Daniel: <strong>615 860 227</strong> como provisión de fondos e indicando tu nombre completo en el concepto.</p>
+                </div>
+                <div class="field-grid" style="grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 8px;">
+                  <label style="font-size: 0.85rem;">
+                    Móvil desde el que envías
+                    <input name="bizumTelefono" type="tel" placeholder="Ej. 600000000" style="min-height: 40px; padding: 8px 12px;" />
+                  </label>
+                  <label style="font-size: 0.85rem;">
+                    Concepto del Bizum
+                    <input name="bizumConcepto" type="text" placeholder="Ej. Juan Pérez" style="min-height: 40px; padding: 8px 12px;" />
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Condiciones del servicio</legend>
+              <label class="check-row">
+                <input name="aceptaCondiciones" required type="checkbox" />
+                <span>
+                  Acepto las <a href="aviso-legal.html" target="_blank" rel="noreferrer">condiciones del servicio</a>, la <a href="privacidad.html" target="_blank" rel="noreferrer">política de privacidad</a>, el precio cerrado de <span id="preview-price-conditions">120,00 € IVA incluido</span> y la provisión de fondos previa.
+                </span>
+              </label>
+              <label class="check-row">
+                <input name="inicioInmediato" type="checkbox" />
+                <span>
+                  Solicito el inicio inmediato de las gestiones sin esperar al plazo legal de desistimiento.
+                </span>
+              </label>
+            </fieldset>
+
+            <div class="form-actions" id="bizum-submit-actions" style="display: none; flex-direction: column; width: 100%; gap: 12px; margin-top: 8px;">
+              <button class="primary" type="submit" id="bizum-submit-button">Confirmar Bizum y formalizar por 120 €</button>
+            </div>
+
+            <div class="form-actions" id="paypal-submit-actions" style="display: none; flex-direction: column; width: 100%; gap: 12px; margin-top: 8px;">
+              <div id="paypal-button-container" style="width: 100%; min-height: 150px;"></div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- SECCIÓN DE RESULTADO (EXITOSO) -->
       <section class="result-section" id="resultado" hidden>
-        <div class="section-inner" style="max-width: 600px; margin: 0 auto; text-align: center;">
+        <div class="section-inner" style="max-width: 600px; margin: 0 auto; text-align: center; padding: 48px 24px;">
           <p class="overline" id="result-overline">Contrato Digital</p>
           <h2 id="result-title">Contrato Formalizado con Éxito</h2>
           <p id="result-desc">
-            El contrato se ha firmado electrónicamente de forma segura y la provision de fondos ha quedado registrada.<br><br>Por favor, <strong>descarga tu copia en PDF</strong> a continuación para conservarla en tus archivos personales. Si has elegido Bizum, el inicio quedara validado al comprobar el abono.
+            El contrato se ha firmado electrónicamente de forma segura y la provisión de fondos ha quedado registrada.<br><br>Por favor, <strong>descarga tu copia en PDF</strong> a continuación para conservarla en tus archivos personales. Si has elegido Bizum, el inicio quedará validado al comprobar el abono.
           </p>
           <div class="result-actions" style="justify-content: center; margin-top: 2rem;">
             <button class="primary" id="download-button" type="button">Descargar mi copia (PDF)</button>
@@ -425,273 +400,133 @@
         </div>
       </section>
 
-      <section class="section-band" id="servicio" aria-labelledby="service-title">
+      <!-- SECCIÓN DE SERVICIOS -->
+      <section class="section-band" id="servicios" aria-labelledby="service-title">
         <div class="section-inner">
-          <p class="overline">Qué contratas</p>
-          <h2 id="service-title">Papeleta, SMAC, demanda, Inspección o acuerdo bancario</h2>
+          <p class="overline">Tarifas Transparentes</p>
+          <h2 id="service-title">Soluciones documentales para tu defensa laboral</h2>
           <div class="scope-grid">
-            <article>
-              <h3>Papeleta España</h3>
-              <ul>
-                <li>Análisis de lo ocurrido, fechas, documentos y cantidades reclamables.</li>
-                <li>Redacción de la papeleta de conciliación laboral por 120 € IVA incluido.</li>
-                <li>Documento listo para que lo presentes ante el órgano administrativo competente.</li>
-                <li>Presentación, asistencia al acto y representación presencial se contratan aparte.</li>
-              </ul>
+            <article class="service-card">
+              <h3>Papeleta de Conciliación</h3>
+              <span class="price-tag">120 € <small>IVA incluido</small></span>
+              <p>Análisis del caso, cálculo detallado de cantidades e indemnización, y redacción de la papeleta de conciliación laboral, lista para ser presentada en cualquier órgano administrativo de España.</p>
             </article>
-            <article>
-              <h3>Representación</h3>
-              <ul>
-                <li>Preparación de papeleta, documentación y estrategia de conciliación.</li>
-                <li>Representación voluntaria presencial según comunidad disponible.</li>
-                <li>Actualmente disponible solo en la Comunidad de Madrid.</li>
-                <li>Preparación de posición negociadora y límites antes de acudir al acto.</li>
-                <li>Precio cerrado de 200 € IVA incluido, con provision de fondos previa antes de iniciar el trabajo.</li>
-              </ul>
+            <article class="service-card">
+              <h3>Representación (SMAC)</h3>
+              <span class="price-tag">200 € <small>IVA incluido</small></span>
+              <p>Preparación de la estrategia jurídica y representación presencial voluntaria por profesionales en el acto de conciliación ante el SMAC de la Comunidad de Madrid. Evita acuerdos desfavorables.</p>
             </article>
-            <article>
-              <h3>Demanda</h3>
-              <ul>
-                <li>Redacción documental de demanda laboral cuando el asunto queda sin acuerdo.</li>
-                <li>Preparación de solicitud de asistencia jurídica gratuita o abogado de oficio.</li>
-                <li>Revisión de papeleta, acta de conciliación, hechos, documentos y cantidades.</li>
-                <li>La intervención judicial posterior corresponde al profesional elegido o designado.</li>
-                <li>Precio cerrado de 220 € IVA incluido, con provision de fondos previa antes de iniciar el trabajo.</li>
-              </ul>
+            <article class="service-card">
+              <h3>Demanda Laboral</h3>
+              <span class="price-tag">220 € <small>IVA incluido</small></span>
+              <p>Redacción jurídica de demanda ante el Juzgado de lo Social correspondiente tras no alcanzar acuerdo en conciliación, incluyendo la preparación de la solicitud de justicia gratuita / abogado de oficio.</p>
             </article>
-            <article>
-              <h3>Inspección</h3>
-              <ul>
-                <li>Preparación de hechos, fechas, empresa, centro de trabajo y documentos relevantes.</li>
-                <li>Redacción de denuncia clara para Inspección de Trabajo y Seguridad Social.</li>
-                <li>Presentación telemática cuando proceda y el cliente facilite los datos necesarios.</li>
-                <li>Precio cerrado de 80 € IVA incluido, con alcance documental claro.</li>
-              </ul>
+            <article class="service-card">
+              <h3>Inspección de Trabajo</h3>
+              <span class="price-tag">80 € <small>IVA incluido</small></span>
+              <p>Redacción de denuncia formal estructurada con hechos y pruebas ante la Inspección de Trabajo y Seguridad Social por abusos de jornada, horas extras no abonadas o falta de alta en seguridad social.</p>
             </article>
-            <article>
-              <h3>Acuerdo bancario</h3>
-              <ul>
-                <li>Préstamos, créditos o tarjetas con posibles intereses o condiciones abusivas.</li>
-                <li>Ordenación documental, importes, hechos y posición de negociación.</li>
-                <li>Reclamación y propuesta de acuerdo extrajudicial con la entidad.</li>
-                <li>Precio cerrado de 180 € IVA incluido, orientado a una solución extrajudicial negociada.</li>
-              </ul>
+            <article class="service-card">
+              <h3>Acuerdo Bancario</h3>
+              <span class="price-tag">180 € <small>IVA incluido</small></span>
+              <p>Estructuración de reclamación y propuesta de acuerdo extrajudicial con entidades bancarias en defensa de los consumidores por cláusulas abusivas, intereses de usura en microcréditos o tarjetas revolving.</p>
             </article>
           </div>
         </div>
       </section>
 
-      <section class="section-band split-band" id="papeleta-presentada" aria-labelledby="presented-title">
-        <div class="section-inner special-case">
-          <div>
-            <p class="overline">Si ya presentaste papeleta</p>
-            <h2 id="presented-title">Todavía hay mucho que preparar antes del acto</h2>
-            <p>
-              Presentar la papeleta no significa llegar preparado. Puedo revisar lo que has presentado,
-              ordenar documentos, calcular cantidades, detectar puntos débiles y preparar contigo la
-              estrategia de conciliación antes de acudir al SMAC. Es especialmente importante porque lo que
-              se diga, se reclame o se acepte en conciliación puede influir en una demanda posterior.
-            </p>
+      <!-- RECURSOS RÁPIDOS Y CALCULADORAS -->
+      <section class="section-band recursos-section" id="recursos">
+        <div class="section-inner resources-grid">
+          <div class="resource-box">
+            <p class="overline">Herramientas libres</p>
+            <h3>Calculadoras Laborales</h3>
+            <p>Calcula de forma rápida e intuitiva tu finiquito, indemnización por despido (procedente o improcedente), la mora salarial aplicable y comprueba las tablas del SMI 2026 antes de reclamar.</p>
+            <a class="primary" href="calculadoras.html">Acceder a calculadoras</a>
           </div>
-          <div class="checklist-card">
-            <h3>Te interesa si ahora tienes dudas sobre...</h3>
-            <ul>
-              <li>Qué cantidades reclamar y cómo defenderlas.</li>
-              <li>Qué documentos llevar el día del acto.</li>
-              <li>Qué acuerdo aceptar y cuál puede perjudicarte.</li>
-              <li>Qué conviene dejar reservado si después hay que demandar.</li>
-              <li>Cómo responder si la empresa comparece con propuesta cerrada.</li>
-            </ul>
-            <a class="primary" href="https://wa.me/34615860227" target="_blank" rel="noreferrer">Preparar mi acto</a>
+          <div class="resource-box">
+            <p class="overline">Documentación gratuita</p>
+            <h3>Modelos y Trámites</h3>
+            <p>Descarga plantillas en Word y PDF listas para solicitar subsanaciones ante el FOGASA, copias de tu expediente administrativo, registros de jornada o cuadrantes horarios oficiales.</p>
+            <a class="secondary" href="modelos.html">Ver modelos de descarga</a>
           </div>
         </div>
       </section>
 
-      <section class="section-band" id="calculadoras-laborales" aria-labelledby="calculators-home-title">
+      <!-- MÉTODO DE TRABAJO -->
+      <section class="process-section" id="como-funciona">
         <div class="section-inner">
-          <p class="overline">Calculadoras laborales</p>
-          <h2 id="calculators-home-title">Calcula antes de reclamar</h2>
-          <div class="service-facts">
-            <div>
-              <span>Despido</span>
-              <strong>Improcedente u objetivo</strong>
-            </div>
-            <div>
-              <span>Finiquito</span>
-              <strong>Salario, vacaciones y extras</strong>
-            </div>
-            <div>
-              <span>SMI 2026</span>
-              <strong>17.094 € anuales</strong>
-            </div>
-            <div>
-              <span>Mora salarial</span>
-              <strong>10% sobre lo adeudado</strong>
-            </div>
-          </div>
-          <div class="calculator-link-panel">
-            <div>
-              <h2>Herramientas rápidas para ordenar cantidades</h2>
-              <p>Resultados orientativos para trabajadores antes de preparar SMAC, reclamación de cantidad o denuncia ante Inspección de Trabajo.</p>
-            </div>
-            <a class="primary" href="calculadoras.html">Abrir calculadoras</a>
-          </div>
-        </div>
-      </section>
-
-      <section class="section-band" id="modelos-gratis" aria-labelledby="free-models-home-title">
-        <div class="section-inner">
-          <p class="overline">Modelos gratis y preparatorias</p>
-          <h2 id="free-models-home-title">Recursos sin coste cuando encajan</h2>
-          <div class="service-facts">
-            <div>
-              <span>FOGASA</span>
-              <strong>Reclamación o subsanación</strong>
-            </div>
-            <div>
-              <span>Empresa</span>
-              <strong>Documentación laboral</strong>
-            </div>
-            <div>
-              <span>Expediente</span>
-              <strong>Copia, estado y aportación</strong>
-            </div>
-            <div>
-              <span>Jornada</span>
-              <strong>Registro horario y turnos</strong>
-            </div>
-          </div>
-          <div class="calculator-link-panel">
-            <div>
-              <h2>Modelos gratis para trámites no conflictivos</h2>
-              <p>Descargas para FOGASA, documentación laboral, expedientes, registro horario, cuadrantes, comité de empresa, mutuas, finiquito, retenciones y datos personales. El certificado de empresa va enlazado al SEPE para obtener sus propios datos.</p>
-            </div>
-            <a class="primary" href="modelos.html">Ver modelos</a>
-          </div>
-        </div>
-      </section>
-
-      <section class="section-band" id="inspeccion" aria-labelledby="inspection-title">
-        <div class="section-inner">
-          <p class="overline">Inspección de Trabajo</p>
-          <h2 id="inspection-title">Denuncia laboral preparada por 80 € IVA incluido</h2>
-          <div class="scope-grid">
+          <p class="overline">Menos incertidumbre</p>
+          <h2>El proceso, paso a paso</h2>
+          <div class="process-grid">
             <article>
-              <h3>Cuándo encaja</h3>
-              <ul>
-                <li>Falta de alta, jornada real superior a la declarada u horas no reconocidas.</li>
-                <li>Salarios impagados, incumplimientos graves, prevención, acoso o represalias.</li>
-                <li>Problemas con mutua, baja médica, cuadrantes, registro horario o condiciones de trabajo.</li>
-              </ul>
+              <span>1</span>
+              <h3>Me cuentas tu caso</h3>
+              <p>Envías tu documentación (contrato, nóminas, despido) por WhatsApp o a través de la web para su análisis inicial prioritario.</p>
             </article>
             <article>
-              <h3>Qué incluye</h3>
-              <ul>
-                <li>Orden de hechos y documentos para que la denuncia sea comprensible.</li>
-                <li>Redacción de la denuncia ante Inspección de Trabajo y Seguridad Social.</li>
-                <li>Presentación telemática cuando sea viable con la documentación disponible.</li>
-              </ul>
+              <span>2</span>
+              <h3>Preparamos el expediente</h3>
+              <p>Ordenamos cantidades y redacto los documentos de la papeleta, demanda o denuncia con base en la jurisprudencia laboral vigente.</p>
+            </article>
+            <article>
+              <span>3</span>
+              <h3>Actuamos con criterio</h3>
+              <p>Presentas la documentación en el registro público o te represento presencialmente en Madrid para negociar tu mejor acuerdo.</p>
             </article>
           </div>
-          <div class="hero-actions">
-            <a class="primary" href="#hire-form">Contratar denuncia por 80 €</a>
-            <a class="secondary" href="https://wa.me/34615860227" target="_blank" rel="noreferrer">Preguntar por WhatsApp</a>
-          </div>
         </div>
       </section>
 
-      <section class="section-inner process-section" aria-labelledby="process-title">
-        <p class="overline">Menos incertidumbre</p>
-        <h2 id="process-title">Qué ocurre cuando me escribes</h2>
-        <div class="process-grid">
-          <article>
-            <span>1</span>
-            <h3>Me cuentas el problema</h3>
-            <p>Despido, impagos, finiquito, horas, vacaciones o acto SMAC ya señalado. Prioridad si hay plazo cercano.</p>
-          </article>
-          <article>
-            <span>2</span>
-            <h3>Analizo documentos y fechas</h3>
-            <p>Reviso contrato, nóminas, carta de despido, mensajes, vida laboral o papeleta ya presentada.</p>
-          </article>
-          <article>
-            <span>3</span>
-            <h3>Preparo la estrategia</h3>
-            <p>Ordenamos cantidades, relato, prueba y posición de negociación para llegar al acto con criterio.</p>
-          </article>
-          <article>
-            <span>4</span>
-            <h3>Ejecuto el servicio</h3>
-            <p>Redacción de papeleta, representación presencial en Madrid si procede, demanda laboral con justicia gratuita, denuncia ante Inspección o gestión extrajudicial bancaria.</p>
-          </article>
-        </div>
-      </section>
-
+      <!-- PREGUNTAS FRECUENTES (FAQ) -->
       <section class="section-band" id="faq" aria-labelledby="faq-title">
         <div class="section-inner">
           <p class="overline">Preguntas frecuentes</p>
           <h2 id="faq-title">Dudas habituales antes de reclamar</h2>
           <div class="faq-grid">
             <details open>
-              <summary>¿Puedo contactarte antes de contratar?</summary>
-              <p>Sí. La prioridad es entender si tu asunto encaja, si hay una comunidad disponible para representación y si existe un plazo que obligue a actuar rápido.</p>
+              <summary>¿Cómo funciona la provisión de fondos y el pago?</summary>
+              <p>Antes de iniciar el análisis del expediente y la redacción documental, se abona una provisión de fondos correspondiente al precio cerrado del servicio por Bizum o PayPal/tarjeta. Las tarifas son finales y transparentes.</p>
             </details>
             <details>
-              <summary>¿Qué pasa si ya presenté la papeleta?</summary>
-              <p>Se puede trabajar sobre lo presentado: revisar enfoque, preparar documentación, calcular cantidades y fijar estrategia para el acto.</p>
+              <summary>¿Qué pasa si ya he presentado la papeleta por mi cuenta?</summary>
+              <p>Podemos revisar lo presentado para reorientar los cálculos, ordenar la documentación necesaria que debes aportar, estructurar tu estrategia negociadora del acto e incluso acudir contigo presencialmente en Madrid.</p>
             </details>
             <details>
-              <summary>¿Por qué la conciliación puede afectar a la demanda?</summary>
-              <p>Porque el acta, los conceptos reclamados, las cantidades y lo que se acepta o se reserva pueden pesar después. La idea es llegar con una posición pensada, no improvisada.</p>
+              <summary>¿Por qué el acto del SMAC puede condicionar una demanda posterior?</summary>
+              <p>El acta de conciliación, los importes que se reclaman y las reservas que se hagan en la firma quedan registrados y delimitan la futura demanda ante el juez. Conviene tener claro qué firmar antes de entrar.</p>
             </details>
             <details>
-              <summary>¿Cuándo pago?</summary>
-              <p>Antes de iniciar el expediente se abona una provision de fondos por Bizum o PayPal/tarjeta. La papeleta laboral cuesta 120,00 € IVA incluido, la representación en conciliación 200,00 € IVA incluido, la demanda laboral con solicitud de justicia gratuita 220,00 € IVA incluido, la denuncia ante Inspección de Trabajo 80,00 € IVA incluido y la gestión extrajudicial bancaria 180,00 € IVA incluido.</p>
+              <summary>¿Ofreces representación presencial?</summary>
+              <p>La representación presencial voluntaria y asistencia al acto está disponible exclusivamente para la Comunidad de Madrid. El resto de servicios de redacción de papeletas, demandas y denuncias se ofrecen para toda España.</p>
             </details>
             <details>
-              <summary>¿Qué incluye la demanda laboral?</summary>
-              <p>La fase de demanda que preparo es documental: redacción de demanda laboral y solicitud de asistencia jurídica gratuita o abogado de oficio. La intervención judicial posterior corresponde al profesional elegido o designado.</p>
-            </details>
-            <details>
-              <summary>¿Qué incluye el servicio bancario?</summary>
-              <p>Preparación documental y gestión extrajudicial para trabajar una propuesta de acuerdo sobre préstamos, créditos o tarjetas con posibles intereses o condiciones abusivas. Si el asunto pasa a vía judicial, la intervención posterior corresponde al profesional elegido o designado.</p>
-            </details>
-            <details>
-              <summary>¿Qué aporta la denuncia a Inspección?</summary>
-              <p>El servicio convierte los hechos y documentos en una denuncia clara y ordenada. La actuación posterior corresponde a la Inspección de Trabajo y Seguridad Social.</p>
-            </details>
-            <details>
-              <summary>¿Respondes rápido si es un despido?</summary>
-              <p>Sí. La respuesta inicial se prioriza dentro de 24 horas, especialmente en despidos, reclamaciones de cantidad o actos próximos.</p>
-            </details>
-            <details>
-              <summary>¿Atiendes presencialmente?</summary>
-              <p>Sí, en las comunidades disponibles en el formulario. Actualmente la representación presencial se ofrece en la Comunidad de Madrid; la redacción de papeleta para toda España es un servicio documental.</p>
-            </details>
-            <details>
-              <summary>¿Qué resultado puedo esperar?</summary>
-              <p>El servicio ordena el caso, refuerza la documentación y prepara la actuación. El acuerdo, la resolución administrativa o el cobro dependen también de la otra parte o del órgano competente.</p>
+              <summary>¿Qué incluye la redacción de demanda laboral?</summary>
+              <p>Incluye el análisis legal del acta sin avenencia del SMAC, la redacción formal de la demanda judicial y la preparación de los formularios para solicitar el beneficio de justicia gratuita y abogado de oficio.</p>
             </details>
           </div>
           <div class="final-cta">
-            <h2>Si tienes fecha, carta de despido o cantidades pendientes, escríbeme hoy</h2>
-            <a class="primary" href="https://wa.me/34615860227" target="_blank" rel="noreferrer">Enviar WhatsApp</a>
-            <a class="secondary" href="tel:+34615860227">Llamar</a>
+            <h2>¿Tienes plazos corriendo, nóminas pendientes o una fecha del SMAC?</h2>
+            <p>Escríbeme hoy y revisaremos tu caso sin compromiso antes de que expiren los plazos.</p>
+            <div class="hero-actions" style="justify-content: center; margin-top: 1.5rem;">
+              <a class="primary" href="https://wa.me/34615860227" target="_blank" rel="noreferrer">Enviar WhatsApp</a>
+              <a class="secondary" href="tel:+34615860227">Llamar ahora</a>
+            </div>
           </div>
         </div>
       </section>
-
-
     </main>
 
     <footer class="site-footer">
       <span>© 2026 Daniel Arnaiz Cuesta</span>
-      <a href="calculadoras.html">Calculadoras</a>
-      <a href="modelos.html">Modelos gratis</a>
-      <a href="aviso-legal.html">Aviso legal</a>
-      <a href="privacidad.html">Privacidad</a>
-      <a href="desistimiento.html">Desistimiento</a>
-      <a href="cookies.html">Cookies</a>
+      <nav aria-label="Navegación pie de página">
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="modelos.html">Modelos gratis</a>
+        <a href="aviso-legal.html">Aviso legal</a>
+        <a href="privacidad.html">Privacidad</a>
+        <a href="desistimiento.html">Desistimiento</a>
+        <a href="cookies.html">Cookies</a>
+      </nav>
     </footer>
 
     <script src="assets/jspdf.umd.min.js"></script>
