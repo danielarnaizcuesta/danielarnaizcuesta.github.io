@@ -6,7 +6,7 @@
     <title>Calculadoras laborales | Daniel Arnaiz Cuesta</title>
     <meta
       name="description"
-      content="Calculadoras laborales para trabajadores: indemnización por despido, finiquito básico, SMI 2026 y mora salarial."
+      content="Calculadoras laborales para trabajadores: despido, finiquito, SMI 2026, inembargabilidad del SMI y mora salarial."
     />
     <meta name="theme-color" content="#2f6653" />
     <link rel="canonical" href="https://danielarnaizcuesta.github.io/calculadoras.html" />
@@ -15,7 +15,7 @@
     <meta property="og:title" content="Calculadoras laborales" />
     <meta
       property="og:description"
-      content="Calcula de forma orientativa despido, finiquito, SMI 2026 y mora salarial antes de reclamar."
+      content="Calcula de forma orientativa despido, finiquito, SMI 2026, inembargabilidad y mora salarial antes de reclamar."
     />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
     <link rel="stylesheet" href="styles.css" />
@@ -25,7 +25,7 @@
         "@type": "WebPage",
         "name": "Calculadoras laborales",
         "url": "https://danielarnaizcuesta.github.io/calculadoras.html",
-        "description": "Calculadoras laborales orientativas para trabajadores: indemnización por despido, finiquito básico, SMI 2026 y mora salarial.",
+        "description": "Calculadoras laborales orientativas para trabajadores: indemnización por despido, finiquito básico, SMI 2026, inembargabilidad y mora salarial.",
         "isPartOf": {
           "@type": "WebSite",
           "name": "Daniel Arnaiz Cuesta",
@@ -60,8 +60,9 @@
         <p class="overline">Calculadoras laborales para trabajadores</p>
         <h1 id="calculator-title">Estima cantidades antes de reclamar</h1>
         <p class="lead">
-          Calcula una referencia de indemnización, finiquito, salario mínimo y mora salarial con reglas laborales
-          básicas vigentes en 2026. El resultado es orientativo y sirve para ordenar el caso antes de revisar documentos.
+          Calcula una referencia de indemnización, finiquito, salario mínimo, inembargabilidad y mora salarial con
+          reglas laborales básicas vigentes en 2026. El resultado es orientativo y sirve para ordenar el caso antes de
+          revisar documentos.
         </p>
         <div class="hero-actions">
           <a class="primary" href="#despido">Calcular despido</a>
@@ -76,6 +77,7 @@
           <a href="#despido">Indemnización por despido</a>
           <a href="#finiquito">Finiquito básico</a>
           <a href="#smi">SMI 2026</a>
+          <a href="#embargo">Inembargabilidad del SMI</a>
           <a href="#mora">Mora salarial</a>
           <a href="#fuentes">Fuentes oficiales</a>
         </aside>
@@ -184,6 +186,52 @@
             <div class="calc-result" id="smi-result" hidden></div>
           </article>
 
+          <article class="calculator-card" id="embargo">
+            <div class="calculator-card-heading">
+              <p class="overline">Embargos</p>
+              <h2>Inembargabilidad del SMI</h2>
+              <p>
+                Estima qué parte de un salario o pensión mensual quedaría protegida por el artículo 607 de la Ley de
+                Enjuiciamiento Civil y qué parte podría embargarse por tramos.
+              </p>
+            </div>
+            <form class="calc-form" id="embargo-form" novalidate>
+              <div class="field-grid">
+                <label>
+                  Ingreso neto mensual principal
+                  <input name="monthlyIncome" inputmode="decimal" placeholder="Ej. 1450" required />
+                  <span class="input-hint">Usa la cuantía neta después de cotización, IRPF y retenciones obligatorias.</span>
+                </label>
+                <label>
+                  Otras percepciones acumulables al mes
+                  <input name="otherIncome" inputmode="decimal" placeholder="Ej. 300" />
+                  <span class="input-hint">Si cobras de dos pagadores o acumulas pensión y salario, súmalas aquí.</span>
+                </label>
+                <label>
+                  Rebaja por cargas familiares
+                  <select name="familyReduction">
+                    <option value="0">Sin rebaja</option>
+                    <option value="10">-10 puntos si la acuerda el LAJ</option>
+                    <option value="15">-15 puntos si la acuerda el LAJ</option>
+                  </select>
+                </label>
+                <label class="field-span-2">
+                  Tipo de deuda
+                  <select name="debtType">
+                    <option value="ordinary">Ordinaria</option>
+                    <option value="maintenance">Alimentos o pensión alimenticia</option>
+                  </select>
+                  <span class="input-hint">Para alimentos no rige esta escala automática: el juzgado puede modular el embargo de otra forma.</span>
+                </label>
+              </div>
+              <div class="form-actions">
+                <button class="primary" type="submit">Calcular</button>
+                <button class="secondary" type="reset">Limpiar</button>
+              </div>
+            </form>
+            <div class="calc-result" id="embargo-result" hidden></div>
+          </article>
+
           <article class="calculator-card" id="mora">
             <div class="calculator-card-heading">
               <p class="overline">Salarios impagados</p>
@@ -224,6 +272,8 @@
               <li><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2015-11430" target="_blank" rel="noreferrer">Estatuto de los Trabajadores, artículo 53</a>: despido objetivo.</li>
               <li><a href="https://www.boe.es/boe/dias/2012/02/11/pdfs/BOE-A-2012-2076.pdf" target="_blank" rel="noreferrer">Real Decreto-ley 3/2012, disposición transitoria quinta</a>: tramo 45/33 días y tope transitorio.</li>
               <li><a href="https://boe.es/buscar/doc.php?id=BOE-A-2026-3815" target="_blank" rel="noreferrer">Real Decreto 126/2026</a>: SMI 2026.</li>
+              <li><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2000-323&p=20250228&tn=1" target="_blank" rel="noreferrer">Ley de Enjuiciamiento Civil, artículo 607</a>: escala de inembargabilidad del SMI.</li>
+              <li><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2000-323&p=20250228&tn=1" target="_blank" rel="noreferrer">Ley de Enjuiciamiento Civil, artículo 608</a>: particularidad para alimentos y pensiones alimenticias.</li>
               <li><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2015-11430" target="_blank" rel="noreferrer">Estatuto de los Trabajadores, artículo 29.3</a>: mora salarial.</li>
             </ul>
             <div class="hero-actions">

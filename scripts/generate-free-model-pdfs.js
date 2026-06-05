@@ -1,6 +1,12 @@
-const fs = require('fs');
-const path = require('path');
-const { jsPDF } = require('../assets/jspdf.umd.min.js');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+globalThis.self = globalThis;
+await import('../assets/jspdf.umd.min.js');
+const { jsPDF } = globalThis.jspdf;
 
 const outputDir = path.join(__dirname, '..', 'assets', 'modelos');
 
@@ -303,6 +309,95 @@ const models = [
       'Firma: [NOMBRE Y APELLIDOS]'
     ],
     note: 'Modelo de acceso a datos personales. La AEPD publica modelos oficiales para el ejercicio de derechos de protección de datos.'
+  },
+  {
+    file: 'modelo-impugnacion-embargo-juzgado.pdf',
+    title: 'Modelo gratuito - embargo judicial',
+    subtitle: 'Impugnación de embargo ilegal por inembargabilidad',
+    body: [
+      'AL JUZGADO DE [ORGANO JUDICIAL] N.º [NUMERO] DE [LOCALIDAD]',
+      '',
+      'Procedimiento de ejecución: [NUMERO_PROCEDIMIENTO]',
+      '',
+      '[NOMBRE Y APELLIDOS], con DNI/NIE [DNI_NIE], domicilio a efectos de notificaciones en [DOMICILIO], teléfono [TELEFONO] y correo electrónico [EMAIL], en calidad de [EJECUTADO/A O PERSONA AFECTADA], comparece y DICE:',
+      '',
+      'Que formula impugnación del embargo practicado mediante [DECRETO/DILIGENCIA/OFICIO] de fecha [FECHA_ACTO], notificado en fecha [FECHA_NOTIFICACION], por vulneración de los límites legales de inembargabilidad.',
+      '',
+      'PRIMERO. El embargo recae sobre [SALARIO/PENSION/CUENTA], en la que se abona habitualmente [DESCRIPCION_DE_LA_PERCEPCION].',
+      '',
+      'SEGUNDO. La percepción neta mensual asciende a [IMPORTE_NETO_MENSUAL] euros. Si existen otras percepciones periódicas acumulables conforme al artículo 607 de la Ley de Enjuiciamiento Civil, su importe mensual total es [OTRAS_PERCEPCIONES_O_CERO].',
+      '',
+      'TERCERO. La cantidad retenida o bloqueada asciende a [IMPORTE_EMBARGADO] euros, superando el tramo legalmente embargable y afectando a cuantías inembargables o embargadas en exceso.',
+      '',
+      'CUARTO. En su caso, constan cargas familiares o circunstancias relevantes para modular el embargo: [CARGAS_FAMILIARES_Y_CIRCUNSTANCIAS].',
+      '',
+      'Conforme a los artículos 562, 607, 609 y 612 de la Ley de Enjuiciamiento Civil, el embargo debe ajustarse a los límites de inembargabilidad y alzarse o reducirse cuando se haya trabado sobre cantidades legalmente protegidas.',
+      '',
+      'SOLICITA que se deje sin efecto o se reduzca el embargo en lo necesario para respetar la parte inembargable, que se libre de inmediato oficio a [BANCO/EMPRESA/PAGADOR] para rectificar la retención y, si ya se hubiera transferido exceso, se acuerde su devolución o regularización.',
+      '',
+      'OTROSI DIGO que acompaña nóminas, pensión, extractos u otros documentos justificativos: [DOCUMENTOS_APORTADOS].',
+      '',
+      'En [LOCALIDAD], a [FECHA].',
+      '',
+      'Firma: [NOMBRE Y APELLIDOS]'
+    ],
+    note: 'Si existe resolución expresa, la vía suele pasar por reposición; si no la hay, el artículo 562 LEC permite escrito directo al juzgado para corregir la infracción.'
+  },
+  {
+    file: 'modelo-impugnacion-embargo-seguridad-social.pdf',
+    title: 'Modelo gratuito - embargo TGSS',
+    subtitle: 'Impugnación de diligencia de embargo de Seguridad Social',
+    body: [
+      'A LA DIRECCIÓN PROVINCIAL DE LA TESORERÍA GENERAL DE LA SEGURIDAD SOCIAL / UNIDAD DE RECAUDACIÓN EJECUTIVA DE [LOCALIDAD]',
+      '',
+      '[NOMBRE Y APELLIDOS], con DNI/NIE [DNI_NIE], NAF [NUMERO_AFILIACION], domicilio a efectos de notificaciones en [DOMICILIO], teléfono [TELEFONO] y correo electrónico [EMAIL], comparece y FORMULA IMPUGNACIÓN frente a la diligencia de embargo [REFERENCIA_DILIGENCIA], notificada en fecha [FECHA_NOTIFICACION].',
+      '',
+      'PRIMERO. La diligencia recae sobre [SALARIO/PENSION/CUENTA], en la que se abona habitualmente [DESCRIPCION_DE_LA_PERCEPCION].',
+      '',
+      'SEGUNDO. La percepción neta mensual asciende a [IMPORTE_NETO_MENSUAL] euros. Si existen otras percepciones periódicas acumulables, su importe mensual total es [OTRAS_PERCEPCIONES_O_CERO].',
+      '',
+      'TERCERO. La cantidad retenida o bloqueada asciende a [IMPORTE_EMBARGADO] euros, excediendo de la cuantía legalmente embargable o afectando a cantidades inembargables.',
+      '',
+      'CUARTO. En su caso, constan cargas familiares o circunstancias relevantes: [CARGAS_FAMILIARES_Y_CIRCUNSTANCIAS].',
+      '',
+      'El artículo 92.2 del Reglamento General de Recaudación de la Seguridad Social remite al artículo 607 de la Ley de Enjuiciamiento Civil para el embargo de salarios, sueldos, pensiones y prestaciones equivalentes. El artículo 46 del mismo reglamento contempla la impugnación administrativa de los actos de gestión recaudatoria y el propio reglamento permite el levantamiento del embargo practicado cuando se acredita su improcedencia.',
+      '',
+      'SOLICITA que se deje sin efecto o se reduzca el embargo en lo necesario para respetar la parte inembargable, se rectifique la orden dada a [BANCO/EMPRESA/PAGADOR] y, si ya se hubiera ingresado exceso, se acuerde su devolución o compensación.',
+      '',
+      'OTROSI DIGO que acompaña la siguiente documentación justificativa: [DOCUMENTOS_APORTADOS].',
+      '',
+      'En [LOCALIDAD], a [FECHA].',
+      '',
+      'Firma: [NOMBRE Y APELLIDOS]'
+    ],
+    note: 'Revisa la notificación para respetar la vía y el plazo indicados. Este modelo está pensado para discutir embargos de TGSS que no respetan la inembargabilidad.'
+  },
+  {
+    file: 'modelo-impugnacion-embargo-hacienda.pdf',
+    title: 'Modelo gratuito - embargo Hacienda',
+    subtitle: 'Impugnación de diligencia de embargo de AEAT',
+    body: [
+      'A LA AGENCIA ESTATAL DE ADMINISTRACIÓN TRIBUTARIA / DEPENDENCIA DE RECAUDACIÓN DE [LOCALIDAD]',
+      '',
+      '[NOMBRE Y APELLIDOS], con NIF/NIE [DNI_NIE], domicilio fiscal en [DOMICILIO] y correo electrónico [EMAIL], comparece y formula [ELEGIR UNA SOLA VIA: RECURSO DE REPOSICION O RECLAMACION ECONOMICO-ADMINISTRATIVA] frente a la diligencia de embargo [REFERENCIA_DILIGENCIA], notificada en fecha [FECHA_NOTIFICACION].',
+      '',
+      'PRIMERO. El embargo recae sobre [SALARIO/PENSION/CUENTA], en la que se abona habitualmente [DESCRIPCION_DE_LA_PERCEPCION].',
+      '',
+      'SEGUNDO. La percepción neta mensual asciende a [IMPORTE_NETO_MENSUAL] euros. Si existen otras percepciones periódicas acumulables, su importe mensual total es [OTRAS_PERCEPCIONES_O_CERO].',
+      '',
+      'TERCERO. La cantidad retenida o bloqueada asciende a [IMPORTE_EMBARGADO] euros, excediendo de la cuantía legalmente embargable o afectando a cantidades inembargables.',
+      '',
+      'CUARTO. El artículo 170.3.c) de la Ley General Tributaria admite oposición por incumplimiento de las normas reguladoras del embargo, y el artículo 171.3 obliga a respetar en cuentas con abono habitual de salarios, sueldos o pensiones las limitaciones establecidas en la Ley de Enjuiciamiento Civil.',
+      '',
+      'Por ello, SOLICITA que se estime la presente impugnación, se deje sin efecto o se reduzca el embargo en lo necesario para respetar la parte inembargable, se rectifique la traba comunicada a [BANCO/PAGADOR] y, si ya se hubiera detraído exceso, se acuerde su devolución o regularización.',
+      '',
+      'OTROSI DIGO que acompaña la siguiente documentación justificativa: [DOCUMENTOS_APORTADOS].',
+      '',
+      'En [LOCALIDAD], a [FECHA].',
+      '',
+      'Firma: [NOMBRE Y APELLIDOS]'
+    ],
+    note: 'No presentes a la vez reposición y reclamación económico-administrativa contra el mismo acto. Elige una sola vía y respeta el plazo de la notificación.'
   }
 ];
 

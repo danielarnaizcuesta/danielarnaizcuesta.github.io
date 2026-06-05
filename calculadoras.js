@@ -8,6 +8,13 @@
     monthly: 1221,
     annual: 17094
   };
+  const EMBARGO_BRACKETS = [
+    { label: "Hasta 2.º SMI", width: SMI_2026.monthly, rate: 0.3, reducible: true },
+    { label: "Hasta 3.º SMI", width: SMI_2026.monthly, rate: 0.5, reducible: true },
+    { label: "Hasta 4.º SMI", width: SMI_2026.monthly, rate: 0.6, reducible: true },
+    { label: "Hasta 5.º SMI", width: SMI_2026.monthly, rate: 0.75, reducible: true },
+    { label: "Exceso sobre 5 SMI", width: Number.POSITIVE_INFINITY, rate: 0.9, reducible: false }
+  ];
 
   const currencyFormatter = new Intl.NumberFormat("es-ES", {
     style: "currency",
@@ -27,6 +34,10 @@
       minimumFractionDigits: digits,
       maximumFractionDigits: digits
     }).format(value);
+  }
+
+  function formatPercent(value) {
+    return `${formatNumber(value * 100, 0)}%`;
   }
 
   function roundMoney(value) {
@@ -248,6 +259,60 @@
     };
   }
 
+  function calculateEmbargoability(input) {
+    const monthlyIncome = requirePositive(input.monthlyIncome, "Indica un ingreso neto mensual mayor que cero.");
+    const otherIncome = optionalNumber(input.otherIncome);
+    const familyReduction = optionalNumber(input.familyReduction);
+    const debtType = input.debtType === "maintenance" ? "maintenance" : "ordinary";
+
+    if (otherIncome < 0) {
+      throw new Error("Las otras percepciones acumulables no pueden ser negativas.");
+    }
+
+    if (![0, 10, 15].includes(familyReduction)) {
+      throw new Error("La rebaja por cargas familiares solo puede ser 0, 10 o 15 puntos.");
+    }
+
+    const totalIncome = monthlyIncome + otherIncome;
+    const protectedAmount = Math.min(totalIncome, SMI_2026.monthly);
+    let remaining = Math.max(0, totalIncome - SMI_2026.monthly);
+    const breakdown = [];
+    let embargoAmount = 0;
+
+    EMBARGO_BRACKETS.forEach((bracket) => {
+      if (remaining <= 0) {
+        return;
+      }
+
+      const trancheAmount = Math.min(remaining, bracket.width);
+      const appliedRate = Math.max(0, bracket.rate - (bracket.reducible ? familyReduction / 100 : 0));
+      const withheld = trancheAmount * appliedRate;
+
+      breakdown.push({
+        label: bracket.label,
+        trancheAmount: roundMoney(trancheAmount),
+        appliedRate,
+        withheld: roundMoney(withheld)
+      });
+
+      embargoAmount += withheld;
+      remaining -= trancheAmount;
+    });
+
+    return {
+      monthlyIncome,
+      otherIncome,
+      totalIncome: roundMoney(totalIncome),
+      protectedAmount: roundMoney(protectedAmount),
+      embargoAmount: roundMoney(embargoAmount),
+      remainingAfterEmbargo: roundMoney(totalIncome - embargoAmount),
+      familyReduction,
+      debtType,
+      breakdown,
+      fullyProtected: embargoAmount === 0
+    };
+  }
+
   function calculateMora(input) {
     const owedAmount = requirePositive(input.owedAmount, "Indica una cantidad salarial debida mayor que cero.");
     const dueDate = requireValidDate(input.dueDate, "Indica una fecha de vencimiento válida.");
@@ -385,6 +450,44 @@
     `);
   }
 
+  function renderEmbargoability(data, result) {
+    const calculation = calculateEmbargoability(data);
+    const reductionLabel = calculation.familyReduction
+      ? `${numberFormatter.format(calculation.familyReduction)} puntos menos en los cuatro primeros tramos`
+      : "No aplicada";
+    const breakdown = calculation.breakdown.length
+      ? calculation.breakdown
+          .map((item) =>
+            metric(
+              item.label,
+              `${formatCurrency(item.trancheAmount)} x ${formatPercent(item.appliedRate)} = ${formatCurrency(item.withheld)}`
+            )
+          )
+          .join("")
+      : metric("Escala aplicada", "Todo el ingreso queda dentro del tramo inembargable");
+    const title = calculation.fullyProtected ? "Ingreso íntegramente protegido" : "Máximo embargable orientativo";
+    const maintenanceNote =
+      calculation.debtType === "maintenance"
+        ? '<p class="calc-warning">Has marcado alimentos o pensión alimenticia. En ese caso el artículo 608 LEC permite apartarse de esta escala y el juzgado puede fijar otra retención.</p>'
+        : "";
+
+    renderResult(result, `
+      <div class="result-main ${calculation.fullyProtected ? "is-positive" : ""}">
+        <span>${title}</span>
+        <strong>${formatCurrency(calculation.embargoAmount)}</strong>
+      </div>
+      ${maintenanceNote}
+      <div class="calc-metric-grid">
+        ${metric("Ingreso computado", formatCurrency(calculation.totalIncome))}
+        ${metric("Tramo inembargable", formatCurrency(calculation.protectedAmount))}
+        ${metric("Te quedaría", formatCurrency(calculation.remainingAfterEmbargo))}
+        ${metric("Rebaja familiar", reductionLabel)}
+        ${breakdown}
+      </div>
+      <p class="calc-disclaimer">Se usa el SMI mensual de 2026, ${formatCurrency(SMI_2026.monthly)}, y la escala del artículo 607 LEC. Si hay varias percepciones periódicas deben acumularse y solo se descuenta una vez la parte inembargable.</p>
+    `);
+  }
+
   function renderMora(data, result) {
     const calculation = calculateMora(data);
 
@@ -422,6 +525,7 @@
     bindForm("dismissal-form", "dismissal-result", renderDismissal);
     bindForm("settlement-form", "settlement-result", renderSettlement);
     bindForm("smi-form", "smi-result", renderSmi);
+    bindForm("embargo-form", "embargo-result", renderEmbargoability);
     bindForm("mora-form", "mora-result", renderMora);
   }
 
@@ -430,6 +534,7 @@
     calculateDismissal,
     calculateSettlement,
     calculateSmi,
+    calculateEmbargoability,
     calculateMora,
     parseSpanishNumber,
     formatCurrency

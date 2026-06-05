@@ -510,6 +510,10 @@ textarea:focus {
   gap: 16px;
 }
 
+.field-span-2 {
+  grid-column: 1 / -1;
+}
+
 .service-tabs {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -1168,6 +1172,19 @@ button,
   background: #fff7f5;
   color: #5a1713;
   font-weight: 700;
+}
+
+.calc-warning {
+  margin: 0 0 16px;
+  padding: 14px 16px;
+  border: 1px solid rgba(207, 155, 52, 0.35);
+  border-left: 4px solid var(--amber);
+  border-radius: var(--radius-sm);
+  background: var(--amber-light);
+  color: #4a3510;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  font-weight: 650;
 }
 
 .result-main {
