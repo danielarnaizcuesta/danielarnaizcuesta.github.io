@@ -650,7 +650,7 @@ function setLinks(summary, data, evidence = null) {
     (evidence ? `Referencia: ${evidence.reference}\n` : "") +
     "Quedo a la espera de que contactes conmigo. ¡Un saludo!";
 
-  whatsappLink.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessage)}`;
+  whatsappLink.href = `https://wa.me/${WHATSAPP_NUMBER}`;
 }
 
 function showResult(summary, data, evidence = null) {
