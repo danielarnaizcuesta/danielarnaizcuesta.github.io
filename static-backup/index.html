@@ -68,7 +68,7 @@
             "name": "¿Hay provisión de fondos?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Trabajamos con precio cerrado y pago posterior: redacción de papeleta por 120 euros IVA incluido, representación en conciliación por 200 euros IVA incluido, demanda laboral con solicitud de justicia gratuita por 220 euros IVA incluido, denuncia ante Inspección de Trabajo por 80 euros IVA incluido y gestión extrajudicial bancaria por 180 euros IVA incluido."
+              "text": "Si. Se solicita provision de fondos previa para iniciar el servicio, abonable por Bizum o PayPal/tarjeta. La redaccion de papeleta cuesta 120 euros IVA incluido, la representacion en conciliacion 200 euros IVA incluido, la demanda laboral con solicitud de justicia gratuita 220 euros IVA incluido, la denuncia ante Inspeccion de Trabajo 80 euros IVA incluido y la gestion extrajudicial bancaria 180 euros IVA incluido."
             }
           },
           {
@@ -110,7 +110,7 @@
       <section class="workbench" id="contratar" aria-labelledby="page-title">
         <div class="workbench-copy">
           <p class="overline">Papeletas laborales, demandas, Inspección y acuerdos bancarios</p>
-          <h1 id="page-title">Precio cerrado y pago posterior al servicio</h1>
+          <h1 id="page-title">Precio cerrado y provision de fondos para empezar</h1>
           <p class="lead">
             Si te han despedido, te deben cantidades, necesitas una papeleta, una demanda con justicia gratuita,
             denunciar hechos ante Inspección o negociar un préstamo abusivo, preparo la documentación para que no improvises ni pierdas fuerza.
@@ -188,7 +188,8 @@
             <p class="overline">Contratación digital</p>
             <h2>Empezar con tu caso</h2>
             <p>
-              Rellena tus datos, revisa la hoja de encargo y firma electrónicamente. Si el asunto es urgente,
+              Rellena tus datos, revisa la hoja de encargo y firma electrónicamente. La provision de fondos se
+              abona en la propia web y el encargo se activa tras su confirmacion. Si el asunto es urgente,
               escribe también por WhatsApp para priorizar la revisión inicial.
             </p>
           </div>
@@ -297,8 +298,7 @@
           <section class="price-box">
             <h3 id="price-box-title">Precio cerrado: 120,00 € IVA incluido</h3>
             <p>
-              <strong id="preview-price">120,00 € IVA incluido</strong>. <span id="price-box-description">Pago posterior por transferencia
-              o Bizum una vez redactada la papeleta.</span>
+              <strong id="preview-price">120,00 € IVA incluido</strong>. <span id="price-box-description">Provision de fondos previa por Bizum o PayPal/tarjeta antes de iniciar la redaccion.</span>
             </p>
           </section>
 
@@ -320,7 +320,7 @@
               <p><strong>Servicio contratado:</strong> <span id="preview-service-title">Papeleta de conciliación laboral</span> contra la empresa <strong id="preview-empresa">____________________</strong>.</p>
               <p><strong>1. OBJETO DEL ENCARGO:</strong> <span id="preview-object">El Cliente encarga al profesional la redacción de una papeleta de conciliación laboral frente a la empresa ____________________. El servicio es documental y válido para asuntos de trabajadores en España. Presentación, representación presencial y asistencia al acto de conciliación se contratan aparte.</span></p>
               
-              <p><strong>2. PRECIO, PAGO Y FACTURACIÓN:</strong> El precio cerrado del servicio es de <span id="preview-price-contract">120,00 € IVA incluido</span>. La aportación de los datos solicitados es obligatoria para la ejecución del encargo y su facturación. El pago se realiza por transferencia o Bizum una vez prestado el servicio. La factura correspondiente se emitirá de conformidad con la normativa de facturación vigente.</p>
+              <p><strong>2. PRECIO, PAGO Y FACTURACIÓN:</strong> El precio cerrado del servicio es de <span id="preview-price-contract">120,00 € IVA incluido</span>. La aportación de los datos solicitados es obligatoria para la ejecución del encargo y su facturación. La provision de fondos previa se abona por Bizum o PayPal/tarjeta para iniciar el encargo. La factura correspondiente se emitirá de conformidad con la normativa de facturación vigente.</p>
               
               <p><strong>3. DESISTIMIENTO E INICIO DEL SERVICIO:</strong> El Cliente tiene derecho a desistir del presente contrato en un plazo de 14 días naturales sin necesidad de justificación. Si marca voluntariamente la casilla opcional de inicio inmediato, solicita y autoriza expresamente el inicio de las gestiones antes de que expire dicho plazo. En tal caso, si desiste posteriormente, deberá abonar la parte proporcional de las gestiones efectivamente realizadas hasta la comunicación del desistimiento, extinguiéndose dicho derecho si el servicio ha sido completamente ejecutado por el profesional.</p>
               
@@ -331,15 +331,11 @@
           </div>
 
           <fieldset id="payment-method-fieldset" style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
-            <legend>Método de pago</legend>
-            <div class="service-tabs" role="tablist" aria-label="Método de pago" style="grid-template-columns: repeat(3, minmax(0, 1fr));">
-              <label class="service-tab" role="tab" aria-selected="true" data-payment-tab="deferred">
-                <input type="radio" name="metodoPago" value="deferred" checked />
-                <span>Pago posterior</span>
-              </label>
-              <label class="service-tab" role="tab" aria-selected="false" data-payment-tab="bizum">
-                <input type="radio" name="metodoPago" value="bizum" />
-                <span>Bizum inmediato</span>
+            <legend>Provisión de fondos</legend>
+            <div class="service-tabs" role="tablist" aria-label="Método de pago" style="grid-template-columns: repeat(2, minmax(0, 1fr));">
+              <label class="service-tab" role="tab" aria-selected="true" data-payment-tab="bizum">
+                <input type="radio" name="metodoPago" value="bizum" checked />
+                <span>Bizum</span>
               </label>
               <label class="service-tab" role="tab" aria-selected="false" data-payment-tab="paypal">
                 <input type="radio" name="metodoPago" value="paypal" />
@@ -347,13 +343,13 @@
               </label>
             </div>
             <p class="form-note" id="payment-method-note" style="margin-top: 0.8rem; text-align: left; color: var(--muted); font-size: 0.85rem;">
-              Pago posterior al servicio por Bizum o transferencia bancaria.
+              La provisión de fondos previa es obligatoria para iniciar el servicio.
             </p>
             
             <div id="bizum-payment-panel" style="display: none; margin-top: 1rem; padding: 16px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--wash); gap: 16px; flex-direction: column;">
               <div style="border-left: 4px solid var(--primary); padding-left: 12px; font-size: 0.9rem; color: var(--ink);">
                 <p style="margin-bottom: 6px;"><strong>Instrucciones de pago por Bizum:</strong></p>
-                <p>Realiza un Bizum de <strong id="bizum-amount-text">120,00 € IVA incluido</strong> al número de Daniel: <strong>615 860 227</strong> indicando tu nombre completo en el concepto.</p>
+                <p>Realiza un Bizum de <strong id="bizum-amount-text">120,00 € IVA incluido</strong> al número de Daniel: <strong>615 860 227</strong> como provisión de fondos e indicando tu nombre completo en el concepto.</p>
               </div>
               <div class="field-grid" style="grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 8px;">
                 <label style="font-size: 0.85rem;">
@@ -373,7 +369,7 @@
             <label class="check-row">
               <input name="aceptaCondiciones" required type="checkbox" />
               <span>
-                Acepto las <a href="aviso-legal.html" target="_blank" rel="noreferrer">condiciones del servicio</a>, la <a href="privacidad.html" target="_blank" rel="noreferrer">política de privacidad</a>, el precio cerrado de <span id="preview-price-conditions">120,00 € IVA incluido</span> y el pago una vez prestado el servicio.
+                Acepto las <a href="aviso-legal.html" target="_blank" rel="noreferrer">condiciones del servicio</a>, la <a href="privacidad.html" target="_blank" rel="noreferrer">política de privacidad</a>, el precio cerrado de <span id="preview-price-conditions">120,00 € IVA incluido</span> y la provision de fondos previa para iniciar el servicio.
               </span>
             </label>
             <label class="check-row">
@@ -384,12 +380,9 @@
             </label>
           </fieldset>
 
-          <div class="form-actions" id="standard-submit-actions">
-            <button class="primary" type="submit">Contratar redacción de papeleta por 120 €</button>
-          </div>
 
           <div class="form-actions" id="bizum-submit-actions" style="display: none; flex-direction: column; width: 100%; gap: 12px; margin-top: 8px;">
-            <button class="primary" type="submit" id="bizum-submit-button">Confirmar Bizum y Enviar por 120 €</button>
+            <button class="primary" type="submit" id="bizum-submit-button">Confirmar Bizum y formalizar por 120 €</button>
           </div>
 
           <div class="form-actions" id="paypal-submit-actions" style="display: none; flex-direction: column; width: 100%; gap: 12px; margin-top: 8px;">
@@ -404,7 +397,7 @@
           <p class="overline" id="result-overline">Contrato Digital</p>
           <h2 id="result-title">Contrato Formalizado con Éxito</h2>
           <p id="result-desc">
-            El contrato se ha firmado electrónicamente de forma segura y se ha transmitido al profesional para iniciar las gestiones de inmediato.<br><br>Por favor, <strong>descarga tu copia en PDF</strong> a continuación para conservarla en tus archivos personales. Daniel contactará contigo a la mayor brevedad.
+            El contrato se ha firmado electrónicamente de forma segura y la provision de fondos ha quedado registrada.<br><br>Por favor, <strong>descarga tu copia en PDF</strong> a continuación para conservarla en tus archivos personales. Si has elegido Bizum, el inicio quedara validado al comprobar el abono.
           </p>
           <div class="result-actions" style="justify-content: center; margin-top: 2rem;">
             <button class="primary" id="download-button" type="button">Descargar mi copia (PDF)</button>
@@ -435,7 +428,7 @@
                 <li>Representación voluntaria presencial según comunidad disponible.</li>
                 <li>Actualmente disponible solo en la Comunidad de Madrid.</li>
                 <li>Preparación de posición negociadora y límites antes de acudir al acto.</li>
-                <li>Precio cerrado de 200 € IVA incluido, con pago posterior al servicio.</li>
+                <li>Precio cerrado de 200 € IVA incluido, con provision de fondos previa antes de iniciar el trabajo.</li>
               </ul>
             </article>
             <article>
@@ -445,7 +438,7 @@
                 <li>Preparación de solicitud de asistencia jurídica gratuita o abogado de oficio.</li>
                 <li>Revisión de papeleta, acta de conciliación, hechos, documentos y cantidades.</li>
                 <li>La intervención judicial posterior corresponde al profesional elegido o designado.</li>
-                <li>Precio cerrado de 220 € IVA incluido, con pago posterior al servicio.</li>
+                <li>Precio cerrado de 220 € IVA incluido, con provision de fondos previa antes de iniciar el trabajo.</li>
               </ul>
             </article>
             <article>
@@ -635,7 +628,7 @@
             </details>
             <details>
               <summary>¿Cuándo pago?</summary>
-              <p>Trabajamos con precio cerrado y pago posterior. La papeleta laboral cuesta 120,00 € IVA incluido, la representación en conciliación 200,00 € IVA incluido, la demanda laboral con solicitud de justicia gratuita 220,00 € IVA incluido, la denuncia ante Inspección de Trabajo 80,00 € IVA incluido y la gestión extrajudicial bancaria 180,00 € IVA incluido.</p>
+              <p>Antes de iniciar el expediente se abona una provision de fondos por Bizum o PayPal/tarjeta. La papeleta laboral cuesta 120,00 € IVA incluido, la representación en conciliación 200,00 € IVA incluido, la demanda laboral con solicitud de justicia gratuita 220,00 € IVA incluido, la denuncia ante Inspección de Trabajo 80,00 € IVA incluido y la gestión extrajudicial bancaria 180,00 € IVA incluido.</p>
             </details>
             <details>
               <summary>¿Qué incluye la demanda laboral?</summary>

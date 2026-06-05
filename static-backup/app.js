@@ -43,7 +43,7 @@ function loadPayPalSDK(clientId, callback) {
   };
   script.onerror = () => {
     console.error("No se pudo cargar el SDK de PayPal.");
-    alert("Error al cargar la pasarela de PayPal. Por favor, selecciona Pago posterior o inténtalo más tarde.");
+    alert("Error al cargar la pasarela de PayPal. Por favor, selecciona Bizum o intentalo mas tarde.");
   };
   document.head.appendChild(script);
 }
@@ -69,7 +69,7 @@ const SERVICES = {
     priceShort: "120",
     paypalAmount: "120.00",
     buttonText: "Contratar redaccion de papeleta por 120 €",
-    priceDescription: "Pago posterior por transferencia o Bizum una vez redactada la papeleta.",
+    priceDescription: "Provision de fondos previa por Bizum o PayPal/tarjeta antes de iniciar la redaccion.",
     filenameSlug: "papeleta-conciliacion",
     serviceZone: "Espana. Servicio documental de redaccion de papeleta de conciliacion laboral para que el Cliente la presente ante el organo administrativo competente.",
     previewZone: "Espana. Redaccion documental de papeleta de conciliacion laboral. Representacion y asistencia presencial se contratan aparte.",
@@ -90,7 +90,7 @@ const SERVICES = {
     priceShort: "200",
     paypalAmount: "200.00",
     buttonText: "Contratar revision y SMAC por 200 €",
-    priceDescription: "Pago posterior por transferencia o Bizum una vez prestado el servicio.",
+    priceDescription: "Provision de fondos previa por Bizum o PayPal/tarjeta antes de iniciar la preparacion y la representacion.",
     filenameSlug: "smac",
     requiresRepresentationRegion: true,
     serviceZone: REPRESENTATION_REGIONS.madrid.serviceZone,
@@ -112,7 +112,7 @@ const SERVICES = {
     priceShort: "80",
     paypalAmount: "80.00",
     buttonText: "Contratar denuncia a Inspeccion por 80 €",
-    priceDescription: "Pago posterior por transferencia o Bizum una vez preparada o presentada la denuncia.",
+    priceDescription: "Provision de fondos previa por Bizum o PayPal/tarjeta antes de preparar o presentar la denuncia.",
     filenameSlug: "denuncia-inspeccion-trabajo",
     serviceZone: "Espana. Servicio documental de preparacion y, cuando proceda, presentacion telematica de denuncia ante la Inspeccion de Trabajo y Seguridad Social.",
     previewZone: "Servicio documental de preparacion y, cuando proceda, presentacion administrativa ante la Inspeccion de Trabajo y Seguridad Social.",
@@ -133,7 +133,7 @@ const SERVICES = {
     priceShort: "180",
     paypalAmount: "180.00",
     buttonText: "Contratar gestion bancaria por 180 €",
-    priceDescription: "Pago posterior por transferencia o Bizum una vez preparada la reclamacion o propuesta extrajudicial.",
+    priceDescription: "Provision de fondos previa por Bizum o PayPal/tarjeta antes de preparar la reclamacion o propuesta extrajudicial.",
     filenameSlug: "gestion-extrajudicial-bancaria",
     serviceZone: "Espana. Servicio documental y de gestion extrajudicial para consumidores sobre prestamos, creditos o tarjetas con posibles intereses o condiciones abusivas.",
     previewZone: "Espana. Gestion extrajudicial bancaria para consumidores centrada en reclamacion y propuesta de acuerdo.",
@@ -154,7 +154,7 @@ const SERVICES = {
     priceShort: "220",
     paypalAmount: "220.00",
     buttonText: "Contratar demanda y justicia gratuita por 220 €",
-    priceDescription: "Pago posterior por transferencia o Bizum una vez preparada la demanda y la solicitud.",
+    priceDescription: "Provision de fondos previa por Bizum o PayPal/tarjeta antes de preparar la demanda y la solicitud.",
     filenameSlug: "demanda-justicia-gratuita",
     serviceZone: "Espana. Servicio documental de redaccion de demanda laboral y preparacion de solicitud de asistencia juridica gratuita o abogado de oficio.",
     previewZone: "Espana. Redaccion documental de demanda laboral y solicitud de justicia gratuita. La intervencion judicial posterior corresponde al profesional designado o elegido.",
@@ -471,7 +471,7 @@ function buildSummary(data, paymentInfo = null) {
   } else if (paymentInfo && paymentInfo.method === "bizum") {
     pagoTexto = `El precio cerrado por la prestacion de este servicio es de ${service.price}, el cual ha sido abonado en este acto mediante Bizum inmediato desde el telefono ${paymentInfo.telefono} con el concepto "${paymentInfo.concepto}". El Profesional emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.`;
   } else {
-    pagoTexto = `El precio cerrado por la prestacion de este servicio es de ${service.price}. La aportacion de los datos solicitados por el Cliente es obligatoria para la correcta ejecucion del encargo y su facturacion. El pago se realizara mediante transferencia bancaria o Bizum una vez que el servicio haya sido prestado. El Profesional emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.`;
+    pagoTexto = `El precio cerrado por la prestacion de este servicio es de ${service.price}. La aportacion de los datos solicitados por el Cliente es obligatoria para la correcta ejecucion del encargo y su facturacion. El servicio solo se iniciara una vez confirmada la provision de fondos previa por Bizum o PayPal/Tarjeta. El Profesional emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.`;
   }
 
   return [
@@ -512,7 +512,7 @@ function buildSummary(data, paymentInfo = null) {
     `Servicio contratado: ${service.title}`,
     `Acepta condiciones de servicio, privacidad y precio cerrado de ${service.price}: ${yesNo(data, "aceptaCondiciones")}`,
     `Solicita inicio inmediato del servicio: ${yesNo(data, "inicioInmediato")}`,
-    paymentInfo ? `Metodo de Pago: Pagado mediante ${paymentInfo.method.toUpperCase()} (${paymentInfo.method === "paypal" ? "ID de Transaccion: " + paymentInfo.transactionId : "Telefono emisor: " + paymentInfo.telefono + ", Concepto: " + paymentInfo.concepto})` : "Metodo de Pago: Pago posterior (Bizum / Transferencia tras el servicio)"
+    paymentInfo ? `Metodo de Pago: Pagado mediante ${paymentInfo.method.toUpperCase()} (${paymentInfo.method === "paypal" ? "ID de Transaccion: " + paymentInfo.transactionId : "Telefono emisor: " + paymentInfo.telefono + ", Concepto: " + paymentInfo.concepto})` : "Metodo de Pago: Provision de fondos pendiente de confirmacion"
   ].join("\n");
 }
 
@@ -549,7 +549,7 @@ async function buildPayload(data, summary, contractPdf) {
       serviceZone,
       representationRegion: serviceRequiresRepresentationRegion(service) ? representationRegion.label : null,
       governingLawAndForum: "Ley espanola. Para clientes consumidores, juzgados y tribunales legalmente competentes. Cuando la competencia territorial sea legalmente disponible, fuero de Madrid.",
-      acceptedConditionsText: `Acepto las condiciones del servicio, la politica de privacidad, el precio cerrado de ${service.price} y el pago posterior una vez prestado el servicio.`,
+      acceptedConditionsText: `Acepto las condiciones del servicio, la politica de privacidad, el precio cerrado de ${service.price} y la provision de fondos previa necesaria para iniciar el servicio.`,
       immediateStartText: data.get("inicioInmediato")
         ? "Solicito el inicio inmediato de las gestiones sin esperar al plazo legal de desistimiento."
         : null,
@@ -577,7 +577,7 @@ async function buildPayload(data, summary, contractPdf) {
       service: service.matterService,
       representationRegion: serviceRequiresRepresentationRegion(service) ? representationRegion.label : null,
       price: service.price,
-      payment: "pago posterior por transferencia o Bizum una vez prestado el servicio",
+      payment: "provision de fondos previa pendiente de confirmacion por Bizum o PayPal/Tarjeta",
     },
     acceptances: {
       conditionsAndPrivacy: Boolean(data.get("aceptaCondiciones")),
@@ -661,7 +661,7 @@ function showResult(summary, data, evidence = null) {
   
   if (resultTitle && resultDesc) {
     resultTitle.textContent = "Contrato Formalizado con Exito";
-    resultDesc.innerHTML = "El contrato se ha firmado electronicamente de forma segura y se ha transmitido al profesional para iniciar las gestiones de inmediato.<br><br>Por favor, <strong>descarga tu copia en PDF</strong> a continuacion para conservarla en tus archivos personales. Daniel contactara contigo a la mayor brevedad.";
+    resultDesc.innerHTML = "El contrato se ha firmado electronicamente de forma segura y la provision de fondos ha quedado registrada.<br><br>Por favor, <strong>descarga tu copia en PDF</strong> a continuacion para conservarla en tus archivos personales. Si has elegido Bizum, el inicio quedara validado al comprobar el abono.";
   }
 
   resultSection.hidden = false;
@@ -722,9 +722,9 @@ async function processContractSubmission(paymentInfo = null) {
     let successMsg = `Contrato firmado y enviado de forma segura. ${evidenceSubject(payload.evidence)}. Hash completo guardado en el email y el manifiesto.`;
     if (paymentInfo) {
       if (paymentInfo.method === "paypal") {
-        successMsg += ` Pago por PayPal registrado.`;
+        successMsg += ` Provision de fondos por PayPal registrada.`;
       } else if (paymentInfo.method === "bizum") {
-        successMsg += ` Pago por Bizum registrado para verificación de Daniel.`;
+        successMsg += ` Provision de fondos por Bizum registrada para verificacion de Daniel.`;
       }
     }
     copyStatus.textContent = successMsg;
@@ -810,20 +810,19 @@ form.addEventListener("submit", async (event) => {
     }
 
     if (invalidFields.length > 0) {
-      copyStatus.innerHTML = `<span style='color: #d9534f; font-weight: bold;'>⚠️ Falta completar: ${invalidFields.join(", ")}.</span>`;
+      copyStatus.innerHTML = `<span style='color: #d9534f; font-weight: bold;'>Falta completar: ${invalidFields.join(", ")}.</span>`;
     }
     return;
   }
 
-  // Validación específica para Bizum inmediato
   const selectedInput = paymentInputs.find((input) => input.checked);
-  const selectedMethod = selectedInput ? selectedInput.value : "deferred";
+  const selectedMethod = selectedInput ? selectedInput.value : "bizum";
 
   if (selectedMethod === "bizum") {
     const bizumTel = form.querySelector("input[name='bizumTelefono']");
     const bizumCon = form.querySelector("input[name='bizumConcepto']");
     if (!bizumTel.value.trim() || !bizumCon.value.trim()) {
-      copyStatus.innerHTML = `<span style='color: #d9534f; font-weight: bold;'>⚠️ Falta completar: Móvil y Concepto del Bizum para verificación de Daniel.</span>`;
+      copyStatus.innerHTML = `<span style='color: #d9534f; font-weight: bold;'>Falta completar: movil y concepto del Bizum para verificar el ingreso.</span>`;
       if (!bizumTel.value.trim()) {
         bizumTel.focus();
       } else {
@@ -831,15 +830,25 @@ form.addEventListener("submit", async (event) => {
       }
       return;
     }
-    
+
     await processContractSubmission({
       method: "bizum",
       telefono: bizumTel.value.trim(),
       concepto: bizumCon.value.trim()
     });
-  } else {
-    await processContractSubmission();
+    return;
   }
+
+  if (selectedMethod === "paypal") {
+    copyStatus.innerHTML = `<span style='color: var(--primary); font-weight: bold;'>Completa la provision de fondos con el boton de PayPal o tarjeta para iniciar el servicio.</span>`;
+    const paypalContainer = document.getElementById("paypal-button-container");
+    if (paypalContainer) {
+      paypalContainer.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+    return;
+  }
+
+  copyStatus.innerHTML = `<span style='color: #d9534f; font-weight: bold;'>Completa la provision de fondos antes de iniciar el servicio.</span>`;
 });
 
 // Obtener elementos de los tabs de pago
@@ -853,7 +862,7 @@ const paymentMethodNote = document.getElementById("payment-method-note");
 
 function updatePaymentMethod() {
   const selectedInput = paymentInputs.find((input) => input.checked);
-  const selectedMethod = selectedInput ? selectedInput.value : "deferred";
+  const selectedMethod = selectedInput ? selectedInput.value : "bizum";
 
   paymentTabs.forEach((tab) => {
     const active = tab.dataset.paymentTab === selectedMethod;
@@ -861,33 +870,24 @@ function updatePaymentMethod() {
   });
 
   if (selectedMethod === "paypal") {
-    standardSubmitActions.style.display = "none";
-    bizumSubmitActions.style.display = "none";
-    paypalSubmitActions.style.display = "flex";
+    if (standardSubmitActions) standardSubmitActions.style.display = "none";
+    if (bizumSubmitActions) bizumSubmitActions.style.display = "none";
+    if (paypalSubmitActions) paypalSubmitActions.style.display = "flex";
     if (bizumPaymentPanel) bizumPaymentPanel.style.display = "none";
     if (paymentMethodNote) {
-      paymentMethodNote.textContent = "Pagas en este acto de forma segura mediante PayPal o tarjeta de débito/crédito.";
+      paymentMethodNote.textContent = "La provision de fondos se abona ahora de forma segura mediante PayPal o tarjeta.";
     }
-    
-    // Cargar SDK y renderizar botones si es necesario
+
     loadPayPalSDK(PAYPAL_CLIENT_ID, () => {
       initPayPalButtons();
     });
-  } else if (selectedMethod === "bizum") {
-    standardSubmitActions.style.display = "none";
-    paypalSubmitActions.style.display = "none";
-    bizumSubmitActions.style.display = "flex";
+  } else {
+    if (standardSubmitActions) standardSubmitActions.style.display = "none";
+    if (paypalSubmitActions) paypalSubmitActions.style.display = "none";
+    if (bizumSubmitActions) bizumSubmitActions.style.display = "flex";
     if (bizumPaymentPanel) bizumPaymentPanel.style.display = "flex";
     if (paymentMethodNote) {
-      paymentMethodNote.textContent = "Envía un Bizum al número de Daniel y completa la información de validación a continuación.";
-    }
-  } else {
-    standardSubmitActions.style.display = "flex";
-    paypalSubmitActions.style.display = "none";
-    bizumSubmitActions.style.display = "none";
-    if (bizumPaymentPanel) bizumPaymentPanel.style.display = "none";
-    if (paymentMethodNote) {
-      paymentMethodNote.textContent = "Pago posterior al servicio por Bizum o transferencia bancaria.";
+      paymentMethodNote.textContent = "La provision de fondos se abona ahora por Bizum. El servicio se inicia cuando Daniel confirme el ingreso.";
     }
   }
 }
@@ -965,7 +965,7 @@ function initPayPalButtons() {
     },
     onError: function(err) {
       console.error("PayPal Smart Buttons Error:", err);
-      alert("Se produjo un error al procesar el pago. Por favor, vuelve a intentarlo o selecciona Pago posterior.");
+      alert("Se produjo un error al procesar el pago. Por favor, vuelve a intentarlo o usa Bizum.");
     }
   }).render('#paypal-button-container');
 }
@@ -1176,7 +1176,7 @@ function updatePreview() {
     bizumAmountText.textContent = service.priceHtml;
   }
   if (bizumSubmitButton) {
-    bizumSubmitButton.textContent = `Confirmar Bizum y Enviar por ${service.priceShort} €`;
+    bizumSubmitButton.textContent = `Confirmar Bizum y formalizar por ${service.priceShort} €`;
   }
 
   if (previewNombre) {
