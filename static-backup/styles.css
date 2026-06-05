@@ -244,6 +244,18 @@ h3 {
   margin-bottom: 24px;
 }
 
+.audience-note {
+  display: inline-flex;
+  margin: 0 0 20px;
+  padding: 8px 12px;
+  border: 1px solid rgba(23, 82, 64, 0.18);
+  border-radius: var(--radius-sm);
+  background: #eef6f1;
+  color: var(--primary-dark);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
@@ -408,6 +420,13 @@ h3 {
   font-family: 'Outfit', sans-serif;
 }
 
+.hero-supporting-links {
+  margin: 6px 0 28px;
+  color: var(--muted);
+  font-size: 0.96rem;
+  font-weight: 560;
+}
+
 /* RETINA DASHBOARD DEVICE MOCKUP CONTAINER */
 .hero-art {
   width: 100%;
@@ -445,6 +464,39 @@ h3 {
   color: var(--muted);
   font-size: 0.95rem;
   line-height: 1.5;
+}
+
+.hire-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.hire-steps div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--wash);
+  color: var(--ink);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.hire-steps span {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 800;
+  flex: 0 0 auto;
 }
 
 fieldset {
@@ -1546,7 +1598,8 @@ button,
 
   .field-grid,
   .conversion-points,
-  .service-facts {
+  .service-facts,
+  .hire-steps {
     grid-template-columns: 1fr;
   }
 
@@ -1686,17 +1739,15 @@ button,
 
 .cookie-banner {
   position: fixed;
-  left: 20px;
   right: 20px;
   bottom: 20px;
   z-index: 80;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 18px;
-  align-items: center;
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: 18px;
+  width: min(420px, calc(100vw - 40px));
+  grid-template-columns: 1fr;
+  gap: 10px;
+  align-items: start;
+  padding: 14px;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   background: #ffffff;
@@ -1717,21 +1768,25 @@ button,
 .cookie-panel__header h2 {
   margin: 0;
   color: var(--primary-dark);
-  font-size: 1rem;
+  font-size: 0.92rem;
 }
 
 .cookie-banner__copy p,
 .cookie-panel p {
   margin: 0;
   color: var(--muted);
-  font-size: 0.9rem;
-  line-height: 1.45;
+  font-size: 0.82rem;
+  line-height: 1.35;
 }
 
 .cookie-banner__copy a {
   color: var(--primary);
   font-weight: 800;
   text-decoration: none;
+}
+
+.cookie-banner__actions {
+  justify-content: flex-start;
 }
 
 .cookie-banner__actions,
@@ -1746,8 +1801,8 @@ button,
 .cookie-banner__actions .secondary,
 .cookie-panel__actions .primary,
 .cookie-panel__actions .secondary {
-  min-height: 42px;
-  padding: 10px 14px;
+  min-height: 38px;
+  padding: 8px 12px;
   white-space: normal;
 }
 
@@ -1823,10 +1878,10 @@ button,
 
 @media (max-width: 780px) {
   .cookie-banner {
-    grid-template-columns: 1fr;
     left: 12px;
     right: 12px;
     bottom: 12px;
+    width: auto;
   }
 
   .cookie-banner__actions,

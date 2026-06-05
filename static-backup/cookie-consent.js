@@ -50,10 +50,10 @@ function savePreferences(preferences) {
     banner.setAttribute("aria-label", "Preferencias de cookies");
     banner.innerHTML = `
       <div class="cookie-banner__copy">
-        <h2>Cookies y privacidad</h2>
+        <h2>Cookies</h2>
         <p>
-          Usamos cookies o almacenamiento tecnico para seguridad, pagos y funcionamiento de la web.
-          Las cookies de analitica o marketing quedan desactivadas salvo que las aceptes.
+          Usamos cookies tecnicas para seguridad, pagos y funcionamiento.
+          Analitica y marketing siguen desactivadas salvo que las aceptes.
         </p>
         <a href="cookies.html">Ver politica de cookies</a>
       </div>
