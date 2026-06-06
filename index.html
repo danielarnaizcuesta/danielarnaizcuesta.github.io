@@ -22,7 +22,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js"></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -110,6 +109,43 @@
     <main>
       <!-- HERO WORKBENCH -->
       <section class="workbench" id="inicio" aria-labelledby="page-title">
+        <div class="workbench-stage" id="workbench-stage" aria-hidden="true">
+          <div class="workbench-ambient workbench-ambient-a"></div>
+          <div class="workbench-ambient workbench-ambient-b"></div>
+          <div class="workbench-grid"></div>
+          <div class="workbench-vignette"></div>
+          <div class="workbench-beam"></div>
+          <div class="scene-shell">
+            <div class="scene-floor"></div>
+            <div class="scene-axis scene-axis-x"></div>
+            <div class="scene-axis scene-axis-y"></div>
+            <div class="scene-core">
+              <div class="scene-halo scene-halo-a"></div>
+              <div class="scene-halo scene-halo-b"></div>
+              <div class="scene-orb"></div>
+              <div class="scene-ring scene-ring-a"></div>
+              <div class="scene-ring scene-ring-b"></div>
+              <div class="scene-ring scene-ring-c"></div>
+            </div>
+            <div class="scene-card scene-card-main">
+              <span class="scene-label">Caso preparado</span>
+              <strong>Hechos, importes y siguiente paso</strong>
+              <p>Una portada visual que desemboca en un alta directa con contrato y pago.</p>
+            </div>
+            <div class="scene-card scene-card-side">
+              <span class="scene-label">Contratación</span>
+              <ul class="scene-list">
+                <li>Precio cerrado</li>
+                <li>Encargo dinámico</li>
+                <li>Bizum / PayPal</li>
+              </ul>
+            </div>
+            <div class="scene-card scene-card-mini">
+              <span class="scene-metric">24h</span>
+              <span class="scene-caption">prioridad media de respuesta</span>
+            </div>
+          </div>
+        </div>
         <div class="workbench-copy">
           <p class="overline">Para trabajadores y consumidores</p>
           <h1 id="page-title">Despido, impagos o conciliación con criterio y precio cerrado</h1>
@@ -117,7 +153,7 @@
             Si tienes carta de despido, nóminas pendientes, fin de contrato o una fecha de conciliación inminente,
             analizo tus documentos, calculo las cantidades reales y preparo la estrategia para que actúes con seguridad.
           </p>
-          <p class="audience-note">Servicio documental privado para toda España. No asesoro a empresas.</p>
+          <p class="audience-note">Experiencia de entrada 3D y, al bajar, contratación inmediata. Servicio documental privado para toda España. No asesoro a empresas.</p>
           <div class="hero-actions" aria-label="Contacto rápido">
             <a class="primary" href="https://wa.me/34615860227" target="_blank" rel="noreferrer">Contar mi caso por WhatsApp</a>
             <a class="secondary" href="#alta-online">Iniciar alta online</a>
@@ -141,9 +177,7 @@
             </div>
           </div>
         </div>
-        <div class="workbench-visual">
-          <spline-viewer url="https://prod.spline.design/UWoeqiir20o49Dah/scene.splinecode"></spline-viewer>
-        </div>
+        <a class="hero-scroll" href="#alta-online">Bajar a contratación</a>
       </section>
 
       <!-- SECCIÓN DE ALTA ONLINE Y FORMULARIO -->
