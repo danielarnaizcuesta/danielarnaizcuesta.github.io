@@ -735,6 +735,18 @@ textarea:focus {
   margin-bottom: 12px;
 }
 
+.precontract-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 12px;
+  font-size: 0.9rem;
+}
+
+.precontract-links a {
+  font-weight: 700;
+}
+
 .contract-container {
   margin-top: 4px;
 }
