@@ -444,6 +444,13 @@ h3 {
   font-family: 'Outfit', sans-serif;
 }
 
+.hero-tail-note {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
 .hero-supporting-links {
   margin: 6px 0 28px;
   color: var(--muted);
@@ -1801,6 +1808,10 @@ button,
 
   .service-facts strong {
     font-size: 1rem;
+  }
+
+  .hero-tail-note {
+    font-size: 0.84rem;
   }
 
   .hire-panel {
