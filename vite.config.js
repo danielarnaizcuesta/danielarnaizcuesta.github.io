@@ -6,6 +6,7 @@ const pages = [
   "index",
   "calculadoras",
   "modelos",
+  "enlaces",
   "aviso-legal",
   "privacidad",
   "cookies",
