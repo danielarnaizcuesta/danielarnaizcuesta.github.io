@@ -723,18 +723,6 @@ textarea:focus {
   padding: 16px;
 }
 
-.precontract-details summary {
-  cursor: pointer;
-  font-family: 'Outfit', sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--primary-dark);
-}
-
-.precontract-details[open] summary {
-  margin-bottom: 12px;
-}
-
 .precontract-links {
   display: flex;
   flex-wrap: wrap;
