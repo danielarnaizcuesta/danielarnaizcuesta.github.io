@@ -63,7 +63,7 @@ const SERVICES = {
   papeleta: {
     title: "Redaccion de papeleta de conciliacion laboral",
     titleHtml: "Papeleta de conciliacion laboral",
-    previewHeading: "HOJA DE ENCARGO - REDACCION DE PAPELETA",
+    previewHeading: "SOLICITUD DE ENCARGO - REDACCION DE PAPELETA",
     previewServiceLine(employer) {
       return `Papeleta de conciliacion laboral frente a la empresa ${employer}.`;
     },
@@ -87,7 +87,7 @@ const SERVICES = {
   smac: {
     title: "Papeleta, preparacion y representacion voluntaria en conciliacion laboral",
     titleHtml: "Representacion en conciliacion laboral",
-    previewHeading: "HOJA DE ENCARGO - REPRESENTACION EN CONCILIACION",
+    previewHeading: "SOLICITUD DE ENCARGO - REPRESENTACION EN CONCILIACION",
     price: "200,00 EUR IVA incluido",
     priceHtml: "200,00 € IVA incluido",
     priceShort: "200",
@@ -112,7 +112,7 @@ const SERVICES = {
   inspeccion: {
     title: "Denuncia ante Inspeccion de Trabajo y Seguridad Social",
     titleHtml: "Denuncia ante Inspeccion de Trabajo",
-    previewHeading: "HOJA DE ENCARGO - DENUNCIA A INSPECCION DE TRABAJO",
+    previewHeading: "SOLICITUD DE ENCARGO - DENUNCIA A INSPECCION DE TRABAJO",
     price: "80,00 EUR IVA incluido",
     priceHtml: "80,00 € IVA incluido",
     priceShort: "80",
@@ -136,7 +136,7 @@ const SERVICES = {
   bancario: {
     title: "Gestion extrajudicial bancaria sobre prestamos o creditos abusivos",
     titleHtml: "Gestion extrajudicial bancaria",
-    previewHeading: "HOJA DE ENCARGO - GESTION EXTRAJUDICIAL BANCARIA",
+    previewHeading: "SOLICITUD DE ENCARGO - GESTION EXTRAJUDICIAL BANCARIA",
     price: "180,00 EUR IVA incluido",
     priceHtml: "180,00 € IVA incluido",
     priceShort: "180",
@@ -466,7 +466,7 @@ function buildSummary(data, paymentInfo = null) {
   }
 
   return [
-    "CONTRATO DE PRESTACION DE SERVICIOS - HOJA DE ENCARGO",
+    "SOLICITUD DE CONTRATACION DE SERVICIOS - HOJA DE ENCARGO",
     `Servicio contratado: ${service.title}`,
     ...representationRegionLine,
     "",
@@ -479,7 +479,7 @@ function buildSummary(data, paymentInfo = null) {
     "",
     `De otra parte, como cliente, en adelante designado como el Cliente: Nombre y apellidos: ${valueOf(data, "nombre")}, con DNI o NIE o Pasaporte: ${valueOf(data, "dni")}, correo electronico: ${valueOf(data, "email")}, telefono: ${valueOf(data, "telefono") || "No indicado"} y domicilio en: ${domicilioCompleto}.`,
     "",
-    "El Profesional y el Cliente, reconociendose la capacidad legal necesaria, acuerdan formalizar el presente contrato de conformidad con las siguientes",
+    "El Cliente formula la presente solicitud de contratacion, que solo quedara aceptada por el Profesional cuando este la confirme expresamente tras revisar la viabilidad del encargo, de conformidad con las siguientes",
     "",
     "ESTIPULACIONES:",
     "",
@@ -490,19 +490,20 @@ function buildSummary(data, paymentInfo = null) {
     pagoTexto,
     "",
     "3. DERECHO DE DESISTIMIENTO E INICIO DEL SERVICIO",
-    `El Cliente tiene derecho a desistir del presente contrato en un plazo de 14 dias naturales sin necesidad de justificacion. ${inicioInmediatoTexto}`,
+    `Si el Profesional acepta la solicitud, el Cliente tendra derecho a desistir del contrato en el plazo legal aplicable. ${inicioInmediatoTexto}`,
     "",
     "4. LUGAR, FECHA, ZONA DE PRESTACION Y FUERO",
     `El presente contrato se celebra en Madrid en la fecha y hora indicadas. La zona geografica de prestacion del servicio es: ${serviceZone} Este contrato se rige por la legislacion espanola. Para clientes que tengan la consideracion de consumidores, seran competentes los juzgados y tribunales que correspondan segun la normativa aplicable. En caso de que la competencia territorial sea legalmente disponible, ambas partes se someten expresamente a los juzgados y tribunales de la ciudad de Madrid.`,
     "",
-    "5. FIRMA Y ACEPTACION ELECTRONICA",
-    "La contratacion queda formalizada y perfeccionada mediante la cumplimentacion y envio de la solicitud web cifrada y el marcado electronico de las casillas obligatorias de lectura de la informacion precontractual y de aceptacion de condiciones, politica de privacidad y precio.",
+    "5. SOLICITUD Y ACEPTACION ELECTRONICA",
+    "La cumplimentacion y envio de la solicitud web cifrada constituye una solicitud de contratacion del Cliente. El encargo solo quedara perfeccionado cuando el Profesional confirme expresamente su aceptacion tras revisar la documentacion y la viabilidad temporal del asunto.",
     "",
-    "ACEPTACION ELECTRONICA:",
+    "DECLARACIONES ELECTRONICAS DEL CLIENTE:",
     `Firmado electronicamente por el Cliente: ${valueOf(data, "nombre")}`,
     `Servicio contratado: ${service.title}`,
     `Confirma haber leido la informacion precontractual y la hoja de encargo: ${yesNo(data, "leeInfoPrecontractual")}`,
     `Acepta condiciones de servicio, privacidad y precio cerrado de ${service.price}: ${yesNo(data, "aceptaCondiciones")}`,
+    `Declara que existe al menos un plazo razonable de tres dias habiles sin prescripcion o caducidad inminente: ${yesNo(data, "declaraPlazoRazonable")}`,
     `Solicita inicio inmediato del servicio: ${yesNo(data, "inicioInmediato")}`,
     paymentInfo ? `Metodo de Pago: Pagado mediante ${paymentInfo.method.toUpperCase()} (${paymentInfo.method === "paypal" ? "ID de Transaccion: " + paymentInfo.transactionId : "Telefono emisor: " + paymentInfo.telefono + ", Concepto: " + paymentInfo.concepto})` : "Metodo de Pago: Provision de fondos pendiente de confirmacion"
   ].join("\n");
@@ -543,6 +544,7 @@ async function buildPayload(data, summary, contractPdf) {
       governingLawAndForum: "Ley espanola. Para clientes consumidores, juzgados y tribunales legalmente competentes. Cuando la competencia territorial sea legalmente disponible, fuero de Madrid.",
       precontractualReadText: "Confirmo que he leido la informacion precontractual, la hoja de encargo y las condiciones del servicio.",
       acceptedConditionsText: `Acepto las condiciones del servicio, la politica de privacidad, el precio cerrado de ${service.price} y la provision de fondos previa necesaria para iniciar el servicio.`,
+      reasonableTimeDeclarationText: "Declaro que existe al menos un plazo razonable de tres dias habiles para el estudio del caso, sin prescripcion o caducidad inminente.",
       immediateStartText: data.get("inicioInmediato")
         ? "Solicito el inicio inmediato de las gestiones sin esperar al plazo legal de desistimiento."
         : null,
@@ -575,6 +577,7 @@ async function buildPayload(data, summary, contractPdf) {
     acceptances: {
       precontractualRead: Boolean(data.get("leeInfoPrecontractual")),
       conditionsAndPrivacy: Boolean(data.get("aceptaCondiciones")),
+      reasonableTimeDeclaration: Boolean(data.get("declaraPlazoRazonable")),
       immediateStart: Boolean(data.get("inicioInmediato")),
     },
   };
@@ -638,7 +641,7 @@ async function sendEncryptedSubmission(encryptedSubmission, evidence) {
 function setLinks(summary, data, evidence = null) {
   const service = selectedServiceFromData(data);
   const waMessage =
-    "*Contrato Formalizado*\n\n" +
+    "*Solicitud de contratacion enviada*\n\n" +
     `Hola Daniel, acabo de formalizar el contrato desde la web.\n\n` +
     `Servicio: ${service.title}\n` +
     (evidence ? `Referencia: ${evidence.reference}\n` : "") +
@@ -654,8 +657,8 @@ function showResult(summary, data, evidence = null) {
   const resultDesc = document.getElementById("result-desc");
   
   if (resultTitle && resultDesc) {
-    resultTitle.textContent = "Contrato Formalizado con Exito";
-    resultDesc.innerHTML = "El contrato se ha firmado electronicamente de forma segura y la provision de fondos ha quedado registrada.<br><br>Por favor, <strong>descarga tu copia en PDF</strong> a continuacion para conservarla en tus archivos personales. Si has elegido Bizum, el inicio quedara validado al comprobar el abono.";
+    resultTitle.textContent = "Solicitud enviada con Exito";
+    resultDesc.innerHTML = "La solicitud se ha firmado electronicamente de forma segura y la provision de fondos ha quedado registrada o preparada segun el metodo elegido.<br><br>Por favor, <strong>descarga tu copia en PDF</strong> para conservarla. El encargo solo quedara aceptado cuando Daniel confirme expresamente su aceptacion.";
   }
 
   resultSection.hidden = false;
@@ -672,7 +675,7 @@ async function processContractSubmission(paymentInfo = null) {
   const originalText = submitButton.textContent;
 
   submitButton.disabled = true;
-  submitButton.textContent = "Firmando y enviando contrato...";
+  submitButton.textContent = "Firmando y enviando solicitud...";
 
   // Si se paga por PayPal o Bizum, mostramos estados e indicadores de carga
   const paypalContainer = document.getElementById("paypal-button-container");
@@ -687,9 +690,9 @@ async function processContractSubmission(paymentInfo = null) {
       bizumPanel.style.opacity = "0.7";
     }
     if (paymentInfo.method === "paypal") {
-      copyStatus.innerHTML = `<span style='color: var(--primary); font-weight: bold;'>⏳ Pago de ${service.price} autorizado (Transacción: ${paymentInfo.transactionId}). Firmando y registrando contrato...</span>`;
+      copyStatus.innerHTML = `<span style='color: var(--primary); font-weight: bold;'>⏳ Pago de ${service.price} autorizado (Transaccion: ${paymentInfo.transactionId}). Firmando y registrando solicitud...</span>`;
     } else if (paymentInfo.method === "bizum") {
-      copyStatus.innerHTML = `<span style='color: var(--primary); font-weight: bold;'>⏳ Bizum registrado (Móvil: ${paymentInfo.telefono}). Firmando y formalizando contrato...</span>`;
+      copyStatus.innerHTML = `<span style='color: var(--primary); font-weight: bold;'>⏳ Bizum registrado (Movil: ${paymentInfo.telefono}). Firmando y registrando solicitud...</span>`;
     }
   }
 
@@ -713,7 +716,7 @@ async function processContractSubmission(paymentInfo = null) {
     showResult(summary, data, payload.evidence);
     downloadCachedPdf();
     
-    let successMsg = `Contrato firmado y enviado de forma segura. ${evidenceSubject(payload.evidence)}. Hash completo guardado en el email y el manifiesto.`;
+    let successMsg = `Solicitud firmada y enviada de forma segura. ${evidenceSubject(payload.evidence)}. Hash completo guardado en el email y el manifiesto.`;
     if (paymentInfo) {
       if (paymentInfo.method === "paypal") {
         successMsg += ` Provision de fondos por PayPal registrada.`;
@@ -723,7 +726,7 @@ async function processContractSubmission(paymentInfo = null) {
     }
     copyStatus.textContent = successMsg;
     
-    submitButton.textContent = "Contrato firmado y enviado";
+    submitButton.textContent = "Solicitud firmada y enviada";
     submitButton.style.backgroundColor = "var(--primary)";
     submitButton.style.borderColor = "var(--primary)";
   } catch (error) {
@@ -791,7 +794,8 @@ form.addEventListener("submit", async (event) => {
       provincia: "Provincia",
       empresa: "Empresa a reclamar",
       leeInfoPrecontractual: "Leer informacion precontractual",
-      aceptaCondiciones: "Aceptar condiciones del servicio y privacidad"
+      aceptaCondiciones: "Aceptar condiciones del servicio y privacidad",
+      declaraPlazoRazonable: "Declarar plazo razonable de tres dias habiles"
     };
 
     const invalidFields = [];

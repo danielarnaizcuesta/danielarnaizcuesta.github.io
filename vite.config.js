@@ -6,6 +6,7 @@ const pages = [
   "index",
   "calculadoras",
   "modelos",
+  "justicia-gratuita",
   "enlaces",
   "aviso-legal",
   "privacidad",
