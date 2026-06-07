@@ -157,30 +157,6 @@ const SERVICES = {
       return `El Cliente encarga al profesional la preparacion documental y gestion extrajudicial frente a la entidad ${employer} por un prestamo, credito o tarjeta con posibles condiciones abusivas. El servicio trabaja una solucion negociada. Si el asunto pasa a via judicial, la intervencion posterior corresponde al profesional elegido o designado.`;
     },
   },
-  demanda: {
-    title: "Redaccion de demanda laboral y solicitud de justicia gratuita",
-    titleHtml: "Demanda y justicia gratuita",
-    previewHeading: "HOJA DE ENCARGO - DEMANDA Y JUSTICIA GRATUITA",
-    price: "220,00 EUR IVA incluido",
-    priceHtml: "220,00 € IVA incluido",
-    priceShort: "220",
-    paypalAmount: "220.00",
-    buttonText: "Contratar demanda y justicia gratuita por 220 €",
-    priceDescription: "Provision de fondos previa por Bizum o PayPal/tarjeta antes de preparar la demanda y la solicitud.",
-    filenameSlug: "demanda-justicia-gratuita",
-    serviceZone: "Espana. Servicio documental de redaccion de demanda laboral y preparacion de solicitud de asistencia juridica gratuita o abogado de oficio.",
-    previewZone: "Espana. Redaccion documental de demanda laboral y solicitud de justicia gratuita. La intervencion judicial posterior corresponde al profesional designado o elegido.",
-    matterService: "Redaccion documental de demanda laboral y solicitud de asistencia juridica gratuita o abogado de oficio",
-    previewServiceLine(employer) {
-      return `Demanda laboral frente a la empresa ${employer} y solicitud de justicia gratuita cuando proceda.`;
-    },
-    objectClause(employer) {
-      return `El Cliente encarga al Profesional la redaccion documental de una demanda laboral frente a la empresa ${employer} y la preparacion de la solicitud de asistencia juridica gratuita o abogado de oficio cuando proceda. El alcance comprende revision de papeleta y acta de conciliacion, ordenacion de hechos y documentos, cuantificacion orientativa cuando proceda, redaccion de demanda y preparacion del escrito o formulario de solicitud de justicia gratuita. La intervencion judicial posterior correspondera al abogado, graduado social o profesional que resulte designado o elegido por el Cliente.`;
-    },
-    previewObject(employer) {
-      return `El Cliente encarga al profesional la redaccion documental de una demanda laboral frente a la empresa ${employer} y la preparacion de la solicitud de asistencia juridica gratuita o abogado de oficio cuando proceda. La intervencion judicial posterior corresponde al profesional designado o elegido.`;
-    },
-  },
 };
 
 const form = document.querySelector("#hire-form");
