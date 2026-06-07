@@ -176,10 +176,10 @@ a:hover {
   position: relative;
   min-height: calc(100vh - 82px);
   margin: 0 auto;
-  padding: 80px 32px 88px;
+  padding: 72px 32px 84px;
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.82fr);
-  gap: 56px;
+  gap: 40px;
   align-items: center;
   overflow: hidden;
   isolation: isolate;
@@ -203,6 +203,7 @@ a:hover {
 }
 
 .hero-scroll {
+  position: absolute;
   left: 32px;
   bottom: 28px;
   z-index: 4;
@@ -220,13 +221,18 @@ a:hover {
   backdrop-filter: blur(14px);
 }
 
+.hero-scroll::after {
+  content: "↓";
+  font-size: 1rem;
+}
+
 .workbench-aside {
   position: relative;
   z-index: 2;
   display: grid;
   gap: 18px;
-  align-self: stretch;
-  min-height: 520px;
+  align-content: start;
+  align-self: center;
 }
 
 .aside-panel {
@@ -238,7 +244,7 @@ a:hover {
 }
 
 .aside-panel-main {
-  padding: 34px;
+  padding: 32px;
 }
 
 .aside-panel-main h2 {
@@ -1759,7 +1765,7 @@ button,
     grid-template-columns: 1fr;
     gap: 28px;
     min-height: auto;
-    padding: 48px 24px 72px;
+    padding: 48px 24px 88px;
   }
 
   .workbench-copy {
@@ -1857,7 +1863,7 @@ button,
   }
 
   .workbench {
-    padding: 40px 20px 72px;
+    padding: 40px 20px 84px;
   }
 
   .workbench-copy {
