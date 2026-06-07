@@ -64,6 +64,9 @@ const SERVICES = {
     title: "Redaccion de papeleta de conciliacion laboral",
     titleHtml: "Papeleta de conciliacion laboral",
     previewHeading: "HOJA DE ENCARGO - REDACCION DE PAPELETA",
+    previewServiceLine(employer) {
+      return `Papeleta de conciliacion laboral frente a la empresa ${employer}.`;
+    },
     price: "120,00 EUR IVA incluido",
     priceHtml: "120,00 € IVA incluido",
     priceShort: "120",
@@ -96,6 +99,9 @@ const SERVICES = {
     serviceZone: REPRESENTATION_REGIONS.madrid.serviceZone,
     previewZone: REPRESENTATION_REGIONS.madrid.previewZone,
     matterService: "Papeleta de conciliacion, presentacion y representacion voluntaria en asunto tramitable ante el organo de conciliacion disponible",
+    previewServiceLine(employer, region = REPRESENTATION_REGIONS.madrid) {
+      return `Representacion en conciliacion laboral ante ${region.organ} contra la empresa ${employer}.`;
+    },
     objectClause(employer, region = REPRESENTATION_REGIONS.madrid) {
       return `El Cliente encarga al Profesional la redaccion, presentacion de la papeleta de conciliacion laboral y la representacion voluntaria en el acto de conciliacion administrativa ante ${region.organ} contra la empresa ${employer}. El servicio se presta para asuntos tramitables en la comunidad autonoma seleccionada: ${region.label}. A tal efecto, el Cliente facilitara al Profesional la representacion necesaria, ya sea compareciendo presencialmente para otorgar dicha representacion o mediante el correspondiente poder notarial, con anterioridad a la fecha del acto de conciliacion.`;
     },
@@ -112,16 +118,19 @@ const SERVICES = {
     priceShort: "80",
     paypalAmount: "80.00",
     buttonText: "Contratar denuncia a Inspeccion por 80 €",
-    priceDescription: "Provision de fondos previa por Bizum o PayPal/tarjeta antes de preparar o presentar la denuncia.",
+    priceDescription: "Provision de fondos previa por Bizum o PayPal/tarjeta antes de preparar la denuncia.",
     filenameSlug: "denuncia-inspeccion-trabajo",
-    serviceZone: "Espana. Servicio documental de preparacion y, cuando proceda, presentacion telematica de denuncia ante la Inspeccion de Trabajo y Seguridad Social.",
-    previewZone: "Servicio documental de preparacion y, cuando proceda, presentacion administrativa ante la Inspeccion de Trabajo y Seguridad Social.",
-    matterService: "Preparacion documental y, cuando proceda, presentacion de denuncia ante la Inspeccion de Trabajo y Seguridad Social",
+    serviceZone: "Espana. Servicio documental de preparacion de denuncia ante la Inspeccion de Trabajo y Seguridad Social.",
+    previewZone: "Espana. Preparacion documental de denuncia ante la Inspeccion de Trabajo y Seguridad Social.",
+    matterService: "Preparacion documental de denuncia ante la Inspeccion de Trabajo y Seguridad Social",
+    previewServiceLine(employer) {
+      return `Denuncia ante Inspeccion de Trabajo y Seguridad Social frente a la empresa ${employer}.`;
+    },
     objectClause(employer) {
-      return `El Cliente encarga al Profesional la preparacion documental y, cuando proceda, la presentacion telematica de una denuncia ante la Inspeccion de Trabajo y Seguridad Social en relacion con hechos laborales imputables a la empresa ${employer}. El alcance comprende analisis documental inicial, ordenacion de hechos, redaccion de la denuncia y orientacion sobre la documentacion necesaria. Seguimiento posterior del expediente e intervencion en actuaciones inspectoras posteriores podran requerir un encargo expreso. La actuacion posterior corresponde a la Inspeccion de Trabajo y Seguridad Social y, si el asunto pasa a via judicial, al profesional elegido o designado.`;
+      return `El Cliente encarga al Profesional la preparacion documental de una denuncia ante la Inspeccion de Trabajo y Seguridad Social en relacion con hechos laborales imputables a la empresa ${employer}. El alcance comprende analisis documental inicial, ordenacion de hechos, redaccion de la denuncia y orientacion sobre la documentacion necesaria para su presentacion por el Cliente. Seguimiento posterior del expediente e intervencion en actuaciones inspectoras posteriores podran requerir un encargo expreso. La actuacion posterior corresponde a la Inspeccion de Trabajo y Seguridad Social y, si el asunto pasa a via judicial, al profesional elegido o designado.`;
     },
     previewObject(employer) {
-      return `El Cliente encarga al profesional la preparacion documental y, cuando proceda, la presentacion telematica de una denuncia ante la Inspeccion de Trabajo y Seguridad Social frente a la empresa ${employer}. El servicio incluye ordenar hechos, documentos y redactar la denuncia. La actuacion posterior corresponde a la Inspeccion de Trabajo y Seguridad Social.`;
+      return `El Cliente encarga al profesional la preparacion documental de una denuncia ante la Inspeccion de Trabajo y Seguridad Social frente a la empresa ${employer}. El servicio incluye ordenar hechos, documentos y redactar la denuncia para su presentacion por el Cliente. La actuacion posterior corresponde a la Inspeccion de Trabajo y Seguridad Social.`;
     },
   },
   bancario: {
@@ -138,6 +147,9 @@ const SERVICES = {
     serviceZone: "Espana. Servicio documental y de gestion extrajudicial para consumidores sobre prestamos, creditos o tarjetas con posibles intereses o condiciones abusivas.",
     previewZone: "Espana. Gestion extrajudicial bancaria para consumidores centrada en reclamacion y propuesta de acuerdo.",
     matterService: "Gestion extrajudicial bancaria para consumidores sobre prestamos, creditos o tarjetas con posibles condiciones abusivas",
+    previewServiceLine(employer) {
+      return `Gestion extrajudicial bancaria frente a la entidad ${employer}.`;
+    },
     objectClause(employer) {
       return `El Cliente encarga al Profesional la preparacion documental y gestion extrajudicial frente a la entidad ${employer} en relacion con un prestamo, credito, tarjeta u otro producto de financiacion con posibles intereses, comisiones o condiciones abusivas. El servicio puede incluir revision documental inicial, ordenacion de importes y hechos, redaccion de reclamacion extrajudicial, propuesta de acuerdo y comunicaciones orientadas a alcanzar una solucion negociada. Podra intervenir un colaborador externo de apoyo documental o negociacion bajo coordinacion del Profesional. Mediacion oficial regulada, asesoramiento financiero o de inversion y valoracion definitiva de nulidad, usura o abusividad corresponden a los cauces o profesionales competentes; si el asunto pasa a via judicial, la intervencion posterior corresponde al profesional elegido o designado y a los tribunales.`;
     },
@@ -159,6 +171,9 @@ const SERVICES = {
     serviceZone: "Espana. Servicio documental de redaccion de demanda laboral y preparacion de solicitud de asistencia juridica gratuita o abogado de oficio.",
     previewZone: "Espana. Redaccion documental de demanda laboral y solicitud de justicia gratuita. La intervencion judicial posterior corresponde al profesional designado o elegido.",
     matterService: "Redaccion documental de demanda laboral y solicitud de asistencia juridica gratuita o abogado de oficio",
+    previewServiceLine(employer) {
+      return `Demanda laboral frente a la empresa ${employer} y solicitud de justicia gratuita cuando proceda.`;
+    },
     objectClause(employer) {
       return `El Cliente encarga al Profesional la redaccion documental de una demanda laboral frente a la empresa ${employer} y la preparacion de la solicitud de asistencia juridica gratuita o abogado de oficio cuando proceda. El alcance comprende revision de papeleta y acta de conciliacion, ordenacion de hechos y documentos, cuantificacion orientativa cuando proceda, redaccion de demanda y preparacion del escrito o formulario de solicitud de justicia gratuita. La intervencion judicial posterior correspondera al abogado, graduado social o profesional que resulte designado o elegido por el Cliente.`;
     },
@@ -505,11 +520,12 @@ function buildSummary(data, paymentInfo = null) {
     `El presente contrato se celebra en Madrid en la fecha y hora indicadas. La zona geografica de prestacion del servicio es: ${serviceZone} Este contrato se rige por la legislacion espanola. Para clientes que tengan la consideracion de consumidores, seran competentes los juzgados y tribunales que correspondan segun la normativa aplicable. En caso de que la competencia territorial sea legalmente disponible, ambas partes se someten expresamente a los juzgados y tribunales de la ciudad de Madrid.`,
     "",
     "5. FIRMA Y ACEPTACION ELECTRONICA",
-    "La contratacion queda formalizada y perfeccionada mediante la cumplimentacion y envio de la solicitud web cifrada y el marcado electronico de la casilla obligatoria de aceptacion de condiciones, politica de privacidad y precio.",
+    "La contratacion queda formalizada y perfeccionada mediante la cumplimentacion y envio de la solicitud web cifrada y el marcado electronico de las casillas obligatorias de lectura de la informacion precontractual y de aceptacion de condiciones, politica de privacidad y precio.",
     "",
     "ACEPTACION ELECTRONICA:",
     `Firmado electronicamente por el Cliente: ${valueOf(data, "nombre")}`,
     `Servicio contratado: ${service.title}`,
+    `Confirma haber leido la informacion precontractual y la hoja de encargo: ${yesNo(data, "leeInfoPrecontractual")}`,
     `Acepta condiciones de servicio, privacidad y precio cerrado de ${service.price}: ${yesNo(data, "aceptaCondiciones")}`,
     `Solicita inicio inmediato del servicio: ${yesNo(data, "inicioInmediato")}`,
     paymentInfo ? `Metodo de Pago: Pagado mediante ${paymentInfo.method.toUpperCase()} (${paymentInfo.method === "paypal" ? "ID de Transaccion: " + paymentInfo.transactionId : "Telefono emisor: " + paymentInfo.telefono + ", Concepto: " + paymentInfo.concepto})` : "Metodo de Pago: Provision de fondos pendiente de confirmacion"
@@ -549,6 +565,7 @@ async function buildPayload(data, summary, contractPdf) {
       serviceZone,
       representationRegion: serviceRequiresRepresentationRegion(service) ? representationRegion.label : null,
       governingLawAndForum: "Ley espanola. Para clientes consumidores, juzgados y tribunales legalmente competentes. Cuando la competencia territorial sea legalmente disponible, fuero de Madrid.",
+      precontractualReadText: "Confirmo que he leido la informacion precontractual, la hoja de encargo y las condiciones del servicio.",
       acceptedConditionsText: `Acepto las condiciones del servicio, la politica de privacidad, el precio cerrado de ${service.price} y la provision de fondos previa necesaria para iniciar el servicio.`,
       immediateStartText: data.get("inicioInmediato")
         ? "Solicito el inicio inmediato de las gestiones sin esperar al plazo legal de desistimiento."
@@ -580,6 +597,7 @@ async function buildPayload(data, summary, contractPdf) {
       payment: "provision de fondos previa pendiente de confirmacion por Bizum o PayPal/Tarjeta",
     },
     acceptances: {
+      precontractualRead: Boolean(data.get("leeInfoPrecontractual")),
       conditionsAndPrivacy: Boolean(data.get("aceptaCondiciones")),
       immediateStart: Boolean(data.get("inicioInmediato")),
     },
@@ -1105,6 +1123,7 @@ const previewDni = document.getElementById("preview-dni");
 const previewDomicilio = document.getElementById("preview-domicilio");
 const previewEmpresa = document.getElementById("preview-empresa");
 const previewServiceTitle = document.getElementById("preview-service-title");
+const previewServiceLine = document.getElementById("preview-service-line");
 const previewContractHeading = document.getElementById("preview-contract-heading");
 const previewObject = document.getElementById("preview-object");
 const previewPrice = document.getElementById("preview-price");
@@ -1134,6 +1153,10 @@ function updatePreview() {
 
   if (previewServiceTitle) {
     previewServiceTitle.textContent = service.titleHtml;
+  }
+
+  if (previewServiceLine && typeof service.previewServiceLine === "function") {
+    previewServiceLine.textContent = service.previewServiceLine(employer, representationRegion);
   }
 
   if (previewContractHeading) {
