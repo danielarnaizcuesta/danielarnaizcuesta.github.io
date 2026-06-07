@@ -203,17 +203,6 @@ a:hover {
   animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.workbench-support {
-  justify-self: center;
-  width: auto;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-  backdrop-filter: none;
-}
-
 .workbench-aside {
   position: relative;
   z-index: 2;
@@ -287,11 +276,6 @@ h3 {
   gap: 12px;
   align-items: center;
   margin: 0 0 20px;
-}
-
-.workbench-support .hero-actions {
-  justify-content: center;
-  margin: 0;
 }
 
 .text-link {
