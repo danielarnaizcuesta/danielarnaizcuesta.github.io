@@ -268,24 +268,12 @@ h3 {
   margin-bottom: 24px;
 }
 
-.audience-note {
-  display: inline-flex;
-  margin: 0 0 20px;
-  padding: 8px 12px;
-  border: 1px solid rgba(23, 82, 64, 0.18);
-  border-radius: var(--radius-sm);
-  background: #eef6f1;
-  color: var(--primary-dark);
-  font-size: 0.92rem;
-  font-weight: 700;
-}
-
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
   align-items: center;
-  margin: 0 0 28px;
+  margin: 0 0 20px;
 }
 
 .text-link {
@@ -403,9 +391,9 @@ h3 {
 
 .service-facts {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 220px));
   gap: 16px;
-  margin: 28px 0;
+  margin: 0;
 }
 
 .service-facts div {
@@ -442,13 +430,6 @@ h3 {
   font-weight: 800;
   color: var(--primary);
   font-family: 'Outfit', sans-serif;
-}
-
-.hero-tail-note {
-  margin: 12px 0 0;
-  color: var(--muted);
-  font-size: 0.9rem;
-  font-weight: 600;
 }
 
 .hero-supporting-links {
@@ -1797,7 +1778,7 @@ button,
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    margin: 20px 0 0;
+    margin: 0;
   }
 
   .service-facts div {
@@ -1808,10 +1789,6 @@ button,
 
   .service-facts strong {
     font-size: 1rem;
-  }
-
-  .hero-tail-note {
-    font-size: 0.84rem;
   }
 
   .hire-panel {
@@ -1831,11 +1808,6 @@ button,
     font-size: 1.08rem;
     line-height: 1.55;
     margin-bottom: 18px;
-  }
-
-  .audience-note {
-    margin-bottom: 16px;
-    font-size: 0.88rem;
   }
 
   .hero-actions {
