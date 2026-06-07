@@ -174,12 +174,12 @@ a:hover {
 /* HERO WORKBENCH */
 .workbench {
   position: relative;
-  min-height: calc(100vh - 82px);
+  min-height: auto;
   margin: 0 auto;
   padding: 72px 32px 72px;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(560px, 1.18fr);
-  gap: 40px;
+  grid-template-columns: 1fr;
+  gap: 28px;
   align-items: start;
   overflow: hidden;
   isolation: isolate;
@@ -192,7 +192,7 @@ a:hover {
 .workbench-copy {
   position: relative;
   z-index: 3;
-  width: 100%;
+  width: min(920px, 100%);
   align-self: start;
   padding: 32px;
   border: 1px solid rgba(255, 255, 255, 0.6);
@@ -203,11 +203,17 @@ a:hover {
   animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.workbench-support {
+  justify-self: center;
+}
+
 .workbench-aside {
   position: relative;
   z-index: 2;
   min-width: 0;
   align-self: start;
+  width: min(1120px, 100%);
+  justify-self: center;
 }
 
 @keyframes fadeInUp {
@@ -1681,7 +1687,6 @@ button,
   }
 
   .workbench {
-    grid-template-columns: 1fr;
     gap: 28px;
     min-height: auto;
     padding: 48px 24px 64px;
