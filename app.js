@@ -796,6 +796,7 @@ form.addEventListener("submit", async (event) => {
       localidad: "Localidad o Ciudad",
       provincia: "Provincia",
       empresa: "Empresa a reclamar",
+      leeInfoPrecontractual: "Leer informacion precontractual",
       aceptaCondiciones: "Aceptar condiciones del servicio y privacidad"
     };
 
@@ -919,6 +920,7 @@ function initPayPalButtons() {
           localidad: "Localidad o Ciudad",
           provincia: "Provincia",
           empresa: "Empresa a reclamar",
+          leeInfoPrecontractual: "Leer informaciÃ³n precontractual",
           aceptaCondiciones: "Aceptar condiciones del servicio y privacidad"
         };
 

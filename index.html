@@ -222,13 +222,13 @@
               </p>
             </section>
 
-            <div class="contract-container" style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
-              <p class="overline">Revisión de tu contrato</p>
-              <h3>Hoja de Encargo y Condiciones</h3>
-              <p class="form-note" style="margin-bottom: 0.8rem; text-align: left;">
-                Los datos del contrato se actualizan mientras escribes.
-              </p>
-              <div class="contract-scroll-box" id="contract-preview" style="max-height: 160px; overflow-y: scroll; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 16px; background: var(--wash); font-size: 0.85rem; line-height: 1.5; color: var(--ink-light);">
+            <details class="precontract-details">
+              <summary>Información precontractual, hoja de encargo y condiciones</summary>
+              <div class="contract-container">
+                <p class="form-note" style="margin-bottom: 0.8rem; text-align: left;">
+                  Los datos del contrato se actualizan mientras escribes.
+                </p>
+                <div class="contract-scroll-box" id="contract-preview" style="max-height: 160px; overflow-y: scroll; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 16px; background: var(--wash); font-size: 0.85rem; line-height: 1.5; color: var(--ink-light);">
                 <div id="preview-contract-heading" style="text-align: center; margin-bottom: 12px; font-weight: bold; color: var(--primary);">
                   HOJA DE ENCARGO - REDACCIÓN DE PAPELETA
                 </div>
@@ -246,9 +246,10 @@
                 
                 <p><strong>4. FIRMA Y VALIDEZ:</strong> La contratación queda realizada mediante el envío de la solicitud cifrada y el marcado de la casilla obligatoria de aceptación de condiciones, privacidad y precio por parte del Cliente.</p>
                 
-                <p><strong>5. LUGAR, FECHA, ZONA Y FUERO:</strong> El contrato se celebra en Madrid en la fecha y hora de envío de la solicitud cifrada. La zona de prestación del servicio es: <span id="preview-zone">España. Redacción documental de papeleta de conciliación laboral. Representación y asistencia presencial se contratan aparte.</span> El contrato se rige por la ley española. Para clientes consumidores, serán competentes los juzgados y tribunales que correspondan conforme a la normativa aplicable; cuando la competencia territorial sea legalmente disponible, el fuero será Madrid.</p>
+                  <p><strong>5. LUGAR, FECHA, ZONA Y FUERO:</strong> El contrato se celebra en Madrid en la fecha y hora de envío de la solicitud cifrada. La zona de prestación del servicio es: <span id="preview-zone">España. Redacción documental de papeleta de conciliación laboral. Representación y asistencia presencial se contratan aparte.</span> El contrato se rige por la ley española. Para clientes consumidores, serán competentes los juzgados y tribunales que correspondan conforme a la normativa aplicable; cuando la competencia territorial sea legalmente disponible, el fuero será Madrid.</p>
+                </div>
               </div>
-            </div>
+            </details>
 
             <fieldset id="payment-method-fieldset" style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
               <legend>Provisión de fondos</legend>
@@ -286,6 +287,12 @@
 
             <fieldset>
               <legend>Condiciones del servicio</legend>
+              <label class="check-row">
+                <input name="leeInfoPrecontractual" required type="checkbox" />
+                <span>
+                  Confirmo que he leído la información precontractual, la hoja de encargo y las condiciones del servicio.
+                </span>
+              </label>
               <label class="check-row">
                 <input name="aceptaCondiciones" required type="checkbox" />
                 <span>

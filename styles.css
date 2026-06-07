@@ -716,6 +716,29 @@ textarea:focus {
   font-size: 1.05rem;
 }
 
+.precontract-details {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  padding: 16px;
+}
+
+.precontract-details summary {
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+
+.precontract-details[open] summary {
+  margin-bottom: 12px;
+}
+
+.contract-container {
+  margin-top: 4px;
+}
+
 /* PREMIUM CUSTOM CHECKBOX ROWS */
 .check-row {
   grid-template-columns: 24px minmax(0, 1fr);
