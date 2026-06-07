@@ -235,11 +235,12 @@ a:hover {
 
 .hero-kicker {
   margin: 0 0 12px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 1.55rem;
-  line-height: 1.15;
+  color: var(--primary-light);
+  font-size: 0.92rem;
   font-weight: 800;
-  color: var(--primary-dark);
+  letter-spacing: 0;
+  line-height: 1.35;
+  text-transform: uppercase;
 }
 
 h1,
@@ -1710,10 +1711,6 @@ button,
     font-size: 2.75rem;
   }
 
-  .hero-kicker {
-    font-size: 1.4rem;
-  }
-
   h2 {
     font-size: 1.85rem;
   }
@@ -1793,10 +1790,6 @@ button,
   .workbench-copy {
     padding: 24px 20px;
     border-radius: 24px;
-  }
-
-  .hero-kicker {
-    font-size: 1.25rem;
   }
 
   .workbench-aside {
