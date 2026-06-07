@@ -1236,26 +1236,3 @@ paymentInputs.forEach((input) => {
 
 updatePreview();
 updatePaymentMethod();
-
-const workbenchStage = document.getElementById("workbench-stage");
-
-if (workbenchStage && window.matchMedia("(pointer: fine)").matches) {
-  const updateStageRotation = (event) => {
-    const rect = workbenchStage.getBoundingClientRect();
-    const x = (event.clientX - rect.left) / rect.width;
-    const y = (event.clientY - rect.top) / rect.height;
-    const rotateY = (x - 0.5) * 14;
-    const rotateX = (0.5 - y) * 10;
-
-    workbenchStage.style.setProperty("--scene-rotate-x", rotateX.toFixed(2));
-    workbenchStage.style.setProperty("--scene-rotate-y", rotateY.toFixed(2));
-  };
-
-  const resetStageRotation = () => {
-    workbenchStage.style.setProperty("--scene-rotate-x", "0");
-    workbenchStage.style.setProperty("--scene-rotate-y", "0");
-  };
-
-  window.addEventListener("pointermove", updateStageRotation);
-  window.addEventListener("pointerleave", resetStageRotation);
-}

@@ -109,44 +109,6 @@
     <main>
       <!-- HERO WORKBENCH -->
       <section class="workbench" id="inicio" aria-labelledby="page-title">
-        <div class="workbench-stage" id="workbench-stage" aria-hidden="true">
-          <div class="workbench-ambient workbench-ambient-a"></div>
-          <div class="workbench-ambient workbench-ambient-b"></div>
-          <div class="workbench-grid"></div>
-          <div class="workbench-vignette"></div>
-          <div class="workbench-beam"></div>
-          <canvas class="hero-canvas" id="hero-canvas"></canvas>
-          <div class="scene-shell">
-            <div class="scene-floor"></div>
-            <div class="scene-axis scene-axis-x"></div>
-            <div class="scene-axis scene-axis-y"></div>
-            <div class="scene-core">
-              <div class="scene-halo scene-halo-a"></div>
-              <div class="scene-halo scene-halo-b"></div>
-              <div class="scene-orb"></div>
-              <div class="scene-ring scene-ring-a"></div>
-              <div class="scene-ring scene-ring-b"></div>
-              <div class="scene-ring scene-ring-c"></div>
-            </div>
-            <div class="scene-card scene-card-main">
-              <span class="scene-label">Caso preparado</span>
-              <strong>Hechos, importes y siguiente paso</strong>
-              <p>Una portada visual que desemboca en un alta directa con contrato y pago.</p>
-            </div>
-            <div class="scene-card scene-card-side">
-              <span class="scene-label">Contratación</span>
-              <ul class="scene-list">
-                <li>Precio cerrado</li>
-                <li>Encargo dinámico</li>
-                <li>Bizum / PayPal</li>
-              </ul>
-            </div>
-            <div class="scene-card scene-card-mini">
-              <span class="scene-metric">24h</span>
-              <span class="scene-caption">prioridad media de respuesta</span>
-            </div>
-          </div>
-        </div>
         <div class="workbench-copy">
           <p class="overline">Para trabajadores y consumidores</p>
           <h1 id="page-title">Despido, impagos o conciliación con criterio y precio cerrado</h1>
@@ -154,7 +116,7 @@
             Si tienes carta de despido, nóminas pendientes, fin de contrato o una fecha de conciliación inminente,
             analizo tus documentos, calculo las cantidades reales y preparo la estrategia para que actúes con seguridad.
           </p>
-          <p class="audience-note">Experiencia de entrada 3D y, al bajar, contratación inmediata. Servicio documental privado para toda España. No asesoro a empresas.</p>
+          <p class="audience-note">Servicio documental privado para toda España. Preparación seria, precio claro y contratación inmediata. No asesoro a empresas.</p>
           <div class="hero-actions" aria-label="Contacto rápido">
             <a class="primary" href="https://wa.me/34615860227" target="_blank" rel="noreferrer">Contar mi caso por WhatsApp</a>
             <a class="secondary" href="#alta-online">Iniciar alta online</a>
@@ -178,6 +140,30 @@
             </div>
           </div>
         </div>
+        <aside class="workbench-aside" aria-label="Resumen del servicio">
+          <div class="aside-panel aside-panel-main">
+            <p class="overline">Preparación del caso</p>
+            <h2>Hechos, cantidades y siguiente paso bien planteados</h2>
+            <p class="lead-sm">
+              Una portada limpia, seria y directa. Sin efectos raros: solo claridad visual, foco en conversión y una contratación que no da rodeos.
+            </p>
+            <div class="aside-points">
+              <span>Despidos</span>
+              <span>SMAC Madrid</span>
+              <span>Demandas</span>
+              <span>Inspección</span>
+            </div>
+          </div>
+          <div class="aside-panel aside-panel-quote">
+            <span class="aside-label">Contratación</span>
+            <strong>Precio cerrado, encargo dinámico y pago inmediato</strong>
+            <p>La web entra directa al caso y baja al formulario sin ruido visual.</p>
+          </div>
+          <div class="aside-panel aside-panel-stat">
+            <span class="aside-stat-value">24h</span>
+            <span class="aside-stat-text">prioridad media de respuesta</span>
+          </div>
+        </aside>
         <a class="hero-scroll" href="#alta-online">Bajar a contratación</a>
       </section>
 
@@ -565,7 +551,6 @@
     </footer>
 
     <script src="assets/jspdf.umd.min.js"></script>
-    <script type="module" src="hero-3d.js"></script>
     <script src="app.js" defer></script>
     <script src="whatsapp-gate.js" defer></script>
     <script src="cookie-consent.js" defer></script>
