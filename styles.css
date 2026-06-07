@@ -176,11 +176,11 @@ a:hover {
   position: relative;
   min-height: calc(100vh - 82px);
   margin: 0 auto;
-  padding: 72px 32px 84px;
+  padding: 72px 32px 72px;
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.82fr);
   gap: 40px;
-  align-items: center;
+  align-items: start;
   overflow: hidden;
   isolation: isolate;
   background:
@@ -202,37 +202,13 @@ a:hover {
   animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.hero-scroll {
-  position: absolute;
-  left: 32px;
-  bottom: 28px;
-  z-index: 4;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 44px;
-  padding: 0 16px;
-  border-radius: 999px;
-  border: 1px solid rgba(21, 78, 59, 0.18);
-  background: rgba(255, 255, 255, 0.72);
-  color: var(--primary-dark);
-  font-size: 0.92rem;
-  font-weight: 700;
-  backdrop-filter: blur(14px);
-}
-
-.hero-scroll::after {
-  content: "↓";
-  font-size: 1rem;
-}
-
 .workbench-aside {
   position: relative;
   z-index: 2;
   display: grid;
   gap: 18px;
   align-content: start;
-  align-self: center;
+  align-self: start;
 }
 
 .aside-panel {
@@ -249,6 +225,38 @@ a:hover {
 
 .aside-panel-main h2 {
   margin-bottom: 14px;
+}
+
+.aside-offers {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.aside-offers article {
+  padding: 16px 16px 14px;
+  border: 1px solid rgba(21, 78, 59, 0.1);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.aside-offers strong,
+.aside-offers span {
+  display: block;
+}
+
+.aside-offers strong {
+  color: var(--primary-dark);
+  font-size: 0.98rem;
+  font-weight: 800;
+}
+
+.aside-offers span {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 700;
 }
 
 .aside-points {
@@ -1765,7 +1773,7 @@ button,
     grid-template-columns: 1fr;
     gap: 28px;
     min-height: auto;
-    padding: 48px 24px 88px;
+    padding: 48px 24px 64px;
   }
 
   .workbench-copy {
@@ -1780,10 +1788,6 @@ button,
 
   .aside-panel-main {
     grid-column: 1 / -1;
-  }
-
-  .hero-scroll {
-    left: 24px;
   }
 
   h1 {
@@ -1863,7 +1867,7 @@ button,
   }
 
   .workbench {
-    padding: 40px 20px 84px;
+    padding: 40px 20px 56px;
   }
 
   .workbench-copy {
@@ -1874,6 +1878,10 @@ button,
   .workbench-aside {
     grid-template-columns: 1fr;
     gap: 14px;
+  }
+
+  .aside-offers {
+    grid-template-columns: 1fr;
   }
 
   .aside-panel-main,
@@ -1895,13 +1903,6 @@ button,
 
   .aside-stat-value {
     font-size: 2.1rem;
-  }
-
-  .hero-scroll {
-    left: 20px;
-    right: 20px;
-    bottom: 18px;
-    justify-content: center;
   }
 
   .section-inner {
