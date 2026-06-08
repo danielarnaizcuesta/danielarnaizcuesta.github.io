@@ -485,7 +485,7 @@ function buildSummary(data, paymentInfo = null) {
     "DECLARACIONES ELECTRONICAS DEL CLIENTE:",
     `Firmado electronicamente por el Cliente: ${valueOf(data, "nombre")}`,
     `Servicio contratado: ${service.title}`,
-    `Confirma haber leido la informacion precontractual y la solicitud de encargo: ${yesNo(data, "leeInfoPrecontractual")}`,
+    `Confirma haber leido la informacion precontractual: ${yesNo(data, "leeInfoPrecontractual")}`,
     `Acepta condiciones de servicio, privacidad y precio cerrado de ${service.price}: ${yesNo(data, "aceptaCondiciones")}`,
     service.title === SERVICES.papeleta.title && representationRegion.label === "Comunidad de Madrid"
       ? `Solicita representacion presencial en conciliacion en Madrid: ${wantsRepresentation ? "SI" : "NO"}`
@@ -529,7 +529,7 @@ async function buildPayload(data, summary, contractPdf) {
       serviceZone,
       representationRegion: wantsRepresentation ? representationRegion.label : null,
       governingLawAndForum: "Ley espanola. Para clientes consumidores, juzgados y tribunales legalmente competentes. Cuando la competencia territorial sea legalmente disponible, fuero de Madrid.",
-      precontractualReadText: "Confirmo que he leido la informacion precontractual, la solicitud de encargo y las condiciones del servicio.",
+      precontractualReadText: "Confirmo que he leido la informacion precontractual.",
       acceptedConditionsText: `Acepto las condiciones del servicio, la politica de privacidad, el precio cerrado de ${service.price}, la posible revision documental previa y la provision de fondos previa necesaria para tramitar el servicio.`,
       reasonableTimeDeclarationText: "La solicitud incorpora la declaracion de que existe al menos un plazo razonable de tres dias habiles para el estudio del caso, sin prescripcion o caducidad inminente.",
       madridRepresentationText: wantsRepresentation ? "La solicitud incluye representacion voluntaria presencial en conciliacion para asunto tramitable en la Comunidad de Madrid." : null,
