@@ -1268,6 +1268,13 @@ button,
   color: var(--primary-light);
 }
 
+.site-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
 /* LABOR CALCULATORS */
 .calculator-page {
   background: var(--paper);
