@@ -453,58 +453,64 @@ function buildSummary(data, paymentInfo = null) {
     .join(", ");
 
   const inicioInmediatoTexto = data.get("inicioInmediato")
-    ? "El Cliente solicita y autoriza de forma expresa el inicio inmediato de las gestiones profesionales sin esperar al plazo legal de desistimiento. Si decide desistir con posterioridad, debera abonar al Profesional la parte proporcional a las gestiones efectivamente realizadas hasta ese momento. Este derecho se extinguira por completo una vez el servicio haya sido ejecutado en su totalidad."
-    : "El Cliente acepta las condiciones del servicio, reservandose el inicio de las gestiones hasta el transcurso del plazo legal de desistimiento, salvo solicitud posterior.";
+    ? "El Cliente solicita y autoriza de forma expresa el inicio inmediato de la preparacion del servicio sin esperar al plazo legal de desistimiento. Si decide desistir con posterioridad, debera abonar al Prestador la parte proporcional a las actuaciones efectivamente realizadas hasta ese momento. Este derecho se extinguira por completo una vez el servicio haya sido ejecutado en su totalidad en los terminos legalmente previstos."
+    : "El Cliente acepta las condiciones del servicio, quedando el inicio material de la preparacion supeditado a la aceptacion expresa del encargo y al regimen legal de desistimiento aplicable.";
 
   let pagoTexto = "";
   if (paymentInfo && paymentInfo.method === "paypal") {
-    pagoTexto = `El precio cerrado por la prestacion de este servicio es de ${service.price}, el cual ha sido abonado integramente en este acto mediante PayPal (ID de transaccion: ${paymentInfo.transactionId}). El Profesional emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.`;
+    pagoTexto = `El precio cerrado por la prestacion de este servicio es de ${service.price}, el cual ha sido abonado integramente en este acto mediante PayPal (ID de transaccion: ${paymentInfo.transactionId}). Salvo pacto expreso distinto, el precio cubre el estudio inicial del material remitido y la redaccion del documento contratado. Las actuaciones adicionales, nuevas versiones por cambio sustancial del asunto o servicios distintos requeriran presupuesto aparte. El Prestador emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.`;
   } else if (paymentInfo && paymentInfo.method === "bizum") {
-    pagoTexto = `El precio cerrado por la prestacion de este servicio es de ${service.price}, el cual ha sido abonado en este acto mediante Bizum inmediato desde el telefono ${paymentInfo.telefono} con el concepto "${paymentInfo.concepto}". El Profesional emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.`;
+    pagoTexto = `El precio cerrado por la prestacion de este servicio es de ${service.price}, el cual ha sido abonado en este acto mediante Bizum inmediato desde el telefono ${paymentInfo.telefono} con el concepto "${paymentInfo.concepto}". Salvo pacto expreso distinto, el precio cubre el estudio inicial del material remitido y la redaccion del documento contratado. Las actuaciones adicionales, nuevas versiones por cambio sustancial del asunto o servicios distintos requeriran presupuesto aparte. El Prestador emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.`;
   } else {
-    pagoTexto = `El precio cerrado por la prestacion de este servicio es de ${service.price}. La aportacion de los datos solicitados por el Cliente es obligatoria para la correcta ejecucion del encargo y su facturacion. El servicio solo se iniciara una vez confirmada la provision de fondos previa por Bizum o PayPal/Tarjeta. El Profesional emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.`;
+    pagoTexto = `El precio cerrado por la prestacion de este servicio es de ${service.price}. La aportacion de los datos solicitados por el Cliente es obligatoria para la correcta ejecucion del encargo y su facturacion. Salvo pacto expreso distinto, el precio cubre el estudio inicial del material remitido y la redaccion del documento contratado. Las actuaciones adicionales, nuevas versiones por cambio sustancial del asunto o servicios distintos requeriran presupuesto aparte. El servicio solo se iniciara una vez confirmada la provision de fondos previa por Bizum o PayPal/Tarjeta. El Prestador emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.`;
   }
 
   return [
-    "SOLICITUD DE CONTRATACION DE SERVICIOS - HOJA DE ENCARGO",
+    "SOLICITUD DE ENCARGO DE SERVICIO DOCUMENTAL",
     `Servicio contratado: ${service.title}`,
     ...representationRegionLine,
     "",
-    `Fecha del contrato: ${generatedAt}`,
-    "Lugar de celebracion: Madrid",
+    `Fecha de la solicitud: ${generatedAt}`,
+    "Lugar de emision: Madrid",
     "",
     "REUNIDOS:",
     "",
-    "De una parte, como prestador del servicio, en adelante designado como el Profesional: DANIEL ARNAIZ CUESTA, con NIF 72828826Q, domicilio profesional en C/ Arroyo de la Media Legua 4, bajo derecha, 28030 Madrid, y correo electronico de contacto danielarnaizcuesta@gmail.com.",
+    "De una parte, como prestador del servicio, en adelante designado como el Prestador: DANIEL ARNAIZ CUESTA, con NIF 72828826Q, domicilio profesional en C/ Arroyo de la Media Legua 4, bajo derecha, 28030 Madrid, y correo electronico de contacto danielarnaizcuesta@gmail.com.",
     "",
     `De otra parte, como cliente, en adelante designado como el Cliente: Nombre y apellidos: ${valueOf(data, "nombre")}, con DNI o NIE o Pasaporte: ${valueOf(data, "dni")}, correo electronico: ${valueOf(data, "email")}, telefono: ${valueOf(data, "telefono") || "No indicado"} y domicilio en: ${domicilioCompleto}.`,
     "",
-    "El Cliente formula la presente solicitud de contratacion, que solo quedara aceptada por el Profesional cuando este la confirme expresamente tras revisar la viabilidad del encargo, de conformidad con las siguientes",
+    "El Cliente formula la presente solicitud de encargo, que solo quedara aceptada por el Prestador cuando este la confirme expresamente tras revisar la viabilidad del asunto y la suficiencia documental, de conformidad con las siguientes",
     "",
     "ESTIPULACIONES:",
     "",
-    "1. OBJETO DEL ENCARGO",
-    service.objectClause(valueOf(data, "empresa"), representationRegion),
+    "1. OBJETO, ALCANCE Y NATURALEZA DEL SERVICIO",
+    `${service.objectClause(valueOf(data, "empresa"), representationRegion)} El servicio se presta exclusivamente sobre base documental y constituye una obligacion de medios, no de resultado. No incluye presentacion, negociacion, representacion presencial, asistencia a actos, defensa judicial ni actuaciones distintas de la redaccion expresamente contratada.`,
     "",
-    "2. PRECIO, PAGO Y FACTURACION",
+    "2. DOCUMENTACION Y DECLARACIONES DEL CLIENTE",
+    "El Cliente declara que los datos y documentos facilitados son veraces, completos, legibles y actualizados, y que dispone de un plazo razonable para el estudio del asunto y la preparacion del documento. El Cliente se compromete a remitir la documentacion necesaria dentro de plazo. Si omite datos relevantes, facilita versiones contradictorias o modifica sustancialmente el encargo, el Prestador podra rechazarlo, suspenderlo o exigir un nuevo presupuesto.",
+    "",
+    "3. PRECIO, PAGO Y FACTURACION",
     pagoTexto,
     "",
-    "3. DERECHO DE DESISTIMIENTO E INICIO DEL SERVICIO",
-    `Si el Profesional acepta la solicitud, el Cliente tendra derecho a desistir del contrato en el plazo legal aplicable. ${inicioInmediatoTexto}`,
+    "4. SOLICITUD, ACEPTACION Y POSIBLE RECHAZO",
+    "La cumplimentacion y envio de la solicitud web cifrada, junto con la provision de fondos cuando proceda, constituye una solicitud de encargo del Cliente. El encargo solo quedara perfeccionado cuando el Prestador confirme expresamente su aceptacion tras revisar la documentacion, la viabilidad temporal, la claridad del objeto y la posibilidad material de prestar el servicio. Si la solicitud no se acepta, no se iniciara trabajo alguno y cualquier provision de fondos se devolvera por el mismo canal o por otro acordado.",
     "",
-    "4. LUGAR, FECHA, ZONA DE PRESTACION Y FUERO",
-    `El presente contrato se celebra en Madrid en la fecha y hora indicadas. La zona geografica de prestacion del servicio es: ${serviceZone} Este contrato se rige por la legislacion espanola. Para clientes que tengan la consideracion de consumidores, seran competentes los juzgados y tribunales que correspondan segun la normativa aplicable. En caso de que la competencia territorial sea legalmente disponible, ambas partes se someten expresamente a los juzgados y tribunales de la ciudad de Madrid.`,
+    "5. DERECHO DE DESISTIMIENTO E INICIO ANTICIPADO",
+    `Si el Prestador acepta la solicitud y el Cliente tiene la condicion legal de consumidor, este tendra derecho a desistir del contrato en el plazo legal aplicable. ${inicioInmediatoTexto}`,
     "",
-    "5. SOLICITUD Y ACEPTACION ELECTRONICA",
-    "La cumplimentacion y envio de la solicitud web cifrada constituye una solicitud de contratacion del Cliente. El encargo solo quedara perfeccionado cuando el Profesional confirme expresamente su aceptacion tras revisar la documentacion y la viabilidad temporal del asunto.",
+    "6. COMUNICACIONES, CONFIDENCIALIDAD Y CONSERVACION",
+    "Las comunicaciones del encargo podran realizarse por correo electronico, telefono o WhatsApp. La documentacion remitida sera tratada con confidencialidad y exclusivamente para gestionar la solicitud y, en su caso, el servicio aceptado, conforme a la politica de privacidad. El Cliente es responsable de conservar copia de la documentacion remitida y del PDF generado por la presente solicitud.",
+    "",
+    "7. LUGAR, FECHA, ZONA DE PRESTACION Y FUERO",
+    `La solicitud se emite en Madrid en la fecha y hora indicadas. La zona geografica de prestacion del servicio es: ${serviceZone} Si el encargo es aceptado, se regira por la legislacion espanola. Para clientes que tengan la consideracion de consumidores, seran competentes los juzgados y tribunales que correspondan segun la normativa aplicable. En caso de que la competencia territorial sea legalmente disponible, ambas partes se someten expresamente a los juzgados y tribunales de la ciudad de Madrid.`,
     "",
     "DECLARACIONES ELECTRONICAS DEL CLIENTE:",
     `Firmado electronicamente por el Cliente: ${valueOf(data, "nombre")}`,
     `Servicio contratado: ${service.title}`,
-    `Confirma haber leido la informacion precontractual y la hoja de encargo: ${yesNo(data, "leeInfoPrecontractual")}`,
+    `Confirma haber leido la informacion precontractual y la solicitud de encargo: ${yesNo(data, "leeInfoPrecontractual")}`,
     `Acepta condiciones de servicio, privacidad y precio cerrado de ${service.price}: ${yesNo(data, "aceptaCondiciones")}`,
     `Declara que existe al menos un plazo razonable de tres dias habiles sin prescripcion o caducidad inminente: ${yesNo(data, "declaraPlazoRazonable")}`,
-    `Solicita inicio inmediato del servicio: ${yesNo(data, "inicioInmediato")}`,
+    `Solicita inicio inmediato de la preparacion del servicio: ${yesNo(data, "inicioInmediato")}`,
     paymentInfo ? `Metodo de Pago: Pagado mediante ${paymentInfo.method.toUpperCase()} (${paymentInfo.method === "paypal" ? "ID de Transaccion: " + paymentInfo.transactionId : "Telefono emisor: " + paymentInfo.telefono + ", Concepto: " + paymentInfo.concepto})` : "Metodo de Pago: Provision de fondos pendiente de confirmacion"
   ].join("\n");
 }
@@ -542,11 +548,11 @@ async function buildPayload(data, summary, contractPdf) {
       serviceZone,
       representationRegion: serviceRequiresRepresentationRegion(service) ? representationRegion.label : null,
       governingLawAndForum: "Ley espanola. Para clientes consumidores, juzgados y tribunales legalmente competentes. Cuando la competencia territorial sea legalmente disponible, fuero de Madrid.",
-      precontractualReadText: "Confirmo que he leido la informacion precontractual, la hoja de encargo y las condiciones del servicio.",
-      acceptedConditionsText: `Acepto las condiciones del servicio, la politica de privacidad, el precio cerrado de ${service.price} y la provision de fondos previa necesaria para iniciar el servicio.`,
+      precontractualReadText: "Confirmo que he leido la informacion precontractual, la solicitud de encargo y las condiciones del servicio.",
+      acceptedConditionsText: `Acepto las condiciones del servicio, la politica de privacidad, el precio cerrado de ${service.price}, la posible revision documental previa y la provision de fondos previa necesaria para tramitar el servicio.`,
       reasonableTimeDeclarationText: "Declaro que existe al menos un plazo razonable de tres dias habiles para el estudio del caso, sin prescripcion o caducidad inminente.",
       immediateStartText: data.get("inicioInmediato")
-        ? "Solicito el inicio inmediato de las gestiones sin esperar al plazo legal de desistimiento."
+        ? "Solicito el inicio inmediato de la preparacion del servicio sin esperar al plazo legal de desistimiento."
         : null,
       browser: {
         userAgent: navigator.userAgent,
@@ -591,7 +597,7 @@ function evidenceSubject(evidence) {
 }
 
 async function sendEncryptedSubmission(encryptedSubmission, evidence) {
-  const subject = `Nuevo contrato firmado ${evidenceSubject(evidence)}`;
+  const subject = `Nueva solicitud firmada ${evidenceSubject(evidence)}`;
 
   if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY === "TU_ACCESS_KEY_AQUI" || WEB3FORMS_ACCESS_KEY.trim() === "") {
     throw new Error("Envio automatico no configurado o clave por defecto. Usando directamente flujo manual.");
