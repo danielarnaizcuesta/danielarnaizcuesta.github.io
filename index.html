@@ -130,14 +130,6 @@
                 <section class="service-pane" data-service-panel="papeleta">
                   <h3>Papeleta de conciliación laboral</h3>
                   <p>120,00 € IVA incluido. Redacción de papeleta para trabajadores en toda España. Si la tramitación corresponde a la Comunidad de Madrid, se adapta a esa conciliación y puede incluir representación voluntaria presencial sin cambiar el precio.</p>
-                  <label class="service-region-field" id="representation-choice-field" hidden>
-                    ¿Quieres representación presencial en conciliación?
-                    <select name="quiereRepresentacionMadrid" id="representation-choice">
-                      <option value="no" selected>No</option>
-                      <option value="si">Sí</option>
-                    </select>
-                    <span class="input-hint">Solo disponible para asuntos tramitables en la Comunidad de Madrid.</span>
-                  </label>
                 </section>
                 <section class="service-pane" data-service-panel="inspeccion" hidden>
                   <h3>Denuncia ante Inspección de Trabajo</h3>
@@ -215,6 +207,18 @@
                   <input name="empresa" required placeholder="Nombre de la empresa a reclamar" />
                 </label>
               </div>
+            </fieldset>
+
+            <fieldset id="representation-choice-field">
+              <legend>Representación en conciliación</legend>
+              <label class="service-region-field">
+                ¿Quieres representación presencial en conciliación?
+                <select name="quiereRepresentacionMadrid" id="representation-choice" disabled>
+                  <option value="no" selected>No</option>
+                  <option value="si">Sí</option>
+                </select>
+                <span class="input-hint">Se activa solo si eliges Comunidad de Madrid dentro del servicio de papeleta.</span>
+              </label>
             </fieldset>
 
             <section class="price-box">

@@ -1115,13 +1115,17 @@ function selectedServiceKeyFromForm() {
 function updateMadridRepresentationField() {
   const serviceKey = selectedServiceKeyFromForm();
   const isMadrid = inputComunidadAutonoma?.value === "madrid";
-  const shouldShow = serviceKey === "papeleta" && isMadrid;
+  const shouldEnable = serviceKey === "papeleta" && isMadrid;
 
   if (representationChoiceField) {
-    representationChoiceField.hidden = !shouldShow;
+    representationChoiceField.style.opacity = shouldEnable ? "1" : "0.55";
   }
 
-  if (inputQuiereRepresentacionMadrid && !shouldShow) {
+  if (inputQuiereRepresentacionMadrid) {
+    inputQuiereRepresentacionMadrid.disabled = !shouldEnable;
+  }
+
+  if (inputQuiereRepresentacionMadrid && !shouldEnable) {
     inputQuiereRepresentacionMadrid.value = "no";
   }
 }
