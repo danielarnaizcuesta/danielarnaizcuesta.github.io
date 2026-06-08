@@ -51,6 +51,12 @@ function loadPayPalSDK(clientId, callback) {
 let lastGeneratedPdf = null;
 
 const REPRESENTATION_REGIONS = {
+  general: {
+    label: "España",
+    serviceZone: "España. Tramitación ante el órgano administrativo de conciliación competente.",
+    previewZone: "España. Papeleta de conciliación laboral para su tramitación ante el órgano competente.",
+    organ: "el organo administrativo de conciliacion competente"
+  },
   madrid: {
     label: "Comunidad de Madrid",
     serviceZone: "Comunidad de Madrid. Solo asuntos tramitables ante el SMAC de la Comunidad de Madrid.",
@@ -64,7 +70,10 @@ const SERVICES = {
     title: "Redaccion de papeleta de conciliacion laboral",
     titleHtml: "Papeleta de conciliacion laboral",
     previewHeading: "SOLICITUD DE ENCARGO - REDACCION DE PAPELETA",
-    previewServiceLine(employer) {
+    previewServiceLine(employer, region = REPRESENTATION_REGIONS.madrid) {
+      if (region.label === "Comunidad de Madrid") {
+        return `Papeleta de conciliacion laboral frente a la empresa ${employer}, con tramitacion adaptada al ${region.organ} y posible representacion voluntaria presencial.`;
+      }
       return `Papeleta de conciliacion laboral frente a la empresa ${employer}.`;
     },
     price: "120,00 EUR IVA incluido",
@@ -74,39 +83,20 @@ const SERVICES = {
     buttonText: "Contratar redaccion de papeleta por 120 €",
     priceDescription: "Provision de fondos previa por Bizum o PayPal/tarjeta antes de iniciar la redaccion.",
     filenameSlug: "papeleta-conciliacion",
-    serviceZone: "Espana. Servicio documental de redaccion de papeleta de conciliacion laboral para que el Cliente la presente ante el organo administrativo competente.",
-    previewZone: "Espana. Redaccion documental de papeleta de conciliacion laboral. Representacion y asistencia presencial se contratan aparte.",
-    matterService: "Redaccion de papeleta de conciliacion laboral para su presentacion por el Cliente ante el organo administrativo competente",
-    objectClause(employer) {
-      return `El Cliente encarga al Profesional la redaccion de una papeleta de conciliacion laboral frente a la empresa ${employer}, con base en la informacion y documentacion facilitada por el Cliente. El alcance comprende analisis documental inicial, ordenacion de hechos, cuantificacion orientativa cuando proceda y redaccion del escrito para su presentacion por el Cliente ante el organo administrativo de conciliacion competente. Presentacion administrativa, representacion presencial y asistencia al acto de conciliacion se contratan mediante acuerdo expreso adicional. La intervencion judicial posterior corresponde al profesional elegido o designado.`;
-    },
-    previewObject(employer) {
-      return `El Cliente encarga al profesional la redaccion de una papeleta de conciliacion laboral frente a la empresa ${employer}. El servicio es documental, valido para asuntos de trabajadores en Espana. Presentacion, representacion presencial y asistencia al acto de conciliacion se contratan aparte.`;
-    },
-  },
-  smac: {
-    title: "Papeleta, preparacion y representacion voluntaria en conciliacion laboral",
-    titleHtml: "Representacion en conciliacion laboral",
-    previewHeading: "SOLICITUD DE ENCARGO - REPRESENTACION EN CONCILIACION",
-    price: "200,00 EUR IVA incluido",
-    priceHtml: "200,00 € IVA incluido",
-    priceShort: "200",
-    paypalAmount: "200.00",
-    buttonText: "Contratar revision y SMAC por 200 €",
-    priceDescription: "Provision de fondos previa por Bizum o PayPal/tarjeta antes de iniciar la preparacion y la representacion.",
-    filenameSlug: "smac",
-    requiresRepresentationRegion: true,
-    serviceZone: REPRESENTATION_REGIONS.madrid.serviceZone,
-    previewZone: REPRESENTATION_REGIONS.madrid.previewZone,
-    matterService: "Papeleta de conciliacion, presentacion y representacion voluntaria en asunto tramitable ante el organo de conciliacion disponible",
-    previewServiceLine(employer, region = REPRESENTATION_REGIONS.madrid) {
-      return `Representacion en conciliacion laboral ante ${region.organ} contra la empresa ${employer}.`;
-    },
+    serviceZone: "Espana. Servicio de preparacion de papeleta de conciliacion laboral para su tramitacion ante el organo administrativo competente, con posible representacion presencial en la Comunidad de Madrid.",
+    previewZone: "Espana. Papeleta de conciliacion laboral. En la Comunidad de Madrid puede incluir representacion voluntaria presencial sin cambiar el precio.",
+    matterService: "Preparacion de papeleta de conciliacion laboral para su tramitacion ante el organo administrativo competente, con posible representacion voluntaria en la Comunidad de Madrid",
     objectClause(employer, region = REPRESENTATION_REGIONS.madrid) {
-      return `El Cliente encarga al Profesional la redaccion, presentacion de la papeleta de conciliacion laboral y la representacion voluntaria en el acto de conciliacion administrativa ante ${region.organ} contra la empresa ${employer}. El servicio se presta para asuntos tramitables en la comunidad autonoma seleccionada: ${region.label}. A tal efecto, el Cliente facilitara al Profesional la representacion necesaria, ya sea compareciendo presencialmente para otorgar dicha representacion o mediante el correspondiente poder notarial, con anterioridad a la fecha del acto de conciliacion.`;
+      if (region.label === "Comunidad de Madrid") {
+        return `El Cliente encarga al Profesional la redaccion de una papeleta de conciliacion laboral frente a la empresa ${employer}, con base en la informacion y documentacion facilitada por el Cliente, para su tramitacion ante ${region.organ}. El alcance comprende analisis documental inicial, ordenacion de hechos, cuantificacion orientativa cuando proceda, redaccion del escrito y, cuando resulte viable, presentacion y representacion voluntaria presencial en el acto de conciliacion dentro de la Comunidad de Madrid sin variacion del precio cerrado. La intervencion judicial posterior corresponde al profesional elegido o designado.`;
+      }
+      return `El Cliente encarga al Profesional la redaccion de una papeleta de conciliacion laboral frente a la empresa ${employer}, con base en la informacion y documentacion facilitada por el Cliente. El alcance comprende analisis documental inicial, ordenacion de hechos, cuantificacion orientativa cuando proceda y redaccion del escrito para su presentacion por el Cliente ante el organo administrativo de conciliacion competente. La intervencion judicial posterior corresponde al profesional elegido o designado.`;
     },
     previewObject(employer, region = REPRESENTATION_REGIONS.madrid) {
-      return `El Cliente encarga al profesional la redaccion, presentacion de la papeleta de conciliacion laboral y la representacion voluntaria en el acto de conciliacion administrativa ante ${region.organ} contra la empresa ${employer}. El servicio se presta en la comunidad autonoma seleccionada: ${region.label}.`;
+      if (region.label === "Comunidad de Madrid") {
+        return `El Cliente encarga al profesional la redaccion de una papeleta de conciliacion laboral frente a la empresa ${employer}. Si la tramitacion corresponde a la Comunidad de Madrid, el servicio puede incluir presentacion y representacion voluntaria presencial sin cambiar el precio cerrado.`;
+      }
+      return `El Cliente encarga al profesional la redaccion de una papeleta de conciliacion laboral frente a la empresa ${employer}. El servicio es valido para asuntos de trabajadores en Espana y se centra en la preparacion de la papeleta para su presentacion ante el organo competente.`;
     },
   },
   inspeccion: {
@@ -191,21 +181,16 @@ function selectedServiceFromForm() {
 }
 
 function representationRegionFromValue(value) {
-  return REPRESENTATION_REGIONS[value] || REPRESENTATION_REGIONS.madrid;
+  return REPRESENTATION_REGIONS[value] || REPRESENTATION_REGIONS.general;
 }
 
 function representationRegionFromData(data) {
-  return representationRegionFromValue(
-    valueOf(data, "comunidadAutonoma") || valueOf(data, "representacionComunidad") || "madrid"
-  );
+  return representationRegionFromValue(valueOf(data, "comunidadAutonoma") || "general");
 }
 
 function selectedRepresentationRegionFromForm() {
   const selectedCommunity = form.querySelector("select[name='comunidadAutonoma']");
-  const hiddenRepresentation = form.querySelector("input[name='representacionComunidad']");
-  return representationRegionFromValue(
-    selectedCommunity?.value || hiddenRepresentation?.value || "madrid"
-  );
+  return representationRegionFromValue(selectedCommunity?.value || "general");
 }
 
 function serviceRequiresRepresentationRegion(service) {
@@ -1113,8 +1098,6 @@ const inputComunidadAutonoma = form.querySelector("select[name='comunidadAutonom
 const inputProvincia = form.querySelector("input[name='provincia']");
 const inputEmpresa = form.querySelector("input[name='empresa']");
 const serviceInputs = Array.from(form.querySelectorAll("input[name='servicio']"));
-const representationRegionInput = form.querySelector("input[name='representacionComunidad']");
-const representationRegionHint = document.getElementById("representation-region-hint");
 
 const previewNombre = document.getElementById("preview-nombre");
 const previewDni = document.getElementById("preview-dni");
@@ -1134,37 +1117,8 @@ const serviceTabs = Array.from(document.querySelectorAll("[data-service-tab]"));
 const servicePanels = Array.from(document.querySelectorAll("[data-service-panel]"));
 const submitButtonPreview = form.querySelector("button[type='submit']");
 
-function syncRepresentationRegion() {
-  if (representationRegionInput) {
-    representationRegionInput.value = inputComunidadAutonoma?.value || "madrid";
-  }
-}
-
 function selectedServiceKeyFromForm() {
   return serviceInputs.find((input) => input.checked)?.value || "papeleta";
-}
-
-function updateRepresentationAvailability() {
-  syncRepresentationRegion();
-  const serviceKey = selectedServiceKeyFromForm();
-  const communityValue = inputComunidadAutonoma?.value || "";
-  const smacOutsideMadrid = serviceKey === "smac" && communityValue && communityValue !== "madrid";
-
-  if (inputComunidadAutonoma) {
-    inputComunidadAutonoma.setCustomValidity(
-      smacOutsideMadrid ? "La representación en conciliación solo está disponible en la Comunidad de Madrid." : ""
-    );
-  }
-
-  if (representationRegionHint) {
-    if (!communityValue) {
-      representationRegionHint.textContent = "Elige la comunidad en tus datos. Por ahora solo hay representación presencial en la Comunidad de Madrid.";
-    } else if (communityValue === "madrid") {
-      representationRegionHint.textContent = "Representación presencial disponible en la Comunidad de Madrid.";
-    } else {
-      representationRegionHint.textContent = "Ahora mismo la representación presencial solo está disponible en la Comunidad de Madrid. Para otras comunidades puedes contratar solo la papeleta.";
-    }
-  }
 }
 
 function updatePreview() {
@@ -1172,8 +1126,6 @@ function updatePreview() {
   const representationRegion = selectedRepresentationRegionFromForm();
   const employer = inputEmpresa.value.trim() || "____________________";
   const serviceKey = selectedServiceKeyFromForm();
-
-  updateRepresentationAvailability();
 
   serviceTabs.forEach((tab) => {
     const active = tab.dataset.serviceTab === serviceKey;
