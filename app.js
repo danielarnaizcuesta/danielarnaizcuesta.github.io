@@ -123,6 +123,33 @@ const SERVICES = {
       return `El Cliente encarga al profesional la preparacion documental de una denuncia ante la Inspeccion de Trabajo y Seguridad Social frente a la empresa ${employer}. El servicio incluye ordenar hechos, documentos y redactar la denuncia para su presentacion por el Cliente. La actuacion posterior corresponde a la Inspeccion de Trabajo y Seguridad Social.`;
     },
   },
+  presupuesto: {
+    title: "Solicitud de presupuesto para caso alternativo",
+    titleHtml: "Caso alternativo o presupuesto a medida",
+    previewHeading: "SOLICITUD DE PRESUPUESTO",
+    price: "Presupuesto pendiente",
+    priceHtml: "Presupuesto a medida",
+    priceShort: "presupuesto",
+    paypalAmount: null,
+    buttonText: "Solicitar presupuesto",
+    priceDescription: "Describe el caso y se revisara para enviarte presupuesto o encaje del servicio.",
+    filenameSlug: "solicitud-presupuesto",
+    serviceZone: "Espana. Solicitud de estudio inicial para caso alternativo o encargo no estandarizado.",
+    previewZone: "Espana. Solicitud de presupuesto para caso alternativo o necesidad no incluida en las opciones cerradas.",
+    matterService: "Solicitud de presupuesto para caso alternativo o necesidad no estandarizada",
+    previewServiceLine() {
+      return "Solicitud de presupuesto para asunto alternativo o necesidad no incluida en los servicios cerrados.";
+    },
+    objectClause(_employer, _region, _wantsRepresentation, caseSummary = "") {
+      const detail = caseSummary || "Caso pendiente de descripcion detallada por la persona usuaria.";
+      return `La persona usuaria solicita un estudio inicial de su caso para valorar encaje, alcance y presupuesto. El resumen facilitado es el siguiente: ${detail} Esta solicitud no implica aceptacion automatica del encargo ni inicio de trabajo facturable hasta que Daniel Arnaiz Cuesta confirme expresamente el presupuesto o, en su caso, la viabilidad del servicio.`;
+    },
+    previewObject(_employer, _region, _wantsRepresentation, caseSummary = "") {
+      return caseSummary
+        ? `La persona usuaria solicita presupuesto para el siguiente asunto: ${caseSummary}`
+        : "La persona usuaria solicita presupuesto para un caso alternativo o una necesidad no incluida en los servicios cerrados.";
+    },
+  },
 };
 
 const form = document.querySelector("#hire-form");
@@ -180,6 +207,10 @@ function wantsMadridRepresentationFromForm() {
 
 function serviceRequiresRepresentationRegion(service) {
   return Boolean(service.requiresRepresentationRegion);
+}
+
+function serviceRequiresUpfrontPayment(service) {
+  return service !== SERVICES.presupuesto;
 }
 
 function zoneForService(service, region = REPRESENTATION_REGIONS.madrid) {
@@ -405,6 +436,8 @@ function buildSummary(data, paymentInfo = null) {
   const service = selectedServiceFromData(data);
   const representationRegion = representationRegionFromData(data);
   const wantsRepresentation = wantsMadridRepresentationFromData(data);
+  const caseSummary = valueOf(data, "resumenCaso");
+  const needsPayment = serviceRequiresUpfrontPayment(service);
   const serviceZone = zoneForService(service, representationRegion);
   const representationRegionLine = wantsRepresentation
     ? [`Comunidad autonoma para la representacion solicitada: ${representationRegion.label}`, ""]
@@ -435,7 +468,9 @@ function buildSummary(data, paymentInfo = null) {
     : "El Cliente acepta las condiciones del servicio, quedando el inicio material de la preparacion supeditado a la aceptacion expresa del encargo y al regimen legal de desistimiento aplicable.";
 
   let pagoTexto = "";
-  if (paymentInfo && paymentInfo.method === "paypal") {
+  if (!needsPayment) {
+    pagoTexto = `No existe precio cerrado abonable en esta fase. La presente solicitud tiene por objeto que el Prestador revise el asunto y, en su caso, comunique despues un presupuesto a medida o la falta de encaje del servicio. No se iniciara trabajo facturable ni nacera obligacion de pago hasta que exista aceptacion expresa posterior del presupuesto o del encargo definitivo.`;
+  } else if (paymentInfo && paymentInfo.method === "paypal") {
     pagoTexto = `El precio cerrado por la prestacion de este servicio es de ${service.price}, el cual ha sido abonado integramente en este acto mediante PayPal (ID de transaccion: ${paymentInfo.transactionId}). Salvo pacto expreso distinto, el precio cubre el estudio inicial del material remitido y la redaccion del documento contratado. Las actuaciones adicionales, nuevas versiones por cambio sustancial del asunto o servicios distintos requeriran presupuesto aparte. El Prestador emitira la correspondiente factura o justificante de pago de conformidad con la normativa de facturacion vigente.`;
   } else if (paymentInfo && paymentInfo.method === "bizum") {
     pagoTexto = `El precio cerrado por la prestacion de este servicio es de ${service.price}, el cual ha sido abonado en este acto mediante Bizum inmediato desde el telefono ${paymentInfo.telefono} con el concepto "${paymentInfo.concepto}". Salvo pacto expreso distinto, el precio cubre el estudio inicial del material remitido y la redaccion del documento contratado. Las actuaciones adicionales, nuevas versiones por cambio sustancial del asunto o servicios distintos requeriran presupuesto aparte. El Prestador emitira la correspondiente factura o justificante de pago de conformidad con la normativa de facturacion vigente.`;
@@ -462,7 +497,7 @@ function buildSummary(data, paymentInfo = null) {
     "ESTIPULACIONES:",
     "",
     "1. OBJETO, ALCANCE Y NATURALEZA DEL SERVICIO",
-    `${service.objectClause(valueOf(data, "empresa"), representationRegion, wantsRepresentation)} El servicio se presta exclusivamente sobre base documental y constituye una obligacion de medios, no de resultado. No incluye negociacion, defensa judicial ni actuaciones distintas de las expresamente contratadas.`,
+    `${service.objectClause(valueOf(data, "empresa"), representationRegion, wantsRepresentation, caseSummary)} El servicio se presta exclusivamente sobre base documental y constituye una obligacion de medios, no de resultado. No incluye negociacion, defensa judicial ni actuaciones distintas de las expresamente contratadas.`,
     "",
     "2. DOCUMENTACION Y DECLARACIONES DEL CLIENTE",
     "El Cliente declara que los datos y documentos facilitados son veraces, completos, legibles y actualizados, y que existe al menos un plazo razonable de tres dias habiles para el estudio del asunto y la preparacion del documento, sin prescripcion o caducidad inminente. El Cliente se compromete a remitir la documentacion necesaria dentro de plazo. Si omite datos relevantes, facilita versiones contradictorias o modifica sustancialmente el encargo, el Prestador podra rechazarlo, suspenderlo o exigir un nuevo presupuesto.",
@@ -471,7 +506,7 @@ function buildSummary(data, paymentInfo = null) {
     pagoTexto,
     "",
     "4. SOLICITUD, ACEPTACION Y POSIBLE RECHAZO",
-    "La cumplimentacion y envio de la solicitud web cifrada, junto con el pago anticipado cuando proceda, constituye una solicitud de encargo del Cliente. El encargo solo quedara perfeccionado cuando el Prestador confirme expresamente su aceptacion tras revisar la documentacion, la viabilidad temporal, la claridad del objeto y la posibilidad material de prestar el servicio. Si la solicitud no se acepta, no se iniciara trabajo alguno y cualquier importe abonado por anticipado se devolvera integramente por el mismo canal o por otro acordado.",
+    "La cumplimentacion y envio de la solicitud web cifrada, junto con el pago anticipado cuando proceda, constituye una solicitud de encargo del Cliente. El encargo solo quedara perfeccionado cuando el Prestador confirme expresamente su aceptacion tras revisar la documentacion, la viabilidad temporal, la claridad del objeto y la posibilidad material de prestar el servicio. Si la solicitud no se acepta, no se iniciara trabajo alguno y cualquier importe abonado por anticipado se devolvera integramente por el mismo canal o por otro acordado. En las solicitudes de presupuesto sin precio cerrado, el envio no implica obligacion inmediata de pago ni inicio automatico de trabajo facturable.",
     "",
     "5. DERECHO DE DESISTIMIENTO E INICIO ANTICIPADO",
     `Si el Prestador acepta la solicitud y el Cliente tiene la condicion legal de consumidor, este tendra derecho a desistir del contrato en el plazo legal aplicable. ${inicioInmediatoTexto}`,
@@ -491,7 +526,9 @@ function buildSummary(data, paymentInfo = null) {
       ? `Solicita representacion presencial en conciliacion en Madrid: ${wantsRepresentation ? "SI" : "NO"}`
       : null,
     `Solicita inicio inmediato de la preparacion del servicio: ${yesNo(data, "inicioInmediato")}`,
-    paymentInfo ? `Metodo de Pago: Pagado mediante ${paymentInfo.method.toUpperCase()} (${paymentInfo.method === "paypal" ? "ID de Transaccion: " + paymentInfo.transactionId : "Telefono emisor: " + paymentInfo.telefono + ", Concepto: " + paymentInfo.concepto})` : "Metodo de Pago: Pago anticipado pendiente de confirmacion"
+    serviceRequiresUpfrontPayment(service)
+      ? (paymentInfo ? `Metodo de Pago: Pagado mediante ${paymentInfo.method.toUpperCase()} (${paymentInfo.method === "paypal" ? "ID de Transaccion: " + paymentInfo.transactionId : "Telefono emisor: " + paymentInfo.telefono + ", Concepto: " + paymentInfo.concepto})` : "Metodo de Pago: Pago anticipado pendiente de confirmacion")
+      : "Metodo de Pago: Sin pago anticipado en esta fase. Pendiente de presupuesto o aceptacion expresa."
   ].filter(Boolean).join("\n");
 }
 
@@ -530,7 +567,9 @@ async function buildPayload(data, summary, contractPdf) {
       representationRegion: wantsRepresentation ? representationRegion.label : null,
       governingLawAndForum: "Ley espanola. Para clientes consumidores, juzgados y tribunales legalmente competentes. Cuando la competencia territorial sea legalmente disponible, fuero de Madrid.",
       precontractualReadText: "Confirmo que he leido la informacion precontractual.",
-      acceptedConditionsText: `Acepto las condiciones del servicio, la politica de privacidad, el precio cerrado de ${service.price}, la posible revision documental previa y el pago anticipado necesario para tramitar el servicio.`,
+      acceptedConditionsText: serviceRequiresUpfrontPayment(service)
+        ? `Acepto las condiciones del servicio, la politica de privacidad, el precio cerrado de ${service.price}, la posible revision documental previa y el pago anticipado necesario para tramitar el servicio.`
+        : "Acepto las condiciones del servicio, la politica de privacidad y que esta solicitud solo pide revision y presupuesto, sin pago anticipado en esta fase.",
       reasonableTimeDeclarationText: "La solicitud incorpora la declaracion de que existe al menos un plazo razonable de tres dias habiles para el estudio del caso, sin prescripcion o caducidad inminente.",
       madridRepresentationText: wantsRepresentation ? "La solicitud incluye representacion voluntaria presencial en conciliacion para asunto tramitable en la Comunidad de Madrid." : null,
       immediateStartText: data.get("inicioInmediato")
@@ -559,9 +598,12 @@ async function buildPayload(data, summary, contractPdf) {
     matter: {
       employer: valueOf(data, "empresa"),
       service: service.matterService,
+      caseSummary: valueOf(data, "resumenCaso") || null,
       representationRegion: wantsRepresentation ? representationRegion.label : null,
       price: service.price,
-      payment: "pago anticipado pendiente de confirmacion por Bizum o PayPal/Tarjeta",
+      payment: serviceRequiresUpfrontPayment(service)
+        ? "pago anticipado pendiente de confirmacion por Bizum o PayPal/Tarjeta"
+        : "sin pago anticipado en esta fase; pendiente de presupuesto o aceptacion expresa",
     },
     acceptances: {
       precontractualRead: Boolean(data.get("leeInfoPrecontractual")),
@@ -641,13 +683,17 @@ function setLinks(summary, data, evidence = null) {
 
 function showResult(summary, data, evidence = null) {
   setLinks(summary, data, evidence);
+  const service = selectedServiceFromData(data);
+  const needsPayment = serviceRequiresUpfrontPayment(service);
   
   const resultTitle = document.getElementById("result-title");
   const resultDesc = document.getElementById("result-desc");
   
   if (resultTitle && resultDesc) {
     resultTitle.textContent = "Solicitud enviada con Exito";
-    resultDesc.innerHTML = "La solicitud se ha firmado electronicamente de forma segura y el pago anticipado ha quedado registrado o preparado segun el metodo elegido.<br><br>Por favor, <strong>descarga tu copia en PDF</strong> para conservarla. El encargo solo quedara aceptado cuando Daniel confirme expresamente su aceptacion.";
+    resultDesc.innerHTML = needsPayment
+      ? "La solicitud se ha firmado electronicamente de forma segura y el pago anticipado ha quedado registrado o preparado segun el metodo elegido.<br><br>Por favor, <strong>descarga tu copia en PDF</strong> para conservarla. El encargo solo quedara aceptado cuando Daniel confirme expresamente su aceptacion."
+      : "La solicitud se ha firmado electronicamente de forma segura y ha quedado registrada para su revision.<br><br>Por favor, <strong>descarga tu copia en PDF</strong> para conservarla. Daniel te respondera despues con el encaje del asunto o con un presupuesto a medida, y el encargo solo quedara aceptado cuando lo confirme expresamente.";
   }
 
   resultSection.hidden = false;
@@ -659,6 +705,7 @@ async function processContractSubmission(paymentInfo = null) {
 
   const data = new FormData(form);
   const service = selectedServiceFromData(data);
+  const needsPayment = serviceRequiresUpfrontPayment(service);
   const summary = buildSummary(data, paymentInfo);
   const submitButton = form.querySelector("button[type='submit']");
   const originalText = submitButton.textContent;
@@ -712,6 +759,8 @@ async function processContractSubmission(paymentInfo = null) {
       } else if (paymentInfo.method === "bizum") {
         successMsg += ` Pago anticipado por Bizum registrado para verificacion de Daniel.`;
       }
+    } else if (!needsPayment) {
+      successMsg += " Solicitud de presupuesto registrada sin pago anticipado.";
     }
     copyStatus.textContent = successMsg;
     
@@ -805,6 +854,12 @@ form.addEventListener("submit", async (event) => {
 
   const selectedInput = paymentInputs.find((input) => input.checked);
   const selectedMethod = selectedInput ? selectedInput.value : "bizum";
+  const selectedService = selectedServiceFromForm();
+
+  if (!serviceRequiresUpfrontPayment(selectedService)) {
+    await processContractSubmission(null);
+    return;
+  }
 
   if (selectedMethod === "bizum") {
     const bizumTel = form.querySelector("input[name='bizumTelefono']");
@@ -849,6 +904,8 @@ const bizumPaymentPanel = document.getElementById("bizum-payment-panel");
 const paymentMethodNote = document.getElementById("payment-method-note");
 
 function updatePaymentMethod() {
+  const selectedService = selectedServiceFromForm();
+  const needsPayment = serviceRequiresUpfrontPayment(selectedService);
   const selectedInput = paymentInputs.find((input) => input.checked);
   const selectedMethod = selectedInput ? selectedInput.value : "bizum";
 
@@ -856,6 +913,22 @@ function updatePaymentMethod() {
     const active = tab.dataset.paymentTab === selectedMethod;
     tab.setAttribute("aria-selected", active ? "true" : "false");
   });
+
+  const paymentFieldset = document.getElementById("payment-method-fieldset");
+  if (paymentFieldset) {
+    paymentFieldset.style.display = needsPayment ? "" : "none";
+  }
+
+  if (!needsPayment) {
+    if (standardSubmitActions) standardSubmitActions.style.display = "none";
+    if (paypalSubmitActions) paypalSubmitActions.style.display = "none";
+    if (bizumSubmitActions) bizumSubmitActions.style.display = "flex";
+    const bizumSubmitButton = document.getElementById("bizum-submit-button");
+    if (bizumSubmitButton) {
+      bizumSubmitButton.textContent = "Enviar solicitud de presupuesto";
+    }
+    return;
+  }
 
   if (selectedMethod === "paypal") {
     if (standardSubmitActions) standardSubmitActions.style.display = "none";
@@ -1087,7 +1160,9 @@ const inputComunidadAutonoma = form.querySelector("select[name='comunidadAutonom
 const inputProvincia = form.querySelector("input[name='provincia']");
 const inputEmpresa = form.querySelector("input[name='empresa']");
 const inputQuiereRepresentacionMadrid = form.querySelector("select[name='quiereRepresentacionMadrid']");
+const inputResumenCaso = form.querySelector("textarea[name='resumenCaso']");
 const representationChoiceField = document.getElementById("representation-choice-field");
+const caseDetailsField = document.getElementById("case-details-field");
 const serviceInputs = Array.from(form.querySelectorAll("input[name='servicio']"));
 
 const previewNombre = document.getElementById("preview-nombre");
@@ -1130,14 +1205,36 @@ function updateMadridRepresentationField() {
   }
 }
 
+function updateCaseFields() {
+  const serviceKey = selectedServiceKeyFromForm();
+  const isBudget = serviceKey === "presupuesto";
+
+  if (caseDetailsField) {
+    caseDetailsField.hidden = !isBudget;
+  }
+
+  if (inputResumenCaso) {
+    inputResumenCaso.required = isBudget;
+  }
+
+  if (inputEmpresa) {
+    inputEmpresa.required = !isBudget;
+    inputEmpresa.placeholder = isBudget
+      ? "Empresa, organismo, persona o parte implicada (opcional)"
+      : "Nombre de la empresa a reclamar";
+  }
+}
+
 function updatePreview() {
   const service = selectedServiceFromForm();
   const representationRegion = selectedRepresentationRegionFromForm();
   const wantsRepresentation = wantsMadridRepresentationFromForm();
   const employer = inputEmpresa.value.trim() || "____________________";
+  const caseSummary = inputResumenCaso?.value.trim() || "";
   const serviceKey = selectedServiceKeyFromForm();
 
   updateMadridRepresentationField();
+  updateCaseFields();
 
   serviceTabs.forEach((tab) => {
     const active = tab.dataset.serviceTab === serviceKey;
@@ -1153,7 +1250,7 @@ function updatePreview() {
   }
 
   if (previewServiceLine && typeof service.previewServiceLine === "function") {
-    previewServiceLine.textContent = service.previewServiceLine(employer, representationRegion, wantsRepresentation);
+    previewServiceLine.textContent = service.previewServiceLine(employer, representationRegion, wantsRepresentation, caseSummary);
   }
 
   if (previewContractHeading) {
@@ -1161,7 +1258,7 @@ function updatePreview() {
   }
 
   if (previewObject) {
-    previewObject.textContent = service.previewObject(employer, representationRegion, wantsRepresentation);
+    previewObject.textContent = service.previewObject(employer, representationRegion, wantsRepresentation, caseSummary);
   }
 
   if (previewPrice) {
@@ -1198,7 +1295,9 @@ function updatePreview() {
     bizumAmountText.textContent = service.priceHtml;
   }
   if (bizumSubmitButton) {
-    bizumSubmitButton.textContent = `Confirmar Bizum y formalizar por ${service.priceShort} €`;
+    bizumSubmitButton.textContent = serviceRequiresUpfrontPayment(service)
+      ? `Confirmar Bizum y formalizar por ${service.priceShort} €`
+      : "Enviar solicitud de presupuesto";
   }
 
   if (previewNombre) {
@@ -1240,6 +1339,7 @@ function updatePreview() {
   inputProvincia,
   inputEmpresa,
   inputQuiereRepresentacionMadrid,
+  inputResumenCaso,
 ].forEach((input) => {
   if (input) {
     input.addEventListener("input", updatePreview);

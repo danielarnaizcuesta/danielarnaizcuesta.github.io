@@ -68,7 +68,7 @@
           },
           {
             "@type": "Question",
-            "name": "¿Hay pago anticipado?",
+            "name": "¿Hay pago anticipado en los servicios cerrados?",
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "Si. El precio del servicio se abona por adelantado por Bizum o PayPal/tarjeta. La papeleta de conciliacion cuesta 120 euros IVA incluido, incluyendo en Madrid la posible representacion voluntaria presencial cuando sea viable, y la denuncia ante Inspeccion de Trabajo cuesta 30 euros IVA incluido."
@@ -125,6 +125,10 @@
                   <input type="radio" name="servicio" value="inspeccion" />
                   <span>Inspección</span>
                 </label>
+                <label class="service-tab" role="tab" aria-selected="false" data-service-tab="presupuesto">
+                  <input type="radio" name="servicio" value="presupuesto" />
+                  <span>Presupuesto</span>
+                </label>
               </div>
               <div class="service-tab-panels">
                 <section class="service-pane" data-service-panel="papeleta">
@@ -134,6 +138,10 @@
                 <section class="service-pane" data-service-panel="inspeccion" hidden>
                   <h3>Denuncia ante Inspección de Trabajo</h3>
                   <p>30,00 € IVA incluido. Preparación documental, orden de hechos y redacción de denuncia ante la Inspección de Trabajo y Seguridad Social con el mismo sistema de contratación reforzado.</p>
+                </section>
+                <section class="service-pane" data-service-panel="presupuesto" hidden>
+                  <h3>Caso alternativo o presupuesto a medida</h3>
+                  <p>Si tu asunto no encaja en las opciones cerradas, puedes describirlo aquí y solicitar un presupuesto sin pago anticipado en esta fase.</p>
                 </section>
               </div>
             </fieldset>
@@ -207,6 +215,14 @@
                   <input name="empresa" required placeholder="Nombre de la empresa a reclamar" />
                 </label>
               </div>
+            </fieldset>
+
+            <fieldset id="case-details-field" hidden>
+              <legend>Describe tu caso</legend>
+              <label>
+                Resumen del caso y lo que necesitas
+                <textarea name="resumenCaso" placeholder="Explica brevemente el asunto, plazos, documentación disponible y qué presupuesto o alternativa necesitas." rows="6"></textarea>
+              </label>
             </fieldset>
 
             <fieldset id="representation-choice-field">
@@ -326,8 +342,8 @@
           <h2 id="faq-title">Dudas habituales antes de reclamar</h2>
           <div class="faq-grid">
             <details open>
-              <summary>¿Cómo funciona el pago anticipado?</summary>
-              <p>Antes de iniciar el análisis del expediente y la redacción documental, se abona por adelantado el precio cerrado del servicio por Bizum o PayPal/tarjeta. Las tarifas son finales y transparentes.</p>
+              <summary>¿Cómo funciona el pago anticipado en los servicios cerrados?</summary>
+              <p>Antes de iniciar el análisis del expediente y la redacción documental, se abona por adelantado el precio cerrado del servicio por Bizum o PayPal/tarjeta. Si el asunto requiere presupuesto a medida, primero se envía la solicitud y después se confirma el encaje y el precio.</p>
             </details>
             <details>
               <summary>¿Qué pasa si ya he presentado la papeleta por mi cuenta?</summary>
