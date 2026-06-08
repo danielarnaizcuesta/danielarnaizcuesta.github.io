@@ -123,30 +123,6 @@ const SERVICES = {
       return `El Cliente encarga al profesional la preparacion documental de una denuncia ante la Inspeccion de Trabajo y Seguridad Social frente a la empresa ${employer}. El servicio incluye ordenar hechos, documentos y redactar la denuncia para su presentacion por el Cliente. La actuacion posterior corresponde a la Inspeccion de Trabajo y Seguridad Social.`;
     },
   },
-  bancario: {
-    title: "Gestion extrajudicial bancaria sobre prestamos o creditos abusivos",
-    titleHtml: "Gestion extrajudicial bancaria",
-    previewHeading: "SOLICITUD DE ENCARGO - GESTION EXTRAJUDICIAL BANCARIA",
-    price: "180,00 EUR IVA incluido",
-    priceHtml: "180,00 € IVA incluido",
-    priceShort: "180",
-    paypalAmount: "180.00",
-    buttonText: "Contratar gestion bancaria por 180 €",
-    priceDescription: "Provision de fondos previa por Bizum o PayPal/tarjeta antes de preparar la reclamacion o propuesta extrajudicial.",
-    filenameSlug: "gestion-extrajudicial-bancaria",
-    serviceZone: "Espana. Servicio documental y de gestion extrajudicial para consumidores sobre prestamos, creditos o tarjetas con posibles intereses o condiciones abusivas.",
-    previewZone: "Espana. Gestion extrajudicial bancaria para consumidores centrada en reclamacion y propuesta de acuerdo.",
-    matterService: "Gestion extrajudicial bancaria para consumidores sobre prestamos, creditos o tarjetas con posibles condiciones abusivas",
-    previewServiceLine(employer) {
-      return `Gestion extrajudicial bancaria frente a la entidad ${employer}.`;
-    },
-    objectClause(employer) {
-      return `El Cliente encarga al Profesional la preparacion documental y gestion extrajudicial frente a la entidad ${employer} en relacion con un prestamo, credito, tarjeta u otro producto de financiacion con posibles intereses, comisiones o condiciones abusivas. El servicio puede incluir revision documental inicial, ordenacion de importes y hechos, redaccion de reclamacion extrajudicial, propuesta de acuerdo y comunicaciones orientadas a alcanzar una solucion negociada. Podra intervenir un colaborador externo de apoyo documental o negociacion bajo coordinacion del Profesional. Mediacion oficial regulada, asesoramiento financiero o de inversion y valoracion definitiva de nulidad, usura o abusividad corresponden a los cauces o profesionales competentes; si el asunto pasa a via judicial, la intervencion posterior corresponde al profesional elegido o designado y a los tribunales.`;
-    },
-    previewObject(employer) {
-      return `El Cliente encarga al profesional la preparacion documental y gestion extrajudicial frente a la entidad ${employer} por un prestamo, credito o tarjeta con posibles condiciones abusivas. El servicio trabaja una solucion negociada. Si el asunto pasa a via judicial, la intervencion posterior corresponde al profesional elegido o designado.`;
-    },
-  },
 };
 
 const form = document.querySelector("#hire-form");
