@@ -195,12 +195,17 @@ function representationRegionFromValue(value) {
 }
 
 function representationRegionFromData(data) {
-  return representationRegionFromValue(valueOf(data, "representacionComunidad") || "madrid");
+  return representationRegionFromValue(
+    valueOf(data, "comunidadAutonoma") || valueOf(data, "representacionComunidad") || "madrid"
+  );
 }
 
 function selectedRepresentationRegionFromForm() {
-  const selected = form.querySelector("select[name='representacionComunidad']");
-  return representationRegionFromValue(selected ? selected.value : "madrid");
+  const selectedCommunity = form.querySelector("select[name='comunidadAutonoma']");
+  const hiddenRepresentation = form.querySelector("input[name='representacionComunidad']");
+  return representationRegionFromValue(
+    selectedCommunity?.value || hiddenRepresentation?.value || "madrid"
+  );
 }
 
 function serviceRequiresRepresentationRegion(service) {
@@ -441,12 +446,14 @@ function buildSummary(data, paymentInfo = null) {
   const piso = valueOf(data, "piso");
   const cp = valueOf(data, "cp");
   const localidad = valueOf(data, "localidad");
+  const comunidadAutonoma = valueOf(data, "comunidadAutonoma");
   const provincia = valueOf(data, "provincia");
   const domicilioCompleto = [
     direccion,
     piso ? `Piso o puerta: ${piso}` : "",
     `CP ${cp}`,
     localidad,
+    comunidadAutonoma,
     provincia,
   ]
     .filter(Boolean)
@@ -570,6 +577,7 @@ async function buildPayload(data, summary, contractPdf) {
         floorDoor: valueOf(data, "piso"),
         postalCode: valueOf(data, "cp"),
         city: valueOf(data, "localidad"),
+        region: valueOf(data, "comunidadAutonoma"),
         province: valueOf(data, "provincia"),
       },
     },
@@ -797,6 +805,7 @@ form.addEventListener("submit", async (event) => {
       piso: "Piso o puerta",
       cp: "Codigo Postal",
       localidad: "Localidad o Ciudad",
+      comunidadAutonoma: "Comunidad autonoma",
       provincia: "Provincia",
       empresa: "Empresa a reclamar",
       leeInfoPrecontractual: "Leer informacion precontractual",
@@ -922,6 +931,7 @@ function initPayPalButtons() {
           piso: "Piso o puerta",
           cp: "Código Postal",
           localidad: "Localidad o Ciudad",
+          comunidadAutonoma: "Comunidad autónoma",
           provincia: "Provincia",
           empresa: "Empresa a reclamar",
           leeInfoPrecontractual: "Leer informaciÃ³n precontractual",
@@ -1099,10 +1109,12 @@ const inputDireccion = form.querySelector("input[name='direccion']");
 const inputPiso = form.querySelector("input[name='piso']");
 const inputCp = form.querySelector("input[name='cp']");
 const inputLocalidad = form.querySelector("input[name='localidad']");
+const inputComunidadAutonoma = form.querySelector("select[name='comunidadAutonoma']");
 const inputProvincia = form.querySelector("input[name='provincia']");
 const inputEmpresa = form.querySelector("input[name='empresa']");
 const serviceInputs = Array.from(form.querySelectorAll("input[name='servicio']"));
-const representationRegionSelect = form.querySelector("select[name='representacionComunidad']");
+const representationRegionInput = form.querySelector("input[name='representacionComunidad']");
+const representationRegionHint = document.getElementById("representation-region-hint");
 
 const previewNombre = document.getElementById("preview-nombre");
 const previewDni = document.getElementById("preview-dni");
@@ -1122,11 +1134,46 @@ const serviceTabs = Array.from(document.querySelectorAll("[data-service-tab]"));
 const servicePanels = Array.from(document.querySelectorAll("[data-service-panel]"));
 const submitButtonPreview = form.querySelector("button[type='submit']");
 
+function syncRepresentationRegion() {
+  if (representationRegionInput) {
+    representationRegionInput.value = inputComunidadAutonoma?.value || "madrid";
+  }
+}
+
+function selectedServiceKeyFromForm() {
+  return serviceInputs.find((input) => input.checked)?.value || "papeleta";
+}
+
+function updateRepresentationAvailability() {
+  syncRepresentationRegion();
+  const serviceKey = selectedServiceKeyFromForm();
+  const communityValue = inputComunidadAutonoma?.value || "";
+  const smacOutsideMadrid = serviceKey === "smac" && communityValue && communityValue !== "madrid";
+
+  if (inputComunidadAutonoma) {
+    inputComunidadAutonoma.setCustomValidity(
+      smacOutsideMadrid ? "La representación en conciliación solo está disponible en la Comunidad de Madrid." : ""
+    );
+  }
+
+  if (representationRegionHint) {
+    if (!communityValue) {
+      representationRegionHint.textContent = "Elige la comunidad en tus datos. Por ahora solo hay representación presencial en la Comunidad de Madrid.";
+    } else if (communityValue === "madrid") {
+      representationRegionHint.textContent = "Representación presencial disponible en la Comunidad de Madrid.";
+    } else {
+      representationRegionHint.textContent = "Ahora mismo la representación presencial solo está disponible en la Comunidad de Madrid. Para otras comunidades puedes contratar solo la papeleta.";
+    }
+  }
+}
+
 function updatePreview() {
   const service = selectedServiceFromForm();
   const representationRegion = selectedRepresentationRegionFromForm();
   const employer = inputEmpresa.value.trim() || "____________________";
-  const serviceKey = serviceInputs.find((input) => input.checked)?.value || "papeleta";
+  const serviceKey = selectedServiceKeyFromForm();
+
+  updateRepresentationAvailability();
 
   serviceTabs.forEach((tab) => {
     const active = tab.dataset.serviceTab === serviceKey;
@@ -1208,6 +1255,9 @@ function updatePreview() {
       inputPiso.value.trim() ? `Piso o puerta: ${inputPiso.value.trim()}` : "",
       inputCp.value.trim() ? `CP ${inputCp.value.trim()}` : "",
       inputLocalidad.value.trim(),
+      inputComunidadAutonoma?.selectedOptions?.[0]?.textContent && inputComunidadAutonoma.value
+        ? inputComunidadAutonoma.selectedOptions[0].textContent
+        : "",
       inputProvincia.value.trim(),
     ].filter(Boolean);
 
@@ -1222,6 +1272,7 @@ function updatePreview() {
   inputPiso,
   inputCp,
   inputLocalidad,
+  inputComunidadAutonoma,
   inputProvincia,
   inputEmpresa,
 ].forEach((input) => {
@@ -1233,10 +1284,6 @@ function updatePreview() {
 serviceInputs.forEach((input) => {
   input.addEventListener("change", updatePreview);
 });
-
-if (representationRegionSelect) {
-  representationRegionSelect.addEventListener("change", updatePreview);
-}
 
 paymentInputs.forEach((input) => {
   input.addEventListener("change", () => {
