@@ -455,7 +455,7 @@ function buildSummary(data, paymentInfo = null) {
     `${service.objectClause(valueOf(data, "empresa"), representationRegion)} El servicio se presta exclusivamente sobre base documental y constituye una obligacion de medios, no de resultado. No incluye presentacion, negociacion, representacion presencial, asistencia a actos, defensa judicial ni actuaciones distintas de la redaccion expresamente contratada.`,
     "",
     "2. DOCUMENTACION Y DECLARACIONES DEL CLIENTE",
-    "El Cliente declara que los datos y documentos facilitados son veraces, completos, legibles y actualizados, y que dispone de un plazo razonable para el estudio del asunto y la preparacion del documento. El Cliente se compromete a remitir la documentacion necesaria dentro de plazo. Si omite datos relevantes, facilita versiones contradictorias o modifica sustancialmente el encargo, el Prestador podra rechazarlo, suspenderlo o exigir un nuevo presupuesto.",
+    "El Cliente declara que los datos y documentos facilitados son veraces, completos, legibles y actualizados, y que existe al menos un plazo razonable de tres dias habiles para el estudio del asunto y la preparacion del documento, sin prescripcion o caducidad inminente. El Cliente se compromete a remitir la documentacion necesaria dentro de plazo. Si omite datos relevantes, facilita versiones contradictorias o modifica sustancialmente el encargo, el Prestador podra rechazarlo, suspenderlo o exigir un nuevo presupuesto.",
     "",
     "3. PRECIO, PAGO Y FACTURACION",
     pagoTexto,
@@ -477,7 +477,6 @@ function buildSummary(data, paymentInfo = null) {
     `Servicio contratado: ${service.title}`,
     `Confirma haber leido la informacion precontractual y la solicitud de encargo: ${yesNo(data, "leeInfoPrecontractual")}`,
     `Acepta condiciones de servicio, privacidad y precio cerrado de ${service.price}: ${yesNo(data, "aceptaCondiciones")}`,
-    `Declara que existe al menos un plazo razonable de tres dias habiles sin prescripcion o caducidad inminente: ${yesNo(data, "declaraPlazoRazonable")}`,
     `Solicita inicio inmediato de la preparacion del servicio: ${yesNo(data, "inicioInmediato")}`,
     paymentInfo ? `Metodo de Pago: Pagado mediante ${paymentInfo.method.toUpperCase()} (${paymentInfo.method === "paypal" ? "ID de Transaccion: " + paymentInfo.transactionId : "Telefono emisor: " + paymentInfo.telefono + ", Concepto: " + paymentInfo.concepto})` : "Metodo de Pago: Provision de fondos pendiente de confirmacion"
   ].join("\n");
@@ -518,7 +517,7 @@ async function buildPayload(data, summary, contractPdf) {
       governingLawAndForum: "Ley espanola. Para clientes consumidores, juzgados y tribunales legalmente competentes. Cuando la competencia territorial sea legalmente disponible, fuero de Madrid.",
       precontractualReadText: "Confirmo que he leido la informacion precontractual, la solicitud de encargo y las condiciones del servicio.",
       acceptedConditionsText: `Acepto las condiciones del servicio, la politica de privacidad, el precio cerrado de ${service.price}, la posible revision documental previa y la provision de fondos previa necesaria para tramitar el servicio.`,
-      reasonableTimeDeclarationText: "Declaro que existe al menos un plazo razonable de tres dias habiles para el estudio del caso, sin prescripcion o caducidad inminente.",
+      reasonableTimeDeclarationText: "La solicitud incorpora la declaracion de que existe al menos un plazo razonable de tres dias habiles para el estudio del caso, sin prescripcion o caducidad inminente.",
       immediateStartText: data.get("inicioInmediato")
         ? "Solicito el inicio inmediato de la preparacion del servicio sin esperar al plazo legal de desistimiento."
         : null,
@@ -552,7 +551,6 @@ async function buildPayload(data, summary, contractPdf) {
     acceptances: {
       precontractualRead: Boolean(data.get("leeInfoPrecontractual")),
       conditionsAndPrivacy: Boolean(data.get("aceptaCondiciones")),
-      reasonableTimeDeclaration: Boolean(data.get("declaraPlazoRazonable")),
       immediateStart: Boolean(data.get("inicioInmediato")),
     },
   };
@@ -770,8 +768,7 @@ form.addEventListener("submit", async (event) => {
       provincia: "Provincia",
       empresa: "Empresa a reclamar",
       leeInfoPrecontractual: "Leer informacion precontractual",
-      aceptaCondiciones: "Aceptar condiciones del servicio y privacidad",
-      declaraPlazoRazonable: "Declarar plazo razonable de tres dias habiles"
+      aceptaCondiciones: "Aceptar condiciones del servicio y privacidad"
     };
 
     const invalidFields = [];
