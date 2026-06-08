@@ -70,9 +70,9 @@ const SERVICES = {
     title: "Redaccion de papeleta de conciliacion laboral",
     titleHtml: "Papeleta de conciliacion laboral",
     previewHeading: "SOLICITUD DE ENCARGO - REDACCION DE PAPELETA",
-    previewServiceLine(employer, region = REPRESENTATION_REGIONS.madrid) {
-      if (region.label === "Comunidad de Madrid") {
-        return `Papeleta de conciliacion laboral frente a la empresa ${employer}, con tramitacion adaptada al ${region.organ} y posible representacion voluntaria presencial.`;
+    previewServiceLine(employer, region = REPRESENTATION_REGIONS.madrid, wantsRepresentation = false) {
+      if (region.label === "Comunidad de Madrid" && wantsRepresentation) {
+        return `Papeleta de conciliacion laboral frente a la empresa ${employer}, con tramitacion adaptada al ${region.organ} y solicitud de representacion voluntaria presencial.`;
       }
       return `Papeleta de conciliacion laboral frente a la empresa ${employer}.`;
     },
@@ -86,15 +86,15 @@ const SERVICES = {
     serviceZone: "Espana. Servicio de preparacion de papeleta de conciliacion laboral para su tramitacion ante el organo administrativo competente, con posible representacion presencial en la Comunidad de Madrid.",
     previewZone: "Espana. Papeleta de conciliacion laboral. En la Comunidad de Madrid puede incluir representacion voluntaria presencial sin cambiar el precio.",
     matterService: "Preparacion de papeleta de conciliacion laboral para su tramitacion ante el organo administrativo competente, con posible representacion voluntaria en la Comunidad de Madrid",
-    objectClause(employer, region = REPRESENTATION_REGIONS.madrid) {
-      if (region.label === "Comunidad de Madrid") {
+    objectClause(employer, region = REPRESENTATION_REGIONS.madrid, wantsRepresentation = false) {
+      if (region.label === "Comunidad de Madrid" && wantsRepresentation) {
         return `El Cliente encarga al Profesional la redaccion de una papeleta de conciliacion laboral frente a la empresa ${employer}, con base en la informacion y documentacion facilitada por el Cliente, para su tramitacion ante ${region.organ}. El alcance comprende analisis documental inicial, ordenacion de hechos, cuantificacion orientativa cuando proceda, redaccion del escrito y, cuando resulte viable, presentacion y representacion voluntaria presencial en el acto de conciliacion dentro de la Comunidad de Madrid sin variacion del precio cerrado. La intervencion judicial posterior corresponde al profesional elegido o designado.`;
       }
       return `El Cliente encarga al Profesional la redaccion de una papeleta de conciliacion laboral frente a la empresa ${employer}, con base en la informacion y documentacion facilitada por el Cliente. El alcance comprende analisis documental inicial, ordenacion de hechos, cuantificacion orientativa cuando proceda y redaccion del escrito para su presentacion por el Cliente ante el organo administrativo de conciliacion competente. La intervencion judicial posterior corresponde al profesional elegido o designado.`;
     },
-    previewObject(employer, region = REPRESENTATION_REGIONS.madrid) {
-      if (region.label === "Comunidad de Madrid") {
-        return `El Cliente encarga al profesional la redaccion de una papeleta de conciliacion laboral frente a la empresa ${employer}. Si la tramitacion corresponde a la Comunidad de Madrid, el servicio puede incluir presentacion y representacion voluntaria presencial sin cambiar el precio cerrado.`;
+    previewObject(employer, region = REPRESENTATION_REGIONS.madrid, wantsRepresentation = false) {
+      if (region.label === "Comunidad de Madrid" && wantsRepresentation) {
+        return `El Cliente encarga al profesional la redaccion de una papeleta de conciliacion laboral frente a la empresa ${employer}. La solicitud incluye presentacion y representacion voluntaria presencial en la Comunidad de Madrid sin cambiar el precio cerrado, cuando resulte viable.`;
       }
       return `El Cliente encarga al profesional la redaccion de una papeleta de conciliacion laboral frente a la empresa ${employer}. El servicio es valido para asuntos de trabajadores en Espana y se centra en la preparacion de la papeleta para su presentacion ante el organo competente.`;
     },
@@ -167,6 +167,15 @@ function representationRegionFromData(data) {
 function selectedRepresentationRegionFromForm() {
   const selectedCommunity = form.querySelector("select[name='comunidadAutonoma']");
   return representationRegionFromValue(selectedCommunity?.value || "general");
+}
+
+function wantsMadridRepresentationFromData(data) {
+  return valueOf(data, "quiereRepresentacionMadrid") === "si";
+}
+
+function wantsMadridRepresentationFromForm() {
+  const selected = form.querySelector("select[name='quiereRepresentacionMadrid']");
+  return selected?.value === "si";
 }
 
 function serviceRequiresRepresentationRegion(service) {
@@ -395,9 +404,10 @@ async function encryptSubmission(payload) {
 function buildSummary(data, paymentInfo = null) {
   const service = selectedServiceFromData(data);
   const representationRegion = representationRegionFromData(data);
+  const wantsRepresentation = wantsMadridRepresentationFromData(data);
   const serviceZone = zoneForService(service, representationRegion);
-  const representationRegionLine = serviceRequiresRepresentationRegion(service)
-    ? [`Comunidad autonoma seleccionada para representacion: ${representationRegion.label}`, ""]
+  const representationRegionLine = wantsRepresentation
+    ? [`Comunidad autonoma para la representacion solicitada: ${representationRegion.label}`, ""]
     : [];
   const generatedAt = new Intl.DateTimeFormat("es-ES", {
     dateStyle: "short",
@@ -452,7 +462,7 @@ function buildSummary(data, paymentInfo = null) {
     "ESTIPULACIONES:",
     "",
     "1. OBJETO, ALCANCE Y NATURALEZA DEL SERVICIO",
-    `${service.objectClause(valueOf(data, "empresa"), representationRegion)} El servicio se presta exclusivamente sobre base documental y constituye una obligacion de medios, no de resultado. No incluye presentacion, negociacion, representacion presencial, asistencia a actos, defensa judicial ni actuaciones distintas de la redaccion expresamente contratada.`,
+    `${service.objectClause(valueOf(data, "empresa"), representationRegion, wantsRepresentation)} El servicio se presta exclusivamente sobre base documental y constituye una obligacion de medios, no de resultado. No incluye negociacion, defensa judicial ni actuaciones distintas de las expresamente contratadas.`,
     "",
     "2. DOCUMENTACION Y DECLARACIONES DEL CLIENTE",
     "El Cliente declara que los datos y documentos facilitados son veraces, completos, legibles y actualizados, y que existe al menos un plazo razonable de tres dias habiles para el estudio del asunto y la preparacion del documento, sin prescripcion o caducidad inminente. El Cliente se compromete a remitir la documentacion necesaria dentro de plazo. Si omite datos relevantes, facilita versiones contradictorias o modifica sustancialmente el encargo, el Prestador podra rechazarlo, suspenderlo o exigir un nuevo presupuesto.",
@@ -477,14 +487,18 @@ function buildSummary(data, paymentInfo = null) {
     `Servicio contratado: ${service.title}`,
     `Confirma haber leido la informacion precontractual y la solicitud de encargo: ${yesNo(data, "leeInfoPrecontractual")}`,
     `Acepta condiciones de servicio, privacidad y precio cerrado de ${service.price}: ${yesNo(data, "aceptaCondiciones")}`,
+    service.title === SERVICES.papeleta.title && representationRegion.label === "Comunidad de Madrid"
+      ? `Solicita representacion presencial en conciliacion en Madrid: ${wantsRepresentation ? "SI" : "NO"}`
+      : null,
     `Solicita inicio inmediato de la preparacion del servicio: ${yesNo(data, "inicioInmediato")}`,
     paymentInfo ? `Metodo de Pago: Pagado mediante ${paymentInfo.method.toUpperCase()} (${paymentInfo.method === "paypal" ? "ID de Transaccion: " + paymentInfo.transactionId : "Telefono emisor: " + paymentInfo.telefono + ", Concepto: " + paymentInfo.concepto})` : "Metodo de Pago: Provision de fondos pendiente de confirmacion"
-  ].join("\n");
+  ].filter(Boolean).join("\n");
 }
 
 async function buildPayload(data, summary, contractPdf) {
   const service = selectedServiceFromData(data);
   const representationRegion = representationRegionFromData(data);
+  const wantsRepresentation = wantsMadridRepresentationFromData(data);
   const serviceZone = zoneForService(service, representationRegion);
   const submittedAt = new Date().toISOString();
   const reference = submissionReference();
@@ -513,11 +527,12 @@ async function buildPayload(data, summary, contractPdf) {
       serviceTitle: service.title,
       contractPlace: "Madrid",
       serviceZone,
-      representationRegion: serviceRequiresRepresentationRegion(service) ? representationRegion.label : null,
+      representationRegion: wantsRepresentation ? representationRegion.label : null,
       governingLawAndForum: "Ley espanola. Para clientes consumidores, juzgados y tribunales legalmente competentes. Cuando la competencia territorial sea legalmente disponible, fuero de Madrid.",
       precontractualReadText: "Confirmo que he leido la informacion precontractual, la solicitud de encargo y las condiciones del servicio.",
       acceptedConditionsText: `Acepto las condiciones del servicio, la politica de privacidad, el precio cerrado de ${service.price}, la posible revision documental previa y la provision de fondos previa necesaria para tramitar el servicio.`,
       reasonableTimeDeclarationText: "La solicitud incorpora la declaracion de que existe al menos un plazo razonable de tres dias habiles para el estudio del caso, sin prescripcion o caducidad inminente.",
+      madridRepresentationText: wantsRepresentation ? "La solicitud incluye representacion voluntaria presencial en conciliacion para asunto tramitable en la Comunidad de Madrid." : null,
       immediateStartText: data.get("inicioInmediato")
         ? "Solicito el inicio inmediato de la preparacion del servicio sin esperar al plazo legal de desistimiento."
         : null,
@@ -544,13 +559,14 @@ async function buildPayload(data, summary, contractPdf) {
     matter: {
       employer: valueOf(data, "empresa"),
       service: service.matterService,
-      representationRegion: serviceRequiresRepresentationRegion(service) ? representationRegion.label : null,
+      representationRegion: wantsRepresentation ? representationRegion.label : null,
       price: service.price,
       payment: "provision de fondos previa pendiente de confirmacion por Bizum o PayPal/Tarjeta",
     },
     acceptances: {
       precontractualRead: Boolean(data.get("leeInfoPrecontractual")),
       conditionsAndPrivacy: Boolean(data.get("aceptaCondiciones")),
+      madridRepresentationRequested: wantsRepresentation,
       immediateStart: Boolean(data.get("inicioInmediato")),
     },
   };
@@ -1070,6 +1086,8 @@ const inputLocalidad = form.querySelector("input[name='localidad']");
 const inputComunidadAutonoma = form.querySelector("select[name='comunidadAutonoma']");
 const inputProvincia = form.querySelector("input[name='provincia']");
 const inputEmpresa = form.querySelector("input[name='empresa']");
+const inputQuiereRepresentacionMadrid = form.querySelector("select[name='quiereRepresentacionMadrid']");
+const representationChoiceField = document.getElementById("representation-choice-field");
 const serviceInputs = Array.from(form.querySelectorAll("input[name='servicio']"));
 
 const previewNombre = document.getElementById("preview-nombre");
@@ -1094,11 +1112,28 @@ function selectedServiceKeyFromForm() {
   return serviceInputs.find((input) => input.checked)?.value || "papeleta";
 }
 
+function updateMadridRepresentationField() {
+  const serviceKey = selectedServiceKeyFromForm();
+  const isMadrid = inputComunidadAutonoma?.value === "madrid";
+  const shouldShow = serviceKey === "papeleta" && isMadrid;
+
+  if (representationChoiceField) {
+    representationChoiceField.hidden = !shouldShow;
+  }
+
+  if (inputQuiereRepresentacionMadrid && !shouldShow) {
+    inputQuiereRepresentacionMadrid.value = "no";
+  }
+}
+
 function updatePreview() {
   const service = selectedServiceFromForm();
   const representationRegion = selectedRepresentationRegionFromForm();
+  const wantsRepresentation = wantsMadridRepresentationFromForm();
   const employer = inputEmpresa.value.trim() || "____________________";
   const serviceKey = selectedServiceKeyFromForm();
+
+  updateMadridRepresentationField();
 
   serviceTabs.forEach((tab) => {
     const active = tab.dataset.serviceTab === serviceKey;
@@ -1114,7 +1149,7 @@ function updatePreview() {
   }
 
   if (previewServiceLine && typeof service.previewServiceLine === "function") {
-    previewServiceLine.textContent = service.previewServiceLine(employer, representationRegion);
+    previewServiceLine.textContent = service.previewServiceLine(employer, representationRegion, wantsRepresentation);
   }
 
   if (previewContractHeading) {
@@ -1122,7 +1157,7 @@ function updatePreview() {
   }
 
   if (previewObject) {
-    previewObject.textContent = service.previewObject(employer, representationRegion);
+    previewObject.textContent = service.previewObject(employer, representationRegion, wantsRepresentation);
   }
 
   if (previewPrice) {
@@ -1200,6 +1235,7 @@ function updatePreview() {
   inputComunidadAutonoma,
   inputProvincia,
   inputEmpresa,
+  inputQuiereRepresentacionMadrid,
 ].forEach((input) => {
   if (input) {
     input.addEventListener("input", updatePreview);
