@@ -81,7 +81,7 @@ const SERVICES = {
     priceShort: "120",
     paypalAmount: "120.00",
     buttonText: "Contratar redaccion de papeleta por 120 €",
-    priceDescription: "Provision de fondos previa por Bizum o PayPal/tarjeta antes de iniciar la redaccion.",
+    priceDescription: "Pago anticipado por Bizum o PayPal/tarjeta antes de iniciar la redaccion.",
     filenameSlug: "papeleta-conciliacion",
     serviceZone: "Espana. Servicio de preparacion de papeleta de conciliacion laboral para su tramitacion ante el organo administrativo competente, con posible representacion presencial en la Comunidad de Madrid.",
     previewZone: "Espana. Papeleta de conciliacion laboral. En la Comunidad de Madrid puede incluir representacion voluntaria presencial sin cambiar el precio.",
@@ -108,7 +108,7 @@ const SERVICES = {
     priceShort: "30",
     paypalAmount: "30.00",
     buttonText: "Contratar denuncia a Inspeccion por 30 €",
-    priceDescription: "Provision de fondos previa por Bizum o PayPal/tarjeta antes de preparar la denuncia.",
+    priceDescription: "Pago anticipado por Bizum o PayPal/tarjeta antes de preparar la denuncia.",
     filenameSlug: "denuncia-inspeccion-trabajo",
     serviceZone: "Espana. Servicio documental de preparacion de denuncia ante la Inspeccion de Trabajo y Seguridad Social.",
     previewZone: "Espana. Preparacion documental de denuncia ante la Inspeccion de Trabajo y Seguridad Social.",
@@ -440,7 +440,7 @@ function buildSummary(data, paymentInfo = null) {
   } else if (paymentInfo && paymentInfo.method === "bizum") {
     pagoTexto = `El precio cerrado por la prestacion de este servicio es de ${service.price}, el cual ha sido abonado en este acto mediante Bizum inmediato desde el telefono ${paymentInfo.telefono} con el concepto "${paymentInfo.concepto}". Salvo pacto expreso distinto, el precio cubre el estudio inicial del material remitido y la redaccion del documento contratado. Las actuaciones adicionales, nuevas versiones por cambio sustancial del asunto o servicios distintos requeriran presupuesto aparte. El Prestador emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.`;
   } else {
-    pagoTexto = `El precio cerrado por la prestacion de este servicio es de ${service.price}. La aportacion de los datos solicitados por el Cliente es obligatoria para la correcta ejecucion del encargo y su facturacion. Salvo pacto expreso distinto, el precio cubre el estudio inicial del material remitido y la redaccion del documento contratado. Las actuaciones adicionales, nuevas versiones por cambio sustancial del asunto o servicios distintos requeriran presupuesto aparte. El servicio solo se iniciara una vez confirmada la provision de fondos previa por Bizum o PayPal/Tarjeta. El Prestador emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.`;
+    pagoTexto = `El precio cerrado por la prestacion de este servicio es de ${service.price}. La aportacion de los datos solicitados por el Cliente es obligatoria para la correcta ejecucion del encargo y su facturacion. Salvo pacto expreso distinto, el precio cubre el estudio inicial del material remitido y la redaccion del documento contratado. Las actuaciones adicionales, nuevas versiones por cambio sustancial del asunto o servicios distintos requeriran presupuesto aparte. El servicio solo se iniciara una vez confirmado el pago anticipado por Bizum o PayPal/Tarjeta. El Prestador emitira la correspondiente factura de conformidad con la normativa de facturacion vigente.`;
   }
 
   return [
@@ -471,7 +471,7 @@ function buildSummary(data, paymentInfo = null) {
     pagoTexto,
     "",
     "4. SOLICITUD, ACEPTACION Y POSIBLE RECHAZO",
-    "La cumplimentacion y envio de la solicitud web cifrada, junto con la provision de fondos cuando proceda, constituye una solicitud de encargo del Cliente. El encargo solo quedara perfeccionado cuando el Prestador confirme expresamente su aceptacion tras revisar la documentacion, la viabilidad temporal, la claridad del objeto y la posibilidad material de prestar el servicio. Si la solicitud no se acepta, no se iniciara trabajo alguno y cualquier provision de fondos se devolvera por el mismo canal o por otro acordado.",
+    "La cumplimentacion y envio de la solicitud web cifrada, junto con el pago anticipado cuando proceda, constituye una solicitud de encargo del Cliente. El encargo solo quedara perfeccionado cuando el Prestador confirme expresamente su aceptacion tras revisar la documentacion, la viabilidad temporal, la claridad del objeto y la posibilidad material de prestar el servicio. Si la solicitud no se acepta, no se iniciara trabajo alguno y cualquier importe abonado por anticipado se devolvera por el mismo canal o por otro acordado.",
     "",
     "5. DERECHO DE DESISTIMIENTO E INICIO ANTICIPADO",
     `Si el Prestador acepta la solicitud y el Cliente tiene la condicion legal de consumidor, este tendra derecho a desistir del contrato en el plazo legal aplicable. ${inicioInmediatoTexto}`,
@@ -491,7 +491,7 @@ function buildSummary(data, paymentInfo = null) {
       ? `Solicita representacion presencial en conciliacion en Madrid: ${wantsRepresentation ? "SI" : "NO"}`
       : null,
     `Solicita inicio inmediato de la preparacion del servicio: ${yesNo(data, "inicioInmediato")}`,
-    paymentInfo ? `Metodo de Pago: Pagado mediante ${paymentInfo.method.toUpperCase()} (${paymentInfo.method === "paypal" ? "ID de Transaccion: " + paymentInfo.transactionId : "Telefono emisor: " + paymentInfo.telefono + ", Concepto: " + paymentInfo.concepto})` : "Metodo de Pago: Provision de fondos pendiente de confirmacion"
+    paymentInfo ? `Metodo de Pago: Pagado mediante ${paymentInfo.method.toUpperCase()} (${paymentInfo.method === "paypal" ? "ID de Transaccion: " + paymentInfo.transactionId : "Telefono emisor: " + paymentInfo.telefono + ", Concepto: " + paymentInfo.concepto})` : "Metodo de Pago: Pago anticipado pendiente de confirmacion"
   ].filter(Boolean).join("\n");
 }
 
@@ -530,7 +530,7 @@ async function buildPayload(data, summary, contractPdf) {
       representationRegion: wantsRepresentation ? representationRegion.label : null,
       governingLawAndForum: "Ley espanola. Para clientes consumidores, juzgados y tribunales legalmente competentes. Cuando la competencia territorial sea legalmente disponible, fuero de Madrid.",
       precontractualReadText: "Confirmo que he leido la informacion precontractual.",
-      acceptedConditionsText: `Acepto las condiciones del servicio, la politica de privacidad, el precio cerrado de ${service.price}, la posible revision documental previa y la provision de fondos previa necesaria para tramitar el servicio.`,
+      acceptedConditionsText: `Acepto las condiciones del servicio, la politica de privacidad, el precio cerrado de ${service.price}, la posible revision documental previa y el pago anticipado necesario para tramitar el servicio.`,
       reasonableTimeDeclarationText: "La solicitud incorpora la declaracion de que existe al menos un plazo razonable de tres dias habiles para el estudio del caso, sin prescripcion o caducidad inminente.",
       madridRepresentationText: wantsRepresentation ? "La solicitud incluye representacion voluntaria presencial en conciliacion para asunto tramitable en la Comunidad de Madrid." : null,
       immediateStartText: data.get("inicioInmediato")
@@ -561,7 +561,7 @@ async function buildPayload(data, summary, contractPdf) {
       service: service.matterService,
       representationRegion: wantsRepresentation ? representationRegion.label : null,
       price: service.price,
-      payment: "provision de fondos previa pendiente de confirmacion por Bizum o PayPal/Tarjeta",
+      payment: "pago anticipado pendiente de confirmacion por Bizum o PayPal/Tarjeta",
     },
     acceptances: {
       precontractualRead: Boolean(data.get("leeInfoPrecontractual")),
@@ -647,7 +647,7 @@ function showResult(summary, data, evidence = null) {
   
   if (resultTitle && resultDesc) {
     resultTitle.textContent = "Solicitud enviada con Exito";
-    resultDesc.innerHTML = "La solicitud se ha firmado electronicamente de forma segura y la provision de fondos ha quedado registrada o preparada segun el metodo elegido.<br><br>Por favor, <strong>descarga tu copia en PDF</strong> para conservarla. El encargo solo quedara aceptado cuando Daniel confirme expresamente su aceptacion.";
+    resultDesc.innerHTML = "La solicitud se ha firmado electronicamente de forma segura y el pago anticipado ha quedado registrado o preparado segun el metodo elegido.<br><br>Por favor, <strong>descarga tu copia en PDF</strong> para conservarla. El encargo solo quedara aceptado cuando Daniel confirme expresamente su aceptacion.";
   }
 
   resultSection.hidden = false;
@@ -708,9 +708,9 @@ async function processContractSubmission(paymentInfo = null) {
     let successMsg = `Solicitud firmada y enviada de forma segura. ${evidenceSubject(payload.evidence)}. Hash completo guardado en el email y el manifiesto.`;
     if (paymentInfo) {
       if (paymentInfo.method === "paypal") {
-        successMsg += ` Provision de fondos por PayPal registrada.`;
+        successMsg += ` Pago anticipado por PayPal registrado.`;
       } else if (paymentInfo.method === "bizum") {
-        successMsg += ` Provision de fondos por Bizum registrada para verificacion de Daniel.`;
+        successMsg += ` Pago anticipado por Bizum registrado para verificacion de Daniel.`;
       }
     }
     copyStatus.textContent = successMsg;
@@ -828,7 +828,7 @@ form.addEventListener("submit", async (event) => {
   }
 
   if (selectedMethod === "paypal") {
-    copyStatus.innerHTML = `<span style='color: var(--primary); font-weight: bold;'>Completa la provision de fondos con el boton de PayPal o tarjeta para iniciar el servicio.</span>`;
+    copyStatus.innerHTML = `<span style='color: var(--primary); font-weight: bold;'>Completa el pago anticipado con el boton de PayPal o tarjeta para iniciar el servicio.</span>`;
     const paypalContainer = document.getElementById("paypal-button-container");
     if (paypalContainer) {
       paypalContainer.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -836,7 +836,7 @@ form.addEventListener("submit", async (event) => {
     return;
   }
 
-  copyStatus.innerHTML = `<span style='color: #d9534f; font-weight: bold;'>Completa la provision de fondos antes de iniciar el servicio.</span>`;
+  copyStatus.innerHTML = `<span style='color: #d9534f; font-weight: bold;'>Completa el pago anticipado antes de iniciar el servicio.</span>`;
 });
 
 // Obtener elementos de los tabs de pago
@@ -863,7 +863,7 @@ function updatePaymentMethod() {
     if (paypalSubmitActions) paypalSubmitActions.style.display = "flex";
     if (bizumPaymentPanel) bizumPaymentPanel.style.display = "none";
     if (paymentMethodNote) {
-      paymentMethodNote.textContent = "La provision de fondos se abona ahora de forma segura mediante PayPal o tarjeta.";
+      paymentMethodNote.textContent = "El pago anticipado se abona ahora de forma segura mediante PayPal o tarjeta.";
     }
 
     loadPayPalSDK(PAYPAL_CLIENT_ID, () => {
@@ -875,7 +875,7 @@ function updatePaymentMethod() {
     if (bizumSubmitActions) bizumSubmitActions.style.display = "flex";
     if (bizumPaymentPanel) bizumPaymentPanel.style.display = "flex";
     if (paymentMethodNote) {
-      paymentMethodNote.textContent = "La provision de fondos se abona ahora por Bizum. El servicio se inicia cuando Daniel confirme el ingreso.";
+      paymentMethodNote.textContent = "El pago anticipado se abona ahora por Bizum. El servicio se inicia cuando Daniel confirme el ingreso.";
     }
   }
 }
