@@ -24,7 +24,7 @@ CyiSWbqj5TdOzbaQqB+j4Ai+gPAFT/rwYXWEJVuFOc1AWPJfx7rBGKVbkAgJY646
 F45WvXRbliUcAMO0nuWuUycCAwEAAQ==
 -----END PUBLIC KEY-----`;
 
-const PAYPAL_CLIENT_ID = "sb"; // Reemplaza por tu Client ID de PayPal de producción. Usa "sb" para pruebas sandbox.
+const PAYPAL_CLIENT_ID = "AW943n1n0DVeXHskL98fTOQ7jVenLW57Lo5krItrxk-tiP2Ax0uAg8xUeRGhoJCTN9HtuFyExcd5hYNw";
 
 let paypalSdkLoaded = false;
 let paypalButtonsRendered = false;
